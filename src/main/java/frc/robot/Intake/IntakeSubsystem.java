@@ -18,10 +18,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     intakeMotor = new TalonFX(0, "rio");
-    intakeDeployMotor = new TalonFX(0, "rio");
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
+
+    intakeDeployMotor = new TalonFX(0, "rio");
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
