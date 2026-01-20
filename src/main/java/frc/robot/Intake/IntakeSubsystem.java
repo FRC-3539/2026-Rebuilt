@@ -4,11 +4,36 @@
 
 package frc.robot.Intake;
 
+import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  public IntakeSubsystem() {}
+  private static TalonFX intakeMotor, intakeDeployMotor;
+
+  public IntakeSubsystem() {
+    intakeMotor = new TalonFX(0, "rio");
+    intakeDeployMotor = new TalonFX(0, "rio");
+    intakeMotor.getConfigurator().apply(
+        new TalonFXConfiguration().MotorOutput
+            .withInverted(InvertedValue.Clockwise_Positive));
+    intakeDeployMotor.getConfigurator().apply(
+        new TalonFXConfiguration().MotorOutput
+            .withInverted(InvertedValue.Clockwise_Positive));
+    intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
+        .withForwardSoftLimitThreshold(0)
+        .withReverseSoftLimitEnable(true)
+        .withReverseSoftLimitThreshold(0));
+    intakeDeployMotor.getConfigurator().apply(new SlotConfigs()
+        .withKP(0)
+        .withKI(0)
+        .withKD(0));
+  }
 
   @Override
   public void periodic() {
