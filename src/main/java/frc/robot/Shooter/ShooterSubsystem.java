@@ -9,18 +9,22 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.compound.Diff_MotionMagicExpoTorqueCurrentFOC_Position;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
-  private static TalonFX hoodMotor, rotateMotor, shootMotorA, shootMotorB;
+  private static TalonFX rotateMotor, shootMotorA, shootMotorB;
+  private static TalonFXS hoodMotor;
   private static double requestedTurretAngle, requestedHoodAngle;
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -43,10 +47,13 @@ public class ShooterSubsystem extends SubsystemBase {
         .apply(new TalonFXConfiguration().MotorOutput
         .withInverted(InvertedValue.Clockwise_Positive));
 
-    hoodMotor = new TalonFX(4, "rio");
-    hoodMotor.getConfigurator()
-        .apply(new TalonFXConfiguration().MotorOutput
-        .withInverted(InvertedValue.Clockwise_Positive));
+    hoodMotor = new TalonFXS(0, "rio");
+        hoodMotor.getConfigurator()
+                .apply(new TalonFXSConfiguration().MotorOutput
+                        .withInverted(InvertedValue.Clockwise_Positive));
+        hoodMotor.getConfigurator().apply(new TalonFXSConfiguration()
+                .withCommutation(new CommutationConfigs()
+                        .withMotorArrangement(MotorArrangementValue.Minion_JST)));
 
     rotateMotor.setNeutralMode(NeutralModeValue.Brake);
     rotateMotor.getConfigurator()

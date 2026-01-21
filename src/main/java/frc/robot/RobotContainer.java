@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.ClimberSubsystem;
-import frc.robot.Intake.IntakeSubsystem;
+import frc.robot.Intake.ShooterSubsystem;
 import frc.robot.Shooter.ShooterSubsystem;
 import frc.robot.Vision.VisionSubsystem;
 
@@ -20,7 +20,7 @@ import frc.robot.Vision.VisionSubsystem;
  */
 public class RobotContainer {
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static ShooterSubsystem intakeSubsystem = new ShooterSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
 
