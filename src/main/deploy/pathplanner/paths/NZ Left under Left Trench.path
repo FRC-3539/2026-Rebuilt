@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.237445783134056,
-        "y": 7.67392771084795
+        "x": 6.270228915662651,
+        "y": 7.881554216867469
       },
       "isLocked": false,
       "linkedName": "Left after eat"
@@ -20,8 +20,8 @@
         "y": 7.367951807233493
       },
       "prevControl": {
-        "x": 4.71849397590514,
-        "y": 7.411662650606988
+        "x": 3.6803614457831326,
+        "y": 7.378879518072289
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 90.0
   },
   "useDefaultConstraints": true
