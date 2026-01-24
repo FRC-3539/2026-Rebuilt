@@ -15,12 +15,12 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeployPos;
 
-  public ShooterSubsystem() {
+  public IntakeSubsystem() {
     intakeMotor = new TalonFX(0, "rio");
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput

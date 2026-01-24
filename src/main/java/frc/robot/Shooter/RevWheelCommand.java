@@ -4,7 +4,7 @@
 
 package frc.robot.Shooter;
 
-import frc.robot.Intake.ShooterSubsystem;
+import frc.robot.Intake.IntakeSubsystem;
 import frc.robot.Utilities.Utils;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,13 +32,11 @@ public class RevWheelCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     ShooterSubsystem.setShootVelocity(0);
-    ShooterSubsystem.setFeedBeltVelocity(Utils.ssToAngularVelocity(IntakeConstants.feedBeltDiameter, IntakeConstants.feedBeltSS).baseUnitMagnitude());
-    ShooterSubsystem.setFeedWheelVelocity(Utils.ssToAngularVelocity(IntakeConstants.feedWheelDiameter, IntakeConstants.feedWheelSS).baseUnitMagnitude());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

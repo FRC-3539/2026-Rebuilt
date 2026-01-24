@@ -6,6 +6,7 @@ package frc.robot.Hopper;
 
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -33,6 +34,18 @@ public class HopperSubsystem extends SubsystemBase {
 
   }
 
+   public static void setRollerMotor(double voltage)
+  {
+    rollerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
+  public static void setPushMotor(double voltage)
+  {
+    pushMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
+  public static void setKickerMotor(double voltage)
+  {
+    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
