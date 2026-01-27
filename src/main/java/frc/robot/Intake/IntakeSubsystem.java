@@ -14,6 +14,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -21,12 +22,12 @@ public class IntakeSubsystem extends SubsystemBase {
   private static double requestedIntakeDeployPos;
 
   public IntakeSubsystem() {
-    intakeMotor = new TalonFX(0, "rio");
+    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "rio");
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
 
-    intakeDeployMotor = new TalonFX(0, "rio");
+    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "rio");
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));

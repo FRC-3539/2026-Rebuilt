@@ -11,20 +11,21 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDConstants;
 
 public class HopperSubsystem extends SubsystemBase {
   private static TalonFX rollerMotor, pushMotor, kickerMotor;
 
   public HopperSubsystem() {
-    rollerMotor = new TalonFX(0, "rio");
+    rollerMotor = new TalonFX(IDConstants.RollerMotorID, "rio");
     rollerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
 
-    pushMotor = new TalonFX(0, "rio");
+    pushMotor = new TalonFX(IDConstants.PushMotorID, "rio");
     pushMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
 
-    kickerMotor = new TalonFX(0, "rio");
+    kickerMotor = new TalonFX(IDConstants.KickerMotorID, "rio");
     kickerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     kickerMotor.getConfigurator().apply(new SlotConfigs()

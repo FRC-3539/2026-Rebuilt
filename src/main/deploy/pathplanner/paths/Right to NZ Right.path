@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.37546362339515,
-        "y": 0.44452211126961516
+        "x": 4.325096385542168,
+        "y": 0.516277108433735
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.617574893009986,
-        "y": 0.5868473609129818
+        "x": 5.65182509900246,
+        "y": 0.5480667337850083
       },
       "isLocked": false,
       "linkedName": "Right Trench Start"
     },
     {
       "anchor": {
-        "x": 7.804208273894435,
-        "y": 1.3243509272467906
+        "x": 7.654312716676033,
+        "y": 0.6449612959305033
       },
       "prevControl": {
-        "x": 6.846747503566333,
-        "y": 0.9232524964336678
+        "x": 7.2487331720094215,
+        "y": 0.6178043676221283
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Close Eat"
+      "linkedName": "NZ Far RIGHT"
     }
   ],
   "rotationTargets": [],

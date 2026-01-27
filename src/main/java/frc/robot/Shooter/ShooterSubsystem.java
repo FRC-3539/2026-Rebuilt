@@ -21,33 +21,37 @@ import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.EnumConstants.ShootingMode;
 
 public class ShooterSubsystem extends SubsystemBase {
   private static TalonFX rotateMotor, shootMotorA, shootMotorB;
   private static TalonFXS hoodMotor;
   private static double requestedTurretAngle, requestedHoodAngle;
+  public static ShootingMode mode;
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
 
     requestedHoodAngle = 0;
     requestedTurretAngle = 0;
 
-    shootMotorA = new TalonFX(1, "rio");
+    shootMotorA = new TalonFX(IDConstants.ShootMotorAID, "rio");
     shootMotorA.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput
         .withInverted(InvertedValue.Clockwise_Positive));
 
-    shootMotorB = new TalonFX(2, "rio");
+    shootMotorB = new TalonFX(IDConstants.ShootMotorBID, "rio");
     shootMotorB.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput
         .withInverted(InvertedValue.Clockwise_Positive));
 
-    rotateMotor = new TalonFX(3, "rio");
+    rotateMotor = new TalonFX(IDConstants.TurretRotateMotorID, "rio");
     rotateMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput
         .withInverted(InvertedValue.Clockwise_Positive));
 
-    hoodMotor = new TalonFXS(0, "rio");
+    hoodMotor = new TalonFXS(IDConstants.HoodMotorID, "rio");
         hoodMotor.getConfigurator()
                 .apply(new TalonFXSConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
@@ -96,31 +100,32 @@ public class ShooterSubsystem extends SubsystemBase {
     public static double getTurretAngle() {
         return rotationsToDegrees(rotateMotor.getPosition().getValueAsDouble());
     }
-    //  public static void reloadConstants() {
-    //     shootMotor.getConfigurator().apply(new SlotConfigs()
-    //             .withKP(ShooterConstants.shootkP)
-    //             .withKI(ShooterConstants.shootkI)
-    //             .withKD(ShooterConstants.shootkD)
-    //             .withKV(ShooterConstants.shootkV));
-    //     shootMotor.getConfigurator().apply(new MotionMagicConfigs()
-    //             .withMotionMagicAcceleration(ShooterConstants.shootAcceleration));
-    //     turretRotateMotor.getConfigurator().apply(new SlotConfigs()
-    //             .withKP(ShooterConstants.turretRotatekP)
-    //             .withKI(ShooterConstants.turretRotatekI)
-    //             .withKD(ShooterConstants.turretRotatekD)
-    //             .withKV(ShooterConstants.turretRotatekV));
-    //     turretRotateMotor.getConfigurator().apply(new MotionMagicConfigs()
-    //             .withMotionMagicAcceleration(ShooterConstants.turretRotateAcceleration)
-    //             .withMotionMagicCruiseVelocity(ShooterConstants.turretRotateCruiseVelocity));
-    //     hoodMotor.getConfigurator().apply(new SlotConfigs()
-    //             .withKP(ShooterConstants.hoodkP)
-    //             .withKI(ShooterConstants.hoodkI)
-    //             .withKD(ShooterConstants.hoodkD)
-    //             .withKV(ShooterConstants.hoodkV));
-    //     hoodMotor.getConfigurator().apply(new MotionMagicConfigs()
-    //             .withMotionMagicAcceleration(ShooterConstants.hoodAcceleration)
-    //             .withMotionMagicCruiseVelocity(ShooterConstants.hoodCruiseVelocity));
-    // }
+     public static void reloadConstants() {
+        shootMotorA.getConfigurator().apply(new SlotConfigs()
+                .withKP(ShooterConstants.ShooterP)
+                .withKI(ShooterConstants.ShooterI)
+                .withKD(ShooterConstants.ShooterD)
+                .withKV(ShooterConstants.ShooterV));
+        shootMotorA.getConfigurator().apply(new MotionMagicConfigs()
+                .withMotionMagicAcceleration(ShooterConstants.ShooterAcceleration)
+                .withMotionMagicCruiseVelocity(ShooterConstants.ShooterCruiseVelocity));
+        rotateMotor.getConfigurator().apply(new SlotConfigs()
+                .withKP(ShooterConstants.TurretRotateP)
+                .withKI(ShooterConstants.TurretRotateI)
+                .withKD(ShooterConstants.TurretRotateD)
+                .withKV(ShooterConstants.TurretRotateV));
+        rotateMotor.getConfigurator().apply(new MotionMagicConfigs()
+                .withMotionMagicAcceleration(ShooterConstants.TurretRotateAcceleration)
+                .withMotionMagicCruiseVelocity(ShooterConstants.TurretRotateCruiseVelocity));
+        hoodMotor.getConfigurator().apply(new SlotConfigs()
+                .withKP(ShooterConstants.HoodP)
+                .withKI(ShooterConstants.HoodI)
+                .withKD(ShooterConstants.HoodD)
+                .withKV(ShooterConstants.HoodV));
+        hoodMotor.getConfigurator().apply(new MotionMagicConfigs()
+                .withMotionMagicAcceleration(ShooterConstants.HoodAcceleration)
+                .withMotionMagicCruiseVelocity(ShooterConstants.HoodCruiseVelocity));
+    }
 
 
     

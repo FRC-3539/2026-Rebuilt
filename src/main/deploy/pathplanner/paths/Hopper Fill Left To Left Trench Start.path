@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.7454698795180725,
+        "y": 4.493963855421687
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.1335180722891565,
+        "y": 5.81621686746988
+      },
+      "isLocked": false,
+      "linkedName": "NZ Hopper Fill Left"
+    },
+    {
+      "anchor": {
+        "x": 4.489012048192771,
+        "y": 7.5318674698795185
+      },
+      "prevControl": {
+        "x": 6.958674698795179,
+        "y": 7.848771084337349
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Trench Start"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.1792461344902
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}
