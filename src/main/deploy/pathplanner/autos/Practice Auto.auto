@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TrenchLeft to NZ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NZ left to NZ right"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NZ right to Trench right"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

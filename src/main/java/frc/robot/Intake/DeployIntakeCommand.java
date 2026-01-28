@@ -2,22 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Hopper;
+package frc.robot.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RollerMotorCommand extends Command {
-  /** Creates a new RollerMotorCommand. */
-  public RollerMotorCommand() {
+public class DeployIntakeCommand extends Command {
+  /** Creates a new DeployIntakeCommand. */
+  public DeployIntakeCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    HopperSubsystem.setRollerMotor(0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -30,6 +28,6 @@ public class RollerMotorCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

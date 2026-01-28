@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right trench to NZ FAR right Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right NZ to mid NZ Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Hopper fill right to Right trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right trench to Climb"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.ClimberSubsystem;
 import frc.robot.Hopper.KickerMotorCommand;
 import frc.robot.Hopper.PushMotorCommand;
-import frc.robot.Hopper.RollerMotorCommand;
+import frc.robot.Hopper.SpinnerMotorCommand;
 import frc.robot.Intake.IntakeBallCommand;
 import frc.robot.Intake.IntakeDeployCommand;
 import frc.robot.Intake.IntakeSubsystem;
@@ -78,7 +78,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RotateTurretCommand", new RotateTurretCommand(0));
     NamedCommands.registerCommand("IntakeDeployCommand", new IntakeDeployCommand());
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
-    NamedCommands.registerCommand("RollerMotorCommand", new RollerMotorCommand());
+    NamedCommands.registerCommand("RollerMotorCommand", new SpinnerMotorCommand());
     NamedCommands.registerCommand("PushMotorCommand", new PushMotorCommand());
     NamedCommands.registerCommand("KickerMotorCommand", new KickerMotorCommand());
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());

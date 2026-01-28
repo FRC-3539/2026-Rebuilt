@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.804,
-        "y": 1.324
+        "x": 7.654312716676033,
+        "y": 0.645
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.789180722891565,
-        "y": 2.3084216867469887
+        "x": 7.639493439567598,
+        "y": 1.6294216867469886
       },
       "isLocked": false,
-      "linkedName": "Right Close Eat"
+      "linkedName": "NZ Far RIGHT"
     },
     {
       "anchor": {

@@ -4,6 +4,7 @@
 
 package frc.robot.Hopper;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -14,15 +15,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
 
 public class HopperSubsystem extends SubsystemBase {
-  private static TalonFX rollerMotor, pushMotor, kickerMotor;
+  private static TalonFX spinnerMotor, pushMotor, kickerMotor;
 
   public HopperSubsystem() {
-    rollerMotor = new TalonFX(IDConstants.RollerMotorID, "rio");
-    rollerMotor.getConfigurator()
-        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
-
-    pushMotor = new TalonFX(IDConstants.PushMotorID, "rio");
-    pushMotor.getConfigurator()
+    spinnerMotor.getConfigurator()
+        .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+            .withSupplyCurrentLimit(90).withSupplyCurrentLowerLimit(60).withSupplyCurrentLowerTime(2));
+            kickerMotor.getConfigurator()
+        .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+            .withSupplyCurrentLimit(90).withSupplyCurrentLowerLimit(60).withSupplyCurrentLowerTime(2));
+    spinnerMotor = new TalonFX(IDConstants.RollerMotorID, "rio");
+    spinnerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
 
     kickerMotor = new TalonFX(IDConstants.KickerMotorID, "rio");
@@ -35,13 +38,9 @@ public class HopperSubsystem extends SubsystemBase {
 
   }
 
-   public static void setRollerMotor(double voltage)
+   public static void setSpinnerMotor(double voltage)
   {
-    rollerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
-  }
-  public static void setPushMotor(double voltage)
-  {
-    pushMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    spinnerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
   }
   public static void setKickerMotor(double voltage)
   {
