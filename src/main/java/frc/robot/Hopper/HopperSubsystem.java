@@ -15,16 +15,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
 
 public class HopperSubsystem extends SubsystemBase {
-  private static TalonFX spinnerMotor, pushMotor, kickerMotor;
-
+  private static TalonFX spinnerMotor, kickerMotor;
+ 
   public HopperSubsystem() {
     spinnerMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(90).withSupplyCurrentLowerLimit(60).withSupplyCurrentLowerTime(2));
+            .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
             kickerMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(90).withSupplyCurrentLowerLimit(60).withSupplyCurrentLowerTime(2));
-    spinnerMotor = new TalonFX(IDConstants.RollerMotorID, "rio");
+            .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+    spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "rio");
     spinnerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
 

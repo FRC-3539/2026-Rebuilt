@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump To Climb"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right trench to NZ FAR right Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump To Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Trench To Climb"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NZ Left under Left Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NZ Left under Left Trench"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
