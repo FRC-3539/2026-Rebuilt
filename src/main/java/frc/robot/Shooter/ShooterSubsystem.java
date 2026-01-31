@@ -175,11 +175,24 @@ public class ShooterSubsystem extends SubsystemBase {
         return offsetTarget;
     }
 
+    public static double getHoodAngle(double distanceToTarget){
+        double angle = 0.07 * Math.pow(distanceToTarget, 2) - 2.45 * distanceToTarget + 82;
+        return angle;
+    }
+
+    // TODO
+    public static double hoodAngleToRotations(double angle) {
+        return 0;
+    }
+    // TODO
+    public static double hoodRotationsToAngle(double rotations) {
+        return 0;
+    }
+
     @Override
     public void periodic() {
 
         double turretAngle = 0;
-
         switch (mode) {
             case AUTO:
                 turretAngle = RobotContainer.driveSubsystem.getPose2d().getTranslation()
@@ -207,13 +220,21 @@ public class ShooterSubsystem extends SubsystemBase {
         }
 
         double turretTarget = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle) % 360;
-
         if (turretTarget > 180)
             turretTarget -= 360;
         else if (turretTarget < -180)
             turretTarget += 360;
 
+        double distanceToTarget = Math.sqrt(Math.pow(
+            RobotContainer.driveSubsystem.getPose2d().getTranslation().getDistance(ShooterConstants.Hub), 2)
+            + Math.pow(2.05, 2));
+        
+        double hoodAngle = getHoodAngle(distanceToTarget);
+
+        
+
         rotateMotor.setControl(new MotionMagicVoltage(degreesToRotations(turretTarget)));
 
+        hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(hoodAngle)));
     }
 }
