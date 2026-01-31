@@ -13,6 +13,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.compound.Diff_MotionMagicExpoTorqueCurrentFOC_Position;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.TalonFXS;
@@ -21,9 +22,13 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.EnumConstants;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.EnumConstants.ShootingMode;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -31,6 +36,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private static TalonFXS hoodMotor;
     private static double requestedTurretAngle, requestedHoodAngle;
     public static ShootingMode mode;
+
+    private static double velocityX = 0, velocityY = 0;
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
@@ -141,8 +148,72 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withMotionMagicCruiseVelocity(ShooterConstants.HoodCruiseVelocity));
     }
 
+    public static Translation2d getOffsetTarget() {
+        // Step 1: calculate robot velocity
+        velocityX = ChassisSpeeds.fromRobotRelativeSpeeds(
+                RobotContainer.driveSubsystem.getKinematics()
+                        .toChassisSpeeds(RobotContainer.driveSubsystem.getState().ModuleStates),
+                RobotContainer.driveSubsystem.getPose2d().getRotation()).vxMetersPerSecond;
+        velocityY = ChassisSpeeds.fromRobotRelativeSpeeds(
+                RobotContainer.driveSubsystem.getKinematics()
+                        .toChassisSpeeds(RobotContainer.driveSubsystem.getState().ModuleStates),
+                RobotContainer.driveSubsystem.getPose2d().getRotation()).vyMetersPerSecond;
+
+        // Step 2: Calculate time for shot to hit target from distance
+        double distanceToTarget = Math.sqrt(Math.pow(
+                RobotContainer.driveSubsystem.getPose2d().getTranslation().getDistance(ShooterConstants.Hub), 2)
+                + Math.pow(2.05, 2));
+        double timeToTarget = 0.125 * distanceToTarget + 1.9333;
+        // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
+        // * distanceToTarget + 1.35;
+
+        // Step 3: adjust the target point by the distance the robot travels in the
+        // above time
+        Translation2d offsetTarget = new Translation2d(ShooterConstants.Hub.getX() - velocityX * timeToTarget,
+                ShooterConstants.Hub.getY() - velocityY * timeToTarget);
+
+        return offsetTarget;
+    }
+
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+
+        double turretAngle = 0;
+
+        switch (mode) {
+            case AUTO:
+                turretAngle = RobotContainer.driveSubsystem.getPose2d().getTranslation()
+                        .minus(getOffsetTarget()).getAngle().getDegrees() - 180;
+                // do stuff
+                break;
+            case LEFT:
+                turretAngle = -85;
+                // do other stuff
+                break;
+            case RIGHT:
+                turretAngle = 85;
+                // do other stuff
+                break;
+            case FRONT:
+                turretAngle = 0;
+                // facing front
+                // do other stuff
+                break;
+            case BACK:
+                turretAngle = 0;
+                // facing front
+                // do other stuff
+                break;
+        }
+
+        double turretTarget = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle) % 360;
+
+        if (turretTarget > 180)
+            turretTarget -= 360;
+        else if (turretTarget < -180)
+            turretTarget += 360;
+
+        rotateMotor.setControl(new MotionMagicVoltage(degreesToRotations(turretTarget)));
+
     }
 }
