@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Bump To Climb"
+            "pathName": "Right Bump Start To Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost To Right Side Climb"
           }
         }
       ]

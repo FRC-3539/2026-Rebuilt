@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.489012048192771,
-        "y": 7.5318674698795185
+        "x": 4.434373493975903,
+        "y": 7.542795180722893
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1395542168674697,
-        "y": 7.979903614457832
+        "x": 2.4018192771084323,
+        "y": 7.34609638554217
       },
       "isLocked": false,
-      "linkedName": "Left Trench Start"
+      "linkedName": "Left Trench"
     },
     {
       "anchor": {
-        "x": 1.538269120432683,
-        "y": 3.745143228368618
+        "x": 1.5822409638554213,
+        "y": 4.1442771084337355
       },
       "prevControl": {
-        "x": 3.0673310604586477,
-        "y": 4.229627064646639
+        "x": 2.314658590410691,
+        "y": 5.297423036691627
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Tower"
+      "linkedName": "Left Side Climb"
     }
   ],
   "rotationTargets": [],

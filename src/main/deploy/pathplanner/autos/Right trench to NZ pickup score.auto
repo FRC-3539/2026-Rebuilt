@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right trench to NZ FAR right Path"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right NZ to mid NZ Path"
+            "pathName": "Right NZ to Mid Path"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Hopper fill right to Right trench"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right trench to Climb"
+            "pathName": "Right Trench to Right Side Climb"
           }
         }
       ]
