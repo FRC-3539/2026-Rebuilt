@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench Start To NZ Left"
+            "pathName": "Left Trench To Left NZ"
           }
         },
         {
@@ -19,19 +19,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Mid NZ To Left Trench"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench To Left Side Climb"
+            "pathName": "Left Trench To Climb"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Left Side Start",
   "choreoAuto": false
 }

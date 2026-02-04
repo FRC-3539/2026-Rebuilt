@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Trench To Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost To Climb"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Right Side Start",
+  "choreoAuto": false
+}

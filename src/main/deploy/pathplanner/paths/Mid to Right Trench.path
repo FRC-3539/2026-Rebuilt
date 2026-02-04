@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 7.647120481927709,
-        "y": 1.466987951807229
+        "y": 1.4669879518072295
       },
       "isLocked": false,
       "linkedName": "Mid Right NZ"
@@ -45,7 +45,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Other Start Points",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 90.0

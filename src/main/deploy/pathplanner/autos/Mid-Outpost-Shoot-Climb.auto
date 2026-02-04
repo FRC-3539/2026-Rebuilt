@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost To Right Side Climb"
+            "pathName": "Outpost To Climb"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Other",
   "choreoAuto": false
 }

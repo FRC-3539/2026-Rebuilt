@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.804,
-        "y": 1.324
+        "x": 4.456228915662651,
+        "y": 0.5272048192771093
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.947746987951808,
-        "y": 0.9096746987951814
+        "x": 3.3088192771084346,
+        "y": 0.3305060240963861
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Trench"
     },
     {
       "anchor": {
-        "x": 4.401590361445783,
-        "y": 0.6583373493975899
+        "x": 1.5822409638554213,
+        "y": 3.226349397590361
       },
       "prevControl": {
-        "x": 5.308590361445783,
-        "y": 0.6583373493975899
+        "x": 1.8666224458323768,
+        "y": 1.844266410185599
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Side Climb"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -0.002
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
