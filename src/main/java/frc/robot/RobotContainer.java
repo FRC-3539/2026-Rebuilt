@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.ClimberSubsystem;
+import frc.robot.Drivetrain.DriveSubsystem;
 import frc.robot.Hopper.KickerMotorCommand;
 import frc.robot.Hopper.SpinnerMotorCommand;
 import frc.robot.Intake.IntakeBallCommand;
@@ -34,10 +35,12 @@ import frc.robot.Vision.VisionSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  public static DriveSubsystem driveSubsystem = TunerConstants.createDrivetrain();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
+
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);

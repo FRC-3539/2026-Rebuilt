@@ -25,6 +25,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -41,11 +42,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private static double requestedTurretAngle, requestedHoodAngle;
     public static ShootingMode mode;
 
-    private static final double maxShootingSpeed = 39, minHoodAngle = 51, maxHoodAngle = 77;
-    
-	static StatusSignal<AngularVelocity> velocitySignal;
-	static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-	static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(true);
+    private static final double maxShootingSpeed = 39, minHoodAngle = 51, maxHoodAngle = 77, turretXOffset = 0.1528572,
+            turretYOffset = -0.0697992;
+
+    static StatusSignal<AngularVelocity> velocitySignal;
+    static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
+    static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(true);
 
     private static double robotVelocityX = 0, robotVelocityY = 0;
 
@@ -105,7 +107,7 @@ public class ShooterSubsystem extends SubsystemBase {
                         .withReverseSoftLimitThreshold(turretAngleToRotations(-135)));
 
         shootMotorB.setControl(new Follower(shootMotorA.getDeviceID(), MotorAlignmentValue.Aligned));
-		velocitySignal = shootMotorA.getVelocity();
+        velocitySignal = shootMotorA.getVelocity();
     }
 
     public static double turretRotationsToAngle(double rotations) {
@@ -125,7 +127,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     // public static void setShootVelocity(double angularVelocity) {
-    //     shootMotorA.setControl(new MotionMagicVelocityVoltage(angularVelocity));
+    // shootMotorA.setControl(new MotionMagicVelocityVoltage(angularVelocity));
     // }
 
     public static double getTurretAngle() {
@@ -186,38 +188,54 @@ public class ShooterSubsystem extends SubsystemBase {
         return offsetTarget;
     }
 
-    public static double calculateHoodAngle(double distanceToTarget){
+    public static double calculateHoodAngle(double distanceToTarget) {
         double angle = 0.07 * Math.pow(distanceToTarget, 2) - 2.45 * distanceToTarget + 82;
         return angle;
     }
 
-    public static double calculateShotSpeed(double distanceToTarget){
+    public static double calculateShotSpeed(double distanceToTarget) {
         double speed = 0.65 * distanceToTarget + 16.33;
-       return speed;
+        return speed;
     }
 
     public static double getShooterSpeed() {
-		velocitySignal.refresh();
-		return velocitySignal.getValue().magnitude();
-	}
+        velocitySignal.refresh();
+        return velocitySignal.getValue().magnitude();
+    }
 
     // TODO
     public static double hoodAngleToRotations(double angle) {
         return 0;
     }
+
     // TODO
     public static double hoodRotationsToAngle(double rotations) {
         return 0;
 
     }
-    //TBD
+
+    // TBD
     public static double velocityToRotations(double angle) {
         return 0;
     }
-    //TBD
+
+    // TBD
     public static double rotationsToVelocity(double rotations) {
         return 0;
 
+    }
+
+    public static Translation2d getTurretLocation() {
+        Pose2d robotPose = RobotContainer.driveSubsystem.getPose2d();
+        double angleRadians = Math.toRadians(robotPose.getRotation().getRadians());
+
+        double cos = Math.cos(angleRadians);
+        double sin = Math.sin(angleRadians);
+
+        double rotatedX = turretXOffset * cos - turretYOffset * sin;
+        double rotatedY = turretXOffset * sin + turretYOffset * cos;
+
+        return new Translation2d(robotPose.getX() + rotatedX, robotPose.getY() + rotatedY);
     }
 
     @Override
@@ -225,13 +243,19 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Calculate turret angle
         double turretAngle = 0;
+
+        Translation2d turretLocation = getTurretLocation();
+        double distanceToTarget = Math.sqrt(Math.pow(
+            turretLocation.getDistance(ShooterConstants.Hub), 2)
+            + Math.pow(2.05, 2));
+
         switch (mode) {
             case AUTO:
-                turretAngle = RobotContainer.driveSubsystem.getPose2d().getTranslation()
-                    .minus(getOffsetTarget()).getAngle().getDegrees() - 180;
+                turretAngle = turretLocation.minus(getOffsetTarget()).getAngle().getDegrees() - 180;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
-                turretAngle = Math.abs(turretAngle - getTurretAngle()) <= Math.abs(otherAngle - getTurretAngle()) 
-                    ? turretAngle : otherAngle;
+                turretAngle = Math.abs(turretAngle - getTurretAngle()) <= Math.abs(otherAngle - getTurretAngle())
+                        ? turretAngle
+                        : otherAngle;
                 break;
             case LEFT:
                 turretAngle = -85;
@@ -252,20 +276,23 @@ public class ShooterSubsystem extends SubsystemBase {
                 // do other stuff
                 break;
         }
-        double turretTargetAngle = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle) % 360;
-        if (turretTargetAngle > 260) turretTargetAngle -= 360;
-        else if (turretTargetAngle < -260) turretTargetAngle += 360;
+        double turretTargetAngle = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle)
+                % 360;
+        if (turretTargetAngle > 260)
+            turretTargetAngle -= 360;
+        else if (turretTargetAngle < -260)
+            turretTargetAngle += 360;
 
         // Calculate hood angle and shot speed
-        double distanceToTarget = Math.sqrt(Math.pow(
-            RobotContainer.driveSubsystem.getPose2d().getTranslation().getDistance(ShooterConstants.Hub), 2)
-            + Math.pow(2.05, 2));
         double hoodAngle = calculateHoodAngle(distanceToTarget);
+        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4) hoodAngle = minHoodAngle;
+        if (RobotContainer.operatorController.rightBumper().getAsBoolean()) hoodAngle = minHoodAngle;
+
         double shotSpeed = calculateShotSpeed(distanceToTarget);
 
         // Apply turret calculations
         rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(turretTargetAngle)));
         hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(hoodAngle)));
-		shootMotorA.setControl(velocityVoltageControl.withVelocity(velocityToRotations(shotSpeed)));
+        shootMotorA.setControl(velocityVoltageControl.withVelocity(velocityToRotations(shotSpeed)));
     }
 }
