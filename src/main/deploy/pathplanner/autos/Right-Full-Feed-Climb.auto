@@ -7,31 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench To NZ Left"
+            "pathName": "Right Trench to Right NZ"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left NZ To Mid NZ"
+            "pathName": "Right NZ To Left NZ"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Hopper Fill Left To Left Trench Start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Trench To Climb"
+            "pathName": "Full Left NZ to Climb"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Right Side Start",
   "choreoAuto": false
 }

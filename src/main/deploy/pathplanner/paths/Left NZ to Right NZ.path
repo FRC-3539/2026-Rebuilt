@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.489012048192771,
-        "y": 7.5318674698795185
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 5.264879518072289,
-        "y": 7.542795180722893
-      },
-      "isLocked": false,
-      "linkedName": "Left Trench Start"
-    },
-    {
-      "anchor": {
         "x": 7.7454698795180725,
         "y": 7.400734939759036
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.741578313253013,
+        "y": 4.045927710843374
+      },
+      "isLocked": false,
+      "linkedName": "Left NZ"
+    },
+    {
+      "anchor": {
+        "x": 7.745,
+        "y": 2.068
+      },
       "prevControl": {
-        "x": 7.046096385542168,
-        "y": 7.466301204819277
+        "x": 7.734072289156626,
+        "y": 3.1498433734939755
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NZ Left"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Left Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.1792461344902
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

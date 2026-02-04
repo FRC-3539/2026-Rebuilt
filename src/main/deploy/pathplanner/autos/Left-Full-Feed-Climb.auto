@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Bump To Outpost"
+            "pathName": "Left Trench To Left NZ"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost To Climb"
+            "pathName": "Left NZ to Right NZ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Full Right NZ To Climb"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Left Side Start",
   "choreoAuto": false
 }

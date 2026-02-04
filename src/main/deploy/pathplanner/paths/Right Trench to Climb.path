@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.804,
-        "y": 6.340746987951808
+        "x": 4.456228915662651,
+        "y": 0.5272048192771093
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.473089802386181,
-        "y": 7.704256866576166
+        "x": 3.3088192771084346,
+        "y": 0.3305060240963861
       },
       "isLocked": false,
-      "linkedName": "Left after eat"
+      "linkedName": "Right Trench"
     },
     {
       "anchor": {
-        "x": 2.8061445783147794,
-        "y": 7.367951807233493
+        "x": 1.5822409638554213,
+        "y": 3.226349397590361
       },
       "prevControl": {
-        "x": 3.700129851842658,
-        "y": 7.229631748362916
+        "x": 1.8666224458323768,
+        "y": 1.844266410185599
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Side Climb"
     }
   ],
   "rotationTargets": [],
@@ -42,12 +42,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -0.002
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right Start Points",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 90.0
   },
   "useDefaultConstraints": true

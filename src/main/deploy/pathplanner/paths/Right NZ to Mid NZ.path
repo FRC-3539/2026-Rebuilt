@@ -3,42 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.804,
-        "y": 6.362602409638554
+        "x": 7.789180722891565,
+        "y": 1.029879518072289
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.800108433734941,
-        "y": 3.007795180722892
+        "x": 7.789180722891565,
+        "y": 2.1389323822049926
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right NZ "
     },
     {
       "anchor": {
-        "x": 7.804,
-        "y": 1.324
+        "x": 7.745,
+        "y": 3.494
       },
       "prevControl": {
-        "x": 7.811036144578313,
-        "y": 2.745530120481929
+        "x": 7.745,
+        "y": 2.1577064438428613
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NZ right"
+      "linkedName": "Mid Right NZ"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Deploy Intake",
-      "waypointRelativePos": 0.5210918114143858,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -49,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

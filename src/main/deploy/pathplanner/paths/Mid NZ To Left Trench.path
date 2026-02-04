@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 7.7454698795180725,
-        "y": 4.493963855421687
+        "y": 4.494
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.1335180722891565,
-        "y": 5.81621686746988
+        "x": 6.6854819277108435,
+        "y": 6.242397590361446
       },
       "isLocked": false,
-      "linkedName": "NZ Hopper Fill Left"
+      "linkedName": "Mid Left NZ"
     },
     {
       "anchor": {
-        "x": 4.489012048192771,
-        "y": 7.5318674698795185
+        "x": 4.434373493975903,
+        "y": 7.542795180722893
       },
       "prevControl": {
-        "x": 6.958674698795179,
-        "y": 7.848771084337349
+        "x": 6.740120481927711,
+        "y": 7.761349397590362
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Trench Start"
+      "linkedName": "Left Trench"
     }
   ],
   "rotationTargets": [],
@@ -42,12 +42,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.1792461344902
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Other Start Points",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": -90.0
   },
   "useDefaultConstraints": true
