@@ -36,6 +36,12 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.EnumConstants.ShootingMode;
 
+class TurretState {
+    public double rotation;
+    public double hoodAngle;
+    public double velocity;
+}
+
 public class ShooterSubsystem extends SubsystemBase {
     private static TalonFX rotateMotor, shootMotorA, shootMotorB;
     private static TalonFXS hoodMotor;
@@ -161,7 +167,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withMotionMagicCruiseVelocity(ShooterConstants.HoodCruiseVelocity));
     }
 
-    public static Translation2d getOffsetTarget() {
+    public static Translation2d getOffsetTarget(Translation2d turret, Translation2d target) {
         // Step 1: calculate robot velocity
         robotVelocityX = ChassisSpeeds.fromRobotRelativeSpeeds(
                 RobotContainer.driveSubsystem.getKinematics()
@@ -174,26 +180,36 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Step 2: Calculate time for shot to hit target from distance
         double distanceToTarget = Math.sqrt(Math.pow(
-                RobotContainer.driveSubsystem.getPose2d().getTranslation().getDistance(ShooterConstants.Hub), 2)
+                turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = 0.125 * distanceToTarget + 1.9333;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
         // Step 3: adjust the target point by the distance the robot travels in the
         // above time
-        Translation2d offsetTarget = new Translation2d(ShooterConstants.Hub.getX() - robotVelocityX * timeToTarget,
-                ShooterConstants.Hub.getY() - robotVelocityY * timeToTarget);
+        Translation2d offsetTarget = new Translation2d(target.getX() - robotVelocityX * timeToTarget,
+                target.getY() - robotVelocityY * timeToTarget);
 
         return offsetTarget;
     }
 
-    public static double calculateHoodAngle(double distanceToTarget) {
+    public static double calculateHoodShotAngle(double distanceToTarget) {
+        double angle = 0.07 * Math.pow(distanceToTarget, 2) - 2.45 * distanceToTarget + 82;
+        return angle;
+    }
+
+    public static double calculateHoodFeedAngle(double distanceToTarget) {
         double angle = 0.07 * Math.pow(distanceToTarget, 2) - 2.45 * distanceToTarget + 82;
         return angle;
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
+        double speed = 0.65 * distanceToTarget + 16.33;
+        return speed;
+    }
+
+    public static double calculateFeedSpeed(double distanceToTarget) {
         double speed = 0.65 * distanceToTarget + 16.33;
         return speed;
     }
@@ -238,20 +254,18 @@ public class ShooterSubsystem extends SubsystemBase {
         return new Translation2d(robotPose.getX() + rotatedX, robotPose.getY() + rotatedY);
     }
 
-    @Override
-    public void periodic() {
-
-        // Calculate turret angle
-        double turretAngle = 0;
+    public static TurretState getScoringState() {
+        TurretState state = new TurretState();
 
         Translation2d turretLocation = getTurretLocation();
         double distanceToTarget = Math.sqrt(Math.pow(
-            turretLocation.getDistance(ShooterConstants.Hub), 2)
-            + Math.pow(2.05, 2));
+                turretLocation.getDistance(ShooterConstants.Hub), 2)
+                + Math.pow(2.05, 2));
 
+        double turretAngle = 0;
         switch (mode) {
             case AUTO:
-                turretAngle = turretLocation.minus(getOffsetTarget()).getAngle().getDegrees() - 180;
+                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, ShooterConstants.Hub)).getAngle().getDegrees() - 180;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
                 turretAngle = Math.abs(turretAngle - getTurretAngle()) <= Math.abs(otherAngle - getTurretAngle())
                         ? turretAngle
@@ -283,16 +297,90 @@ public class ShooterSubsystem extends SubsystemBase {
         else if (turretTargetAngle < -260)
             turretTargetAngle += 360;
 
-        // Calculate hood angle and shot speed
-        double hoodAngle = calculateHoodAngle(distanceToTarget);
-        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4) hoodAngle = minHoodAngle;
-        if (RobotContainer.operatorController.rightBumper().getAsBoolean()) hoodAngle = minHoodAngle;
+        state.rotation = turretTargetAngle;
 
-        double shotSpeed = calculateShotSpeed(distanceToTarget);
+        // Calculate hood angle and shot speed
+        state.hoodAngle = calculateHoodShotAngle(distanceToTarget);
+        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
+            state.hoodAngle = minHoodAngle;
+        if (RobotContainer.operatorController.rightBumper().getAsBoolean())
+            state.hoodAngle = minHoodAngle;
+
+        state.velocity = calculateShotSpeed(distanceToTarget);
+
+        return state;
+    }
+
+    public static TurretState getFeedingState() {
+        TurretState state = new TurretState();
+
+        Translation2d turretLocation = getTurretLocation();
+        double distanceToTarget = Math.sqrt(Math.pow(
+                turretLocation.getDistance(ShooterConstants.FeedMiddle), 2)
+                + Math.pow(2.05, 2));
+
+        double turretAngle = 0;
+        switch (mode) {
+            case AUTO:
+                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, ShooterConstants.FeedMiddle)).getAngle().getDegrees() - 180;
+                double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
+                turretAngle = Math.abs(turretAngle - getTurretAngle()) <= Math.abs(otherAngle - getTurretAngle())
+                        ? turretAngle
+                        : otherAngle;
+                break;
+            case LEFT:
+                turretAngle = -85;
+                // do other stuff
+                break;
+            case RIGHT:
+                turretAngle = 85;
+                // do other stuff
+                break;
+            case FRONT:
+                turretAngle = 0;
+                // facing front
+                // do other stuff
+                break;
+            case BACK:
+                turretAngle = 0;
+                // facing front
+                // do other stuff
+                break;
+        }
+        double turretTargetAngle = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle)
+                % 360;
+        if (turretTargetAngle > 260)
+            turretTargetAngle -= 360;
+        else if (turretTargetAngle < -260)
+            turretTargetAngle += 360;
+
+        state.rotation = turretTargetAngle;
+
+        // Calculate hood angle and shot speed
+        // TODO: use other side trench coordinates
+        state.hoodAngle = calculateHoodFeedAngle(distanceToTarget);
+        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
+            state.hoodAngle = minHoodAngle;
+        if (RobotContainer.operatorController.rightBumper().getAsBoolean())
+            state.hoodAngle = minHoodAngle;
+
+        state.velocity = calculateFeedSpeed(distanceToTarget);
+
+        return state;
+    }
+
+    @Override
+    public void periodic() {
+        TurretState state;
+
+        // if robot x is less than 4 then:
+        state = getScoringState();
+        // otherwise
+        state = getFeedingState();
 
         // Apply turret calculations
-        rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(turretTargetAngle)));
-        hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(hoodAngle)));
-        shootMotorA.setControl(velocityVoltageControl.withVelocity(velocityToRotations(shotSpeed)));
+        rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(state.rotation)));
+        hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(state.hoodAngle)));
+        shootMotorA.setControl(velocityVoltageControl.withVelocity(velocityToRotations(state.velocity)));
     }
 }
