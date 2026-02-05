@@ -15,13 +15,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.ClimberSubsystem;
 import frc.robot.Drivetrain.DriveSubsystem;
 import frc.robot.Hopper.KickerMotorCommand;
+import frc.robot.Hopper.ShootCommand;
 import frc.robot.Hopper.SpinnerMotorCommand;
 import frc.robot.Intake.IntakeBallCommand;
 import frc.robot.Intake.IntakeDeployCommand;
 import frc.robot.Intake.IntakeSubsystem;
 import frc.robot.Shooter.AngleHoodCommand;
 import frc.robot.Shooter.RevWheelCommand;
-import frc.robot.Shooter.RotateTurretCommand;
+import frc.robot.Shooter.TurretAutoCommand;
+import frc.robot.Shooter.TurretBackCommand;
+import frc.robot.Shooter.TurretFrontCommand;
+import frc.robot.Shooter.TurretLeftCommand;
+import frc.robot.Shooter.TurretRightCommand;
 import frc.robot.Shooter.ShooterSubsystem;
 import frc.robot.Vision.VisionSubsystem;
 
@@ -68,16 +73,23 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    operatorController.rightTrigger(0.15).whileTrue(new KickerMotorCommand());
+    operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
     operatorController.leftTrigger(0.05).whileTrue(new IntakeBallCommand());
+
+    // Turret Set Positions
+    operatorController.povLeft().onTrue(new TurretLeftCommand());
+    operatorController.povRight().onTrue(new TurretRightCommand());
+    operatorController.povUp().onTrue(new TurretFrontCommand());
+    operatorController.povDown().onTrue(new TurretBackCommand());
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
   }
 
   public void putAutons() {
-    NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
+    // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
     NamedCommands.registerCommand("AngleHoodCommand", new AngleHoodCommand(0));
-    NamedCommands.registerCommand("RotateTurretCommand", new RotateTurretCommand(0));
+    NamedCommands.registerCommand("RotateTurretCommand", new TurretAutoCommand());
     NamedCommands.registerCommand("IntakeDeployCommand", new IntakeDeployCommand());
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
     NamedCommands.registerCommand("SpinnerMotorCommand", new SpinnerMotorCommand());

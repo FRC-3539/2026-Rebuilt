@@ -4,24 +4,20 @@
 
 package frc.robot.Shooter;
 
-import frc.robot.Intake.IntakeSubsystem;
-import frc.robot.Utilities.Utils;
-
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.EnumConstants.ShootingMode;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RevWheelCommand extends Command {
-  /** Creates a new RevWheelCommand. */
-  public RevWheelCommand() {
+public class TurretFrontCommand extends Command {
+  /** Creates a new TurretFrontCommand. */
+  public TurretFrontCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     ShooterSubsystem.setShootVelocity(Utils.ssToAngularVelocity(0.0,1).baseUnitMagnitude());
-
-//  ShooterSubsystem.setShootVelocity(Utils.ssToAngularVelocity(ShooterConstants.shootDiameter, ShooterConstants.shootSS).baseUnitMagnitude());
+     ShooterSubsystem.mode = ShootingMode.FRONT;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,9 +26,7 @@ public class RevWheelCommand extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    ShooterSubsystem.setShootVelocity(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -5,20 +5,19 @@
 package frc.robot.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.EnumConstants.ShootingMode;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RotateTurretCommand extends Command {
-  private double angle;
-  /** Creates a new RotateTurretCommand. */
-  public RotateTurretCommand(double angle) {
-    this.angle = angle;
+public class TurretRightCommand extends Command {
+  /** Creates a new TurretRightCommand. */
+  public TurretRightCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ShooterSubsystem.setRotateAngle(angle);
+     ShooterSubsystem.mode = ShootingMode.RIGHT;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
