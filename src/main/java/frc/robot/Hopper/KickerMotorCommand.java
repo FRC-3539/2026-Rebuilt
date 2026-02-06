@@ -5,6 +5,7 @@
 package frc.robot.Hopper;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.HopperConstants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class KickerMotorCommand extends Command {
@@ -16,7 +17,7 @@ public class KickerMotorCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    HopperSubsystem.setKickerMotor(0);
+    HopperSubsystem.setKickerVelocity(HopperConstants.KickerVelocity);;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

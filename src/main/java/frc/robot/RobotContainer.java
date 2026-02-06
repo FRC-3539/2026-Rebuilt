@@ -18,10 +18,9 @@ import frc.robot.Hopper.KickerMotorCommand;
 import frc.robot.Hopper.ShootCommand;
 import frc.robot.Hopper.SpinnerMotorCommand;
 import frc.robot.Intake.IntakeBallCommand;
-import frc.robot.Intake.IntakeDeployCommand;
+import frc.robot.Intake.IntakeMoveCommand;
 import frc.robot.Intake.IntakeSubsystem;
 import frc.robot.Shooter.AngleHoodCommand;
-import frc.robot.Shooter.RevWheelCommand;
 import frc.robot.Shooter.TurretAutoCommand;
 import frc.robot.Shooter.TurretBackCommand;
 import frc.robot.Shooter.TurretFrontCommand;
@@ -74,7 +73,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
-    operatorController.leftTrigger(0.05).whileTrue(new IntakeBallCommand());
+
+    //Intake Commands 
+    operatorController.y().onTrue(new IntakeMoveCommand(true));
+    operatorController.y().whileTrue(new IntakeBallCommand());
+    operatorController.a().onTrue(new IntakeMoveCommand(false));
 
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());
@@ -82,7 +85,6 @@ public class RobotContainer {
     operatorController.povUp().onTrue(new TurretFrontCommand());
     operatorController.povDown().onTrue(new TurretBackCommand());
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
   }
 
@@ -90,7 +92,8 @@ public class RobotContainer {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
     NamedCommands.registerCommand("AngleHoodCommand", new AngleHoodCommand(0));
     NamedCommands.registerCommand("RotateTurretCommand", new TurretAutoCommand());
-    NamedCommands.registerCommand("IntakeDeployCommand", new IntakeDeployCommand());
+    NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
+    NamedCommands.registerCommand("IntakeRetractCommand", new IntakeMoveCommand(false));
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
     NamedCommands.registerCommand("SpinnerMotorCommand", new SpinnerMotorCommand());
     NamedCommands.registerCommand("KickerMotorCommand", new KickerMotorCommand());
