@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.ClimberSubsystem;
+import frc.robot.Drivetrain.DriveCommand;
 import frc.robot.Drivetrain.DriveSubsystem;
+import frc.robot.Drivetrain.TunerConstants;
 import frc.robot.Hopper.KickerMotorCommand;
 import frc.robot.Hopper.ShootCommand;
 import frc.robot.Hopper.SpinnerMotorCommand;
@@ -21,7 +23,6 @@ import frc.robot.Intake.IntakeBallCommand;
 import frc.robot.Intake.IntakeDeployCommand;
 import frc.robot.Intake.IntakeSubsystem;
 import frc.robot.Shooter.AngleHoodCommand;
-import frc.robot.Shooter.RevWheelCommand;
 import frc.robot.Shooter.TurretAutoCommand;
 import frc.robot.Shooter.TurretBackCommand;
 import frc.robot.Shooter.TurretFrontCommand;
@@ -49,6 +50,8 @@ public class RobotContainer {
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
+  public static Trigger rightDriverTrigger = driverController.rightTrigger(0.5);
+  public static Trigger rightDriverBumper = driverController.rightBumper();
 
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
@@ -75,6 +78,8 @@ public class RobotContainer {
   private void configureBindings() {
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
     operatorController.leftTrigger(0.05).whileTrue(new IntakeBallCommand());
+
+    driveSubsystem.setDefaultCommand(new DriveCommand());
 
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());
