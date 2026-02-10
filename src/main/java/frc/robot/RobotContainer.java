@@ -79,9 +79,9 @@ public class RobotContainer {
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
 
     //Intake Commands 
-    operatorController.y().onTrue(new IntakeMoveCommand(true));
-    operatorController.y().whileTrue(new IntakeBallCommand());
-    operatorController.a().onTrue(new IntakeMoveCommand(false));
+    operatorController.leftTrigger(.1).onTrue(new IntakeMoveCommand(true));
+    operatorController.leftTrigger(.1).whileTrue(new IntakeBallCommand());
+    operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
 
     driveSubsystem.setDefaultCommand(new DriveCommand());
 
@@ -90,6 +90,8 @@ public class RobotContainer {
     operatorController.povRight().onTrue(new TurretRightCommand());
     operatorController.povUp().onTrue(new TurretFrontCommand());
     operatorController.povDown().onTrue(new TurretBackCommand());
+    operatorController.a().onTrue(new TurretAutoCommand());
+    // climber here ->
 
 
   }
