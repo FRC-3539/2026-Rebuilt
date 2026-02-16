@@ -42,10 +42,9 @@ class TurretState {
 }
 
 public class ShooterSubsystem extends SubsystemBase {
-    private static TalonFX rotateMotor, shootMotorA, shootMotorB;
+    private static TalonFX rotateMotor, shootMotorLeader, shootMotorFollower;
     private static TalonFXS hoodMotor;
-    private static double requestedTurretAngle, requestedHoodAngle;
-    public static ShootingMode mode;
+    public static ShootingMode mode = ShootingMode.AUTO;
 
     public static TurretState requestedState;
 
@@ -65,24 +64,21 @@ public class ShooterSubsystem extends SubsystemBase {
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
                         .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
-        shootMotorA.getConfigurator()
+        shootMotorLeader.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
                         .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
-        shootMotorB.getConfigurator()
+        shootMotorFollower.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
                         .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
-        requestedHoodAngle = 0;
-        requestedTurretAngle = 0;
-
-        shootMotorA = new TalonFX(IDConstants.ShootMotorAID, "rio");
-        shootMotorA.getConfigurator()
+        shootMotorLeader = new TalonFX(IDConstants.ShootMotorLeaderID, "rio");
+        shootMotorLeader.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
 
-        shootMotorB = new TalonFX(IDConstants.ShootMotorBID, "rio");
-        shootMotorB.getConfigurator()
+        shootMotorFollower = new TalonFX(IDConstants.ShootMotorFollowerID, "rio");
+        shootMotorFollower.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
 
@@ -113,26 +109,20 @@ public class ShooterSubsystem extends SubsystemBase {
                         .withReverseSoftLimitEnable(true)
                         .withReverseSoftLimitThreshold(turretAngleToRotations(minHoodAngle)));
 
-        shootMotorB.setControl(new Follower(shootMotorA.getDeviceID(), MotorAlignmentValue.Aligned));
-        velocitySignal = shootMotorA.getVelocity();
+        shootMotorFollower.setControl(new Follower(shootMotorLeader.getDeviceID(), MotorAlignmentValue.Aligned));
+        velocitySignal = shootMotorLeader.getVelocity();
+
+        reloadConstants();
     }
 
-    // TODO: fox for real measurements
+   
     public static double turretRotationsToAngle(double rotations) {
-        return rotations * 360 / 47.0;
+        return rotations * ShooterConstants.TurretDegreesPerRotation;
     }
 
-    // TODO: fox for real measurements
+    
     public static double turretAngleToRotations(double degrees) {
-        return degrees * 47 / 360.0;
-    }
-
-    public static void setRotateAngle(double angle) {
-        requestedTurretAngle = angle;
-    }
-
-    public static void setHoodAngle(double angle) {
-        requestedHoodAngle = angle;
+        return degrees / ShooterConstants.TurretDegreesPerRotation;
     }
 
     public static double getTurretRotation() {
@@ -143,12 +133,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static void reloadConstants() {
-        shootMotorA.getConfigurator().apply(new SlotConfigs()
+        shootMotorLeader.getConfigurator().apply(new SlotConfigs()
                 .withKP(ShooterConstants.ShooterP)
                 .withKI(ShooterConstants.ShooterI)
                 .withKD(ShooterConstants.ShooterD)
                 .withKV(ShooterConstants.ShooterV));
-        shootMotorA.getConfigurator().apply(new MotionMagicConfigs()
+        shootMotorLeader.getConfigurator().apply(new MotionMagicConfigs()
                 .withMotionMagicAcceleration(ShooterConstants.ShooterAcceleration)
                 .withMotionMagicCruiseVelocity(ShooterConstants.ShooterCruiseVelocity));
         rotateMotor.getConfigurator().apply(new SlotConfigs()
@@ -221,25 +211,21 @@ public class ShooterSubsystem extends SubsystemBase {
         return velocitySignal.getValue().magnitude();
     }
 
-    // TODO
     public static double hoodAngleToRotations(double angle) {
-        return 0;
+        return angle / ShooterConstants.HoodDegreesPerRotation;
     }
 
-    // TODO
     public static double hoodRotationsToAngle(double rotations) {
-        return 0;
+        return  rotations * ShooterConstants.HoodDegreesPerRotation;
 
     }
 
-    // TBD
-    public static double velocityToRotations(double angle) {
-        return 0;
+    public static double velocityToRotations(double velocity) {
+        return velocity / ShooterConstants.ShooterVelocityPerRotation;
     }
 
-    // TBD
     public static double rotationsToVelocity(double rotations) {
-        return 0;
+        return rotations * ShooterConstants.ShooterVelocityPerRotation ;
 
     }
 
@@ -399,6 +385,8 @@ public class ShooterSubsystem extends SubsystemBase {
         // Apply turret calculations
         rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
         hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(requestedState.hoodAngle)));
-        shootMotorA.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
+        shootMotorLeader.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
+
+        log();
     }
 }

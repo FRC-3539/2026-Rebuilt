@@ -12,24 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Climber.ClimberSubsystem;
-import frc.robot.Drivetrain.DriveCommand;
-import frc.robot.Drivetrain.DriveSubsystem;
-import frc.robot.Drivetrain.TunerConstants;
-import frc.robot.Hopper.KickerMotorCommand;
-import frc.robot.Hopper.ShootCommand;
-import frc.robot.Hopper.SpinnerMotorCommand;
-import frc.robot.Intake.IntakeBallCommand;
-import frc.robot.Intake.IntakeMoveCommand;
-import frc.robot.Intake.IntakeSubsystem;
-import frc.robot.Shooter.AngleHoodCommand;
-import frc.robot.Shooter.TurretAutoCommand;
-import frc.robot.Shooter.TurretBackCommand;
-import frc.robot.Shooter.TurretFrontCommand;
-import frc.robot.Shooter.TurretLeftCommand;
-import frc.robot.Shooter.TurretRightCommand;
-import frc.robot.Shooter.ShooterSubsystem;
-import frc.robot.Vision.VisionSubsystem;
+import frc.robot.Climber.*;
+import frc.robot.Drivetrain.*;
+import frc.robot.Hopper.*;
+import frc.robot.Intake.*;
+import frc.robot.Shooter.*;
+import frc.robot.Vision.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -98,7 +86,6 @@ public class RobotContainer {
 
   public void putAutons() {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
-    NamedCommands.registerCommand("AngleHoodCommand", new AngleHoodCommand(0));
     NamedCommands.registerCommand("RotateTurretCommand", new TurretAutoCommand());
     NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
     NamedCommands.registerCommand("IntakeRetractCommand", new IntakeMoveCommand(false));

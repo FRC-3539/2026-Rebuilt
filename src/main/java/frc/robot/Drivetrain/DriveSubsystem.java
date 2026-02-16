@@ -246,6 +246,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		}
 
 		publishPose2d("/DriveTrain/Pose", getPose2d());
+		SmartDashboard.putNumber("/DriveTrain/Heading", pigeon.getRotation2d().getDegrees());
 
 	}
 }

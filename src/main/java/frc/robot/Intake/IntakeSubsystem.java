@@ -90,7 +90,7 @@ public class IntakeSubsystem extends SubsystemBase {
   
   public static void log(){
     //Slider Position
-    SmartDashboard.putNumber("Intake/Position", intakeDeployRotationsToInches(getIntakeDeployRotations()));
+    SmartDashboard.putNumber("/Intake/Position", intakeDeployRotationsToInches(getIntakeDeployRotations()));
   }
 
 
@@ -99,5 +99,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     intakeDeployMotor.setControl(new MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
+    log();
   }
 }

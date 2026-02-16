@@ -14,7 +14,7 @@ public class IntakeConstants extends BBConstants {
     public static double IntakeDeploySoftMin = 0.0;
     public static double IntakeDeploySoftMax = 0.0;
     public static double IntakeDeployHomePositionOffset = 0.0;
-    public static double IntakeDeployInchesPerRotation = 0.0;
+    public static double IntakeDeployInchesPerRotation = 0.628;
     public static double IntakeDeployP = 0.0;
     public static double IntakeDeployI = 0.0;
     public static double IntakeDeployD = 0.0;

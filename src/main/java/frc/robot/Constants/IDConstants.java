@@ -26,8 +26,8 @@ public class IDConstants extends BBConstants {
     public static int SpinnerMotorID = 12;
     public static int KickerMotorID = 13;
     public static int TurretRotateMotorID = 14;
-    public static int ShootMotorAID = 15;
-    public static int ShootMotorBID = 16;
+    public static int ShootMotorLeaderID = 15;
+    public static int ShootMotorFollowerID = 16;
     public static int HoodMotorID = 17;
     public static int FLCanCoderID = 30;
     public static int FRCanCoderID = 31;
