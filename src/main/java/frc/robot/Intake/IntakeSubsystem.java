@@ -25,18 +25,16 @@ public class IntakeSubsystem extends SubsystemBase {
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeployInches;
 
- 
-
   public IntakeSubsystem() {
+    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "rio");
+    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "rio");
+
     intakeMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
-    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "rio");
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
-
-    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "rio");
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
@@ -79,21 +77,18 @@ public class IntakeSubsystem extends SubsystemBase {
     return rotations * IntakeConstants.IntakeDeployInchesPerRotation;
   }
 
-  public static double getIntakeDeployRotations()
-  {
+  public static double getIntakeDeployRotations() {
     return intakeDeployMotor.getPosition().getValueAsDouble();
   }
 
   public static void setIntakeMotor(double voltage) {
     intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
   }
-  
-  public static void log(){
-    //Slider Position
+
+  public static void log() {
+    // Slider Position
     SmartDashboard.putNumber("/Intake/Position", intakeDeployRotationsToInches(getIntakeDeployRotations()));
   }
-
-
 
   @Override
   public void periodic() {

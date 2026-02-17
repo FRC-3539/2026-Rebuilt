@@ -212,7 +212,6 @@ public class VisionSubsystem extends Thread {
 					aprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
 				}
 				if (DriverStation.getAlliance().get() == Alliance.Red && lastAlliance != Alliance.Red) {
-
 					lastAlliance = Alliance.Red;
 					aprilTagFieldLayout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
 				}

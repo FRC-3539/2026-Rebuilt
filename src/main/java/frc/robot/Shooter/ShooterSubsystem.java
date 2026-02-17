@@ -59,35 +59,34 @@ public class ShooterSubsystem extends SubsystemBase {
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
-
-        rotateMotor.getConfigurator()
-                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
-
-        shootMotorLeader.getConfigurator()
-                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
-
-        shootMotorFollower.getConfigurator()
-                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
-
-        shootMotorLeader = new TalonFX(IDConstants.ShootMotorLeaderID, "rio");
-        shootMotorLeader.getConfigurator()
-                .apply(new TalonFXConfiguration().MotorOutput
-                        .withInverted(InvertedValue.Clockwise_Positive));
-
-        shootMotorFollower = new TalonFX(IDConstants.ShootMotorFollowerID, "rio");
-        shootMotorFollower.getConfigurator()
-                .apply(new TalonFXConfiguration().MotorOutput
-                        .withInverted(InvertedValue.Clockwise_Positive));
-
         rotateMotor = new TalonFX(IDConstants.TurretRotateMotorID, "rio");
+        shootMotorLeader = new TalonFX(IDConstants.ShootMotorLeaderID, "rio");
+        shootMotorFollower = new TalonFX(IDConstants.ShootMotorFollowerID, "rio");
+        hoodMotor = new TalonFXS(IDConstants.HoodMotorID, "rio");
+        
         rotateMotor.getConfigurator()
+                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+
+        shootMotorLeader.getConfigurator()
+                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+
+        shootMotorFollower.getConfigurator()
+                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+
+        shootMotorLeader.getConfigurator()
+                .apply(new TalonFXConfiguration().MotorOutput
+                        .withInverted(InvertedValue.Clockwise_Positive));
+        shootMotorFollower.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
 
-        hoodMotor = new TalonFXS(IDConstants.HoodMotorID, "rio");
+        
+        rotateMotor.getConfigurator()
+                .apply(new TalonFXConfiguration().MotorOutput
+                        .withInverted(InvertedValue.Clockwise_Positive));
         hoodMotor.getConfigurator()
                 .apply(new TalonFXSConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
