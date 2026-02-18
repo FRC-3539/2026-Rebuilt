@@ -26,8 +26,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private static double requestedIntakeDeployInches;
 
   public IntakeSubsystem() {
-    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "rio");
-    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "rio");
+    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
+    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
 
     intakeMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
@@ -93,7 +93,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    intakeDeployMotor.setControl(new MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
+    // intakeDeployMotor.setControl(new MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
     log();
   }
 }

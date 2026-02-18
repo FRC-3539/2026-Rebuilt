@@ -34,6 +34,7 @@ public class RobotContainer {
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
+  public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
 
   public static CommandXboxController driverController = new CommandXboxController(1);
@@ -79,8 +80,8 @@ public class RobotContainer {
     operatorController.povUp().onTrue(new TurretFrontCommand());
     operatorController.povDown().onTrue(new TurretBackCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
-    // climber here ->
-
+    // climber 
+    //climberSubsystem.setDefaultCommand(new ClimberCommand());
 
   }
 

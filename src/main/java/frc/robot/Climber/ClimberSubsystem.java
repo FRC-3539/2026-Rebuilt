@@ -10,16 +10,17 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
   private static TalonFX climberDeployMotor, climberMotor;
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
-    climberDeployMotor = new TalonFX(0, "rio");
+    climberDeployMotor = new TalonFX(IDConstants.ClimberDeployMotorID, "rio");
     climberDeployMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
-    climberMotor = new TalonFX(0, "rio");
+    climberMotor = new TalonFX(IDConstants.ClimberMotorID, "rio");
     climberMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
   }
@@ -28,7 +29,7 @@ public class ClimberSubsystem extends SubsystemBase {
     climberDeployMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
   }
 
-  public static void setclimberMotor(double voltage) {
+  public static void setClimberMotor(double voltage) {
     climberMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
   }
 

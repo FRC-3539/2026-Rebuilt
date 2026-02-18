@@ -42,8 +42,8 @@ class TurretState {
 }
 
 public class ShooterSubsystem extends SubsystemBase {
-    private static TalonFX rotateMotor, shootMotorLeader, shootMotorFollower;
-    private static TalonFXS hoodMotor;
+    private static TalonFX shootMotorLeader, shootMotorFollower;
+    private static TalonFXS hoodMotor, rotateMotor;
     public static ShootingMode mode = ShootingMode.AUTO;
 
     public static TurretState requestedState;
@@ -59,7 +59,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
-        rotateMotor = new TalonFX(IDConstants.TurretRotateMotorID, "rio");
+        rotateMotor = new TalonFXS(IDConstants.TurretRotateMotorID, "rio");
         shootMotorLeader = new TalonFX(IDConstants.ShootMotorLeaderID, "rio");
         shootMotorFollower = new TalonFX(IDConstants.ShootMotorFollowerID, "rio");
         hoodMotor = new TalonFXS(IDConstants.HoodMotorID, "rio");
@@ -78,7 +78,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         shootMotorLeader.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput
-                        .withInverted(InvertedValue.Clockwise_Positive));
+                        .withInverted(InvertedValue.CounterClockwise_Positive));
         shootMotorFollower.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput
                         .withInverted(InvertedValue.Clockwise_Positive));
@@ -89,7 +89,7 @@ public class ShooterSubsystem extends SubsystemBase {
                         .withInverted(InvertedValue.Clockwise_Positive));
         hoodMotor.getConfigurator()
                 .apply(new TalonFXSConfiguration().MotorOutput
-                        .withInverted(InvertedValue.Clockwise_Positive));
+                        .withInverted(InvertedValue.CounterClockwise_Positive));
         hoodMotor.getConfigurator().apply(new TalonFXSConfiguration()
                 .withCommutation(new CommutationConfigs()
                         .withMotorArrangement(MotorArrangementValue.Minion_JST)));
@@ -100,15 +100,19 @@ public class ShooterSubsystem extends SubsystemBase {
                         .withForwardSoftLimitThreshold(turretAngleToRotations(maxTurretRotation))
                         .withReverseSoftLimitEnable(true)
                         .withReverseSoftLimitThreshold(turretAngleToRotations(minTurretRotation)));
+                        
+        rotateMotor.getConfigurator().apply(new TalonFXSConfiguration()
+                .withCommutation(new CommutationConfigs()
+                        .withMotorArrangement(MotorArrangementValue.Minion_JST)));
 
         hoodMotor.setNeutralMode(NeutralModeValue.Brake);
         hoodMotor.getConfigurator()
                 .apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
-                        .withForwardSoftLimitThreshold(turretAngleToRotations(maxHoodAngle))
+                        .withForwardSoftLimitThreshold(turretAngleToRotations(ShooterConstants.HoodSoftMax))
                         .withReverseSoftLimitEnable(true)
-                        .withReverseSoftLimitThreshold(turretAngleToRotations(minHoodAngle)));
+                        .withReverseSoftLimitThreshold(turretAngleToRotations(ShooterConstants.HoodSoftMin)));
 
-        shootMotorFollower.setControl(new Follower(shootMotorLeader.getDeviceID(), MotorAlignmentValue.Aligned));
+        shootMotorFollower.setControl(new Follower(shootMotorLeader.getDeviceID(), MotorAlignmentValue.Opposed));
         velocitySignal = shootMotorLeader.getVelocity();
 
         reloadConstants();
@@ -211,11 +215,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double hoodAngleToRotations(double angle) {
-        return angle / ShooterConstants.HoodDegreesPerRotation;
+        return (angle - minHoodAngle) / ShooterConstants.HoodDegreesPerRotation;
     }
 
     public static double hoodRotationsToAngle(double rotations) {
-        return  rotations * ShooterConstants.HoodDegreesPerRotation;
+        return  rotations * ShooterConstants.HoodDegreesPerRotation + minHoodAngle;
 
     }
 
@@ -382,9 +386,16 @@ public class ShooterSubsystem extends SubsystemBase {
         else requestedState = getFeedingState();
 
         // Apply turret calculations
-        rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
-        hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(requestedState.hoodAngle)));
-        shootMotorLeader.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
+        // rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
+        // hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(requestedState.hoodAngle)));
+        //  shootMotorLeader.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
+
+
+
+        //  shootMotorLeader.setControl(velocityVoltageControl.withVelocity(20));
+        // System.out.println(hoodAngleToRotations(minHoodAngle + 5));
+                hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(minHoodAngle + 5)));
+
 
         log();
     }

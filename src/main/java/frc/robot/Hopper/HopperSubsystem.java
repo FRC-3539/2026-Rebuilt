@@ -11,6 +11,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HopperConstants;
@@ -20,10 +21,10 @@ public class HopperSubsystem extends SubsystemBase {
   private static TalonFX spinnerMotor, kickerMotor;
 
   static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-  static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(true);
+  static VoltageOut voltageOutControl = new VoltageOut(0).withEnableFOC(true);
 
   public HopperSubsystem() {
-    spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "rio");
+    spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "CANivore");
     spinnerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     spinnerMotor.getConfigurator()
@@ -31,16 +32,17 @@ public class HopperSubsystem extends SubsystemBase {
             .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
     kickerMotor = new TalonFX(IDConstants.KickerMotorID, "rio");
+    kickerMotor.setNeutralMode(NeutralModeValue.Brake);
     kickerMotor.getConfigurator()
-        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
     kickerMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
     kickerMotor.getConfigurator().apply(new SlotConfigs()
         .withKP(HopperConstants.KickerP)
         .withKI(HopperConstants.KickerI)
-        .withKD(HopperConstants.KickerD));
-
+        .withKD(HopperConstants.KickerD)
+        .withKV(HopperConstants.KickerV));
   }
 
   public static void setSpinnerMotor(double voltage) {
@@ -51,6 +53,10 @@ public class HopperSubsystem extends SubsystemBase {
     kickerMotor.setControl(velocityVoltageControl.withVelocity(velocity));
   }
 
+  public static void setKickerVoltage(double voltage)
+  {
+    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
   
 
   @Override
