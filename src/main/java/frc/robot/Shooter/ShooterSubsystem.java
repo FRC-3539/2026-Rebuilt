@@ -394,7 +394,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         //  shootMotorLeader.setControl(velocityVoltageControl.withVelocity(20));
         // System.out.println(hoodAngleToRotations(minHoodAngle + 5));
-                hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(minHoodAngle + 5)));
+        // hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(minHoodAngle + 5)));
 
 
         log();
