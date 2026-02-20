@@ -48,6 +48,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     putAutons();
+    visionSubsystem.start();
   }
 
   /**
@@ -65,14 +66,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    driveSubsystem.setDefaultCommand(new DriveCommand());
+
+    
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
 
     //Intake Commands 
-    operatorController.leftTrigger(.1).onTrue(new IntakeMoveCommand(true));
-    operatorController.leftTrigger(.1).whileTrue(new IntakeBallCommand());
-    operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
+    // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
+    operatorController.leftTrigger(.15).whileTrue(new IntakeBallCommand());
+    // operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
 
-    driveSubsystem.setDefaultCommand(new DriveCommand());
 
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());

@@ -80,21 +80,21 @@ public class VisionSubsystem extends Thread {
 			aprilTagFieldLayout = null;
 		}
 
-		leftCam = new PhotonCamera("leftCam");
-		leftPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-				PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToLeftCam);
+		// leftCam = new PhotonCamera("leftCam");
+		// leftPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
+		// 		PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToLeftCam);
 
-		rightCam = new PhotonCamera("rightCam");
-		rightPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-				PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToRightCam);
+		// rightCam = new PhotonCamera("rightCam");
+		// rightPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
+		// 		PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToRightCam);
 
 		backLeftCam = new PhotonCamera("backLeftCam");
 		backLeftPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
 				PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToBackLeftCam);
 
-		backRightCam = new PhotonCamera("backRightCam");
-		backRightPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-				PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToBackRightCam);
+		// backRightCam = new PhotonCamera("backRightCam");
+		// backRightPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
+		// 		PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToBackRightCam);
 
 		setVisionWeights(.2, .2, 10);
 	}
@@ -156,10 +156,10 @@ public class VisionSubsystem extends Thread {
 	}
 
 	public void log() {
-		SmartDashboard.putBoolean("/Vision/Left/Connected", leftCam.isConnected());
-		SmartDashboard.putBoolean("/Vision/Right/Connected", rightCam.isConnected());
+		// SmartDashboard.putBoolean("/Vision/Left/Connected", leftCam.isConnected());
+		// SmartDashboard.putBoolean("/Vision/Right/Connected", rightCam.isConnected());
 		SmartDashboard.putBoolean("/Vision/BackLeft/Connected", backLeftCam.isConnected());
-		SmartDashboard.putBoolean("/Vision/BackRight/Connected", backRightCam.isConnected());
+		// SmartDashboard.putBoolean("/Vision/BackRight/Connected", backRightCam.isConnected());
 	}
 
 	public Matrix<N3, N1> getVisionWeights(double distanceRatio, int numTargets) {
@@ -217,47 +217,47 @@ public class VisionSubsystem extends Thread {
 				}
 			}
 
-			leftPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
-			rightPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
+			// leftPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
+			// rightPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
 			backLeftPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
-			backRightPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
+			// backRightPhotonPoseEstimator.setFieldTags(aprilTagFieldLayout);
 
-			this.resultLeft = getEstimatedLeftGlobalPose();
-			this.resultRight = getEstimatedRightGlobalPose();
+			// this.resultLeft = getEstimatedLeftGlobalPose();
+			// this.resultRight = getEstimatedRightGlobalPose();
 			this.resultBackLeft = getEstimatedBackLeftGlobalPose();
-			this.resultBackRight = getEstimatedBackRightGlobalPose();
+			// this.resultBackRight = getEstimatedBackRightGlobalPose();
 
 			if (useVision) {
 				// Left camera
-				if (resultLeft.isPresent()) {
-					EstimatedRobotPose camPose = resultLeft.get();
-					double timeStamp = camPose.timestampSeconds;
-					Matrix<N3, N1> weights = evaluateMeasurement(resultLeft);
+				// if (resultLeft.isPresent()) {
+				// 	EstimatedRobotPose camPose = resultLeft.get();
+				// 	double timeStamp = camPose.timestampSeconds;
+				// 	Matrix<N3, N1> weights = evaluateMeasurement(resultLeft);
 
-					if (timeStamp != leftLastTimeStamp) {
-						publishPose2d("/Vision/LeftCamPose", camPose.estimatedPose.toPose2d());
-						SmartDashboard.putString("/Vision/LeftWeights", weights.toString());
+				// 	if (timeStamp != leftLastTimeStamp) {
+				// 		publishPose2d("/Vision/LeftCamPose", camPose.estimatedPose.toPose2d());
+				// 		SmartDashboard.putString("/Vision/LeftWeights", weights.toString());
 
-						RobotContainer.driveSubsystem.addVisionMeasurement(
-								camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
-					}
-					leftLastTimeStamp = timeStamp;
-				}
+				// 		RobotContainer.driveSubsystem.addVisionMeasurement(
+				// 				camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
+				// 	}
+				// 	leftLastTimeStamp = timeStamp;
+				// }
 				// Right camera
-				if (resultRight.isPresent()) {
-					EstimatedRobotPose camPose = resultRight.get();
-					double timeStamp = camPose.timestampSeconds;
-					Matrix<N3, N1> weights = evaluateMeasurement(resultRight);
+				// if (resultRight.isPresent()) {
+				// 	EstimatedRobotPose camPose = resultRight.get();
+				// 	double timeStamp = camPose.timestampSeconds;
+				// 	Matrix<N3, N1> weights = evaluateMeasurement(resultRight);
 
-					if (timeStamp != rightLastTimeStamp) {
-						publishPose2d("/Vision/RightCamPose", camPose.estimatedPose.toPose2d());
-						SmartDashboard.putString("/Vision/RightWeights", weights.toString());
+				// 	if (timeStamp != rightLastTimeStamp) {
+				// 		publishPose2d("/Vision/RightCamPose", camPose.estimatedPose.toPose2d());
+				// 		SmartDashboard.putString("/Vision/RightWeights", weights.toString());
 
-						RobotContainer.driveSubsystem.addVisionMeasurement(
-								camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
-					}
-					rightLastTimeStamp = timeStamp;
-				}
+				// 		RobotContainer.driveSubsystem.addVisionMeasurement(
+				// 				camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
+				// 	}
+				// 	rightLastTimeStamp = timeStamp;
+				// }
 				// Back left camera
 				if (resultBackLeft.isPresent()) {
 					EstimatedRobotPose camPose = resultBackLeft.get();
@@ -274,20 +274,20 @@ public class VisionSubsystem extends Thread {
 					backLeftLastTimeStamp = timeStamp;
 				}
 				// Back right camera
-				if (resultBackRight.isPresent()) {
-					EstimatedRobotPose camPose = resultBackRight.get();
-					double timeStamp = camPose.timestampSeconds;
-					Matrix<N3, N1> weights = evaluateMeasurement(resultBackRight);
+				// if (resultBackRight.isPresent()) {
+				// 	EstimatedRobotPose camPose = resultBackRight.get();
+				// 	double timeStamp = camPose.timestampSeconds;
+				// 	Matrix<N3, N1> weights = evaluateMeasurement(resultBackRight);
 
-					if (timeStamp != backRightLastTimeStamp) {
-						publishPose2d("/Vision/BackRightCamPose", camPose.estimatedPose.toPose2d());
-						SmartDashboard.putString("/Vision/BackRightWeights", weights.toString());
+				// 	if (timeStamp != backRightLastTimeStamp) {
+				// 		publishPose2d("/Vision/BackRightCamPose", camPose.estimatedPose.toPose2d());
+				// 		SmartDashboard.putString("/Vision/BackRightWeights", weights.toString());
 
-						RobotContainer.driveSubsystem.addVisionMeasurement(
-								camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
-					}
-					backRightLastTimeStamp = timeStamp;
-				}
+				// 		RobotContainer.driveSubsystem.addVisionMeasurement(
+				// 				camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp), weights);
+				// 	}
+				// 	backRightLastTimeStamp = timeStamp;
+				// }
 			}
 
 			log();
