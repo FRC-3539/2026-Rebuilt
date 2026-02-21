@@ -8,6 +8,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CommutationConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -85,25 +86,21 @@ public class ShooterSubsystem extends SubsystemBase {
 
         
         rotateMotor.getConfigurator()
-                .apply(new TalonFXConfiguration().MotorOutput
-                        .withInverted(InvertedValue.Clockwise_Positive));
-        hoodMotor.getConfigurator()
-                .apply(new TalonFXSConfiguration().MotorOutput
-                        .withInverted(InvertedValue.CounterClockwise_Positive));
+                .apply(new TalonFXSConfiguration().withCommutation(new CommutationConfigs()
+                        .withMotorArrangement(MotorArrangementValue.Minion_JST))
+                        .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
+
         hoodMotor.getConfigurator().apply(new TalonFXSConfiguration()
                 .withCommutation(new CommutationConfigs()
-                        .withMotorArrangement(MotorArrangementValue.Minion_JST)));
+                        .withMotorArrangement(MotorArrangementValue.Minion_JST))
+                        .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
 
         rotateMotor.setNeutralMode(NeutralModeValue.Brake);
         rotateMotor.getConfigurator()
                 .apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
-                        .withForwardSoftLimitThreshold(turretAngleToRotations(maxTurretRotation))
+                        .withForwardSoftLimitThreshold(ShooterConstants.TurretRotateSoftMax)
                         .withReverseSoftLimitEnable(true)
-                        .withReverseSoftLimitThreshold(turretAngleToRotations(minTurretRotation)));
-                        
-        rotateMotor.getConfigurator().apply(new TalonFXSConfiguration()
-                .withCommutation(new CommutationConfigs()
-                        .withMotorArrangement(MotorArrangementValue.Minion_JST)));
+                        .withReverseSoftLimitThreshold(ShooterConstants.TurretRotateSoftMin));
 
         hoodMotor.setNeutralMode(NeutralModeValue.Brake);
         hoodMotor.getConfigurator()
@@ -211,11 +208,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static double getShooterVelocity() {
         velocitySignal.refresh();
-        return velocitySignal.getValue().magnitude();
+        return rotationsToVelocity(velocitySignal.getValue().magnitude());
     }
 
     public static double hoodAngleToRotations(double angle) {
-        return (angle - minHoodAngle) / ShooterConstants.HoodDegreesPerRotation;
+        return (angle - minHoodAngle) / (maxHoodAngle - minHoodAngle) * ShooterConstants.HoodSoftMax;
     }
 
     public static double hoodRotationsToAngle(double rotations) {
@@ -281,8 +278,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 // do other stuff
                 break;
         }
-        double turretTargetAngle = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle)
-                % 360;
+        double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees());
         if (turretTargetAngle > 260)
             turretTargetAngle -= 360;
         else if (turretTargetAngle < -260)
@@ -315,7 +311,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double turretAngle = 0;
         switch (mode) {
             case AUTO:
-                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, ShooterConstants.FeedMiddle)).getAngle().getDegrees() - 180;
+                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, ShooterConstants.FeedMiddle)).getAngle().getDegrees() - 90;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
                 turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
                         ? turretAngle
@@ -340,12 +336,12 @@ public class ShooterSubsystem extends SubsystemBase {
                 // do other stuff
                 break;
         }
-        double turretTargetAngle = (RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees() - turretAngle)
+        double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees())
                 % 360;
-        if (turretTargetAngle > 260)
-            turretTargetAngle -= 360;
-        else if (turretTargetAngle < -260)
-            turretTargetAngle += 360;
+        // if (turretTargetAngle > 260)
+        //     turretTargetAngle -= 360;
+        // else if (turretTargetAngle < -260)
+        //     turretTargetAngle += 360;
 
         state.rotation = turretTargetAngle;
 
@@ -386,12 +382,14 @@ public class ShooterSubsystem extends SubsystemBase {
         else requestedState = getFeedingState();
 
         // Apply turret calculations
-        // rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
-        // hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(requestedState.hoodAngle)));
-        // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
+        // System.out.println(hoodAngleToRotations(requestedState.hoodAngle));
+        System.out.println(velocityToRotations(requestedState.velocity));
+         rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
+         hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(requestedState.hoodAngle)));
+         shootMotorLeader.setControl(velocityVoltageControl.withVelocity(velocityToRotations(requestedState.velocity)));
 
 
-        shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));
+        // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));
         // System.out.println(hoodAngleToRotations(minHoodAngle + 5));
         // hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(minHoodAngle + 5)));
 
