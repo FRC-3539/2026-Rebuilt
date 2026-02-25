@@ -39,6 +39,7 @@ public class RobotContainer {
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
+  public static Trigger leftDriverTrigger = driverController.leftTrigger(0.5);
   public static Trigger rightDriverTrigger = driverController.rightTrigger(0.5);
   public static Trigger rightDriverBumper = driverController.rightBumper();
 
@@ -70,10 +71,11 @@ public class RobotContainer {
 
     
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
+    operatorController.leftTrigger(0.15).whileTrue(new RevCommand());
 
     //Intake Commands 
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
-    operatorController.leftTrigger(.15).whileTrue(new IntakeBallCommand());
+    operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeBallCommand());
     // operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
 
 
@@ -83,6 +85,7 @@ public class RobotContainer {
     operatorController.povUp().onTrue(new TurretFrontCommand());
     operatorController.povDown().onTrue(new TurretBackCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
+    operatorController.back().whileTrue(new ReverseHopperCommand());
     // climber 
     //climberSubsystem.setDefaultCommand(new ClimberCommand());
 
