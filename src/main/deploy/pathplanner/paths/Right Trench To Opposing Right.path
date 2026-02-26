@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 4.456228915662651,
-        "y": 0.527
+        "y": 0.5272048192771093
       },
       "prevControl": null,
       "nextControl": {
         "x": 5.456228915662651,
-        "y": 0.5270000000000002
+        "y": 0.5272048192771095
       },
       "isLocked": false,
       "linkedName": "Right Trench"
@@ -45,10 +45,10 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Right Start Points",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 88.68308759420677
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

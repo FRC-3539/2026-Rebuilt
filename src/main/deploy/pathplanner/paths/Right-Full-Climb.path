@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.095156626506025,
-        "y": 0.8768915662650603
+        "x": 7.789180722891565,
+        "y": 1.029879518072289
       },
       "prevControl": {
-        "x": 8.062373493975905,
-        "y": 0.6036987951807238
+        "x": 7.756397590361445,
+        "y": 0.7566867469879526
       },
       "nextControl": {
-        "x": 8.238564178149828,
-        "y": 2.071954496630073
+        "x": 7.932588274535368,
+        "y": 2.224942448437302
       },
       "isLocked": false,
       "linkedName": "Right NZ "
@@ -98,10 +98,10 @@
     "rotation": -0.002
   },
   "reversed": false,
-  "folder": "Right Start Points",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 88.68308759420677
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
