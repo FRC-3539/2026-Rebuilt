@@ -25,6 +25,7 @@ import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -158,6 +159,14 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withMotionMagicCruiseVelocity(ShooterConstants.HoodCruiseVelocity));
     }
 
+    public static Translation2d scaleOffset(Translation2d offset, Rotation2d direction, double scale) {
+        double dx = direction.getCos();
+        double dy = direction.getSin();
+
+        double dot = offset.getX() * dx + offset.getY() * dy;
+        return offset.plus(new Translation2d(dx * (scale - 1) * dot, dy * (scale - 1) * dot));
+    }
+
     public static Translation2d getOffsetTarget(Translation2d turret, Translation2d target) {
         // Step 1: calculate robot velocity
         robotVelocityX = ChassisSpeeds.fromRobotRelativeSpeeds(
@@ -174,14 +183,18 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.75;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.5;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
         // Step 3: adjust the target point by the distance the robot travels in the
         // above time
-        Translation2d offsetTarget = new Translation2d(target.getX() - robotVelocityX * timeToTarget,
-                target.getY() - robotVelocityY * timeToTarget);
+        
+        // TEST
+        Translation2d offsetAmount = new Translation2d(-robotVelocityX * timeToTarget, -robotVelocityY * timeToTarget);
+        //Translation2d scaledOffset = scaleOffset(offsetAmount, turret.minus(target).getAngle(), 1.1);
+
+        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(offsetAmount);
 
         return offsetTarget;
     }
@@ -248,7 +261,7 @@ public class ShooterSubsystem extends SubsystemBase {
         TurretState state = new TurretState();
 
         Translation2d turretLocation = getTurretLocation();
-        double distanceToTarget = turretLocation.getDistance(ShooterConstants.Hub);
+        double distanceToTarget = 0;
         // double distanceToTarget = Math.sqrt(Math.pow(
         //         turretLocation.getDistance(ShooterConstants.Hub), 2)
         //         + Math.pow(2.05, 2));
@@ -259,8 +272,10 @@ public class ShooterSubsystem extends SubsystemBase {
                 // System.out.println(ShooterConstants.Hub);
                 // System.out.println(getOffsetTarget(turretLocation, ShooterConstants.Hub));
                 // System.out.println("\n\n\n");
-                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, ShooterConstants.Hub)).getAngle()
-                        .getDegrees() - 180;
+                Translation2d offsetTarget = getOffsetTarget(turretLocation, ShooterConstants.Hub);
+                distanceToTarget = turretLocation.getDistance(offsetTarget);
+
+                turretAngle = turretLocation.minus(offsetTarget).getAngle().getDegrees() - 180;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
                 turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
                         ? turretAngle
@@ -268,19 +283,23 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             case LEFT:
                 turretAngle = -85;
+                distanceToTarget = 2;
                 // do other stuff
                 break;
             case RIGHT:
                 turretAngle = 85;
+                distanceToTarget = 2;
                 // do other stuff
                 break;
             case FRONT:
                 turretAngle = 0;
+                distanceToTarget = 2;
                 // facing front
                 // do other stuff
                 break;
             case BACK:
                 turretAngle = 0;
+                distanceToTarget = 2;
                 // facing front
                 // do other stuff
                 break;
