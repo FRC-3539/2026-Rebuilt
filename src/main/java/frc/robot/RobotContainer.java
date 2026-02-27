@@ -93,12 +93,12 @@ public class RobotContainer {
 
   public void putAutons() {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
-    NamedCommands.registerCommand("RotateTurretCommand", new TurretAutoCommand());
     NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
     NamedCommands.registerCommand("IntakeRetractCommand", new IntakeMoveCommand(false));
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
-    NamedCommands.registerCommand("SpinnerMotorCommand", new SpinnerMotorCommand());
-    NamedCommands.registerCommand("KickerMotorCommand", new KickerMotorCommand());
+    NamedCommands.registerCommand("ShootCommand", new ShootCommand());
+    NamedCommands.registerCommand("RevCommand", new RevCommand());
+    
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
 
     chooser = AutoBuilder.buildAutoChooser();

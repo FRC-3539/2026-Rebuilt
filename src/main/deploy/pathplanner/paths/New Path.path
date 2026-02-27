@@ -64,7 +64,7 @@
   "folder": "Right Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 88.68308759420677
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
