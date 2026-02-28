@@ -30,6 +30,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
@@ -349,9 +350,7 @@ public class ShooterSubsystem extends SubsystemBase {
         TurretState state = new TurretState();
 
         Translation2d turretLocation = getTurretLocation();
-        double distanceToTarget = Math.sqrt(Math.pow(
-                turretLocation.getDistance(ShooterConstants.FeedMiddle), 2)
-                + Math.pow(2.05, 2));
+        double distanceToTarget = 0;
 
         double turretAngle = 0;
         switch (mode) {
@@ -359,8 +358,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 Translation2d feedTarget;
                 if( RobotContainer.driveSubsystem.getPose2d().getY() < 4.05) feedTarget = ShooterConstants.FeedRight;
                 else feedTarget = ShooterConstants.FeedLeft;
-
-                turretAngle = turretLocation.minus(getOffsetTarget(turretLocation, feedTarget))
+                Translation2d offsetTarget = getOffsetTarget(turretLocation, feedTarget);
+                distanceToTarget = turretLocation.getDistance(offsetTarget);
+                turretAngle = turretLocation.minus(offsetTarget)
                         .getAngle().getDegrees() - 180;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
                 turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
@@ -436,11 +436,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Apply turret calculations
         // System.out.println(velocityToRotations(requestedState.velocity));
-        rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
-        if (hideHoodState) hoodMotor.setControl (new MotionMagicVoltage(0));
-        else hoodMotor.setControl(new MotionMagicVoltage(requestedState.hoodAngle));
-        if (revState) shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
-        else shootMotorLeader.setControl(new VoltageOut(0));
+        if(!DriverStation.isTest())
+        {
+            rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
+            if (hideHoodState) hoodMotor.setControl (new MotionMagicVoltage(0));
+            else hoodMotor.setControl(new MotionMagicVoltage(requestedState.hoodAngle));
+            if (revState) shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
+            else shootMotorLeader.setControl(new VoltageOut(0));
+        }
 
         // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));
         // System.out.println(hoodAngleToRotations(minHoodAngle + 5));

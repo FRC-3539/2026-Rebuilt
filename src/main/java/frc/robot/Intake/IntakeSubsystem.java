@@ -30,17 +30,19 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
 
     intakeMotor.getConfigurator()
-        .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(20).withSupplyCurrentLowerTime(2));
+        .apply(new CurrentLimitsConfigs()
+        .withStatorCurrentLimitEnable(false)
+        .withSupplyCurrentLimitEnable(true)
+        .withSupplyCurrentLimit(40)
+        .withSupplyCurrentLowerLimit(20)
+        .withSupplyCurrentLowerTime(2));
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
-    intakeDeployMotor.getConfigurator().apply(
-        new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.CounterClockwise_Positive));
+
     intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
     intakeDeployMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
@@ -93,7 +95,8 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // intakeDeployMotor.setControl(new MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
+    // intakeDeployMotor.setControl(new
+    // MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
     log();
   }
 }
