@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of RT Outpost"
+            "pathName": "Outpost to Tower"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "Right Side Start",
+  "resetOdom": true,
+  "folder": null,
   "choreoAuto": false
 }

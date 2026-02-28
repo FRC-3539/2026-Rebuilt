@@ -209,9 +209,8 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		velocityR = ChassisSpeeds.fromRobotRelativeSpeeds(this.getState().Speeds,
 				this.getPose2d().getRotation()).omegaRadiansPerSecond;
 
-		double robotVelocity = Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2));
-
-		SmartDashboard.putNumber("/DriveTrain/RobotVelocity", robotVelocity);
+		var robotVelocity = new Translation2d(velocityX, velocityY);
+		SmartDashboard.putNumber("/DriveTrain/RobotVelocity", robotVelocity.getNorm());
 
 		SwerveRequest request = new SwerveRequest.Idle();
 		request = swerveRequest;

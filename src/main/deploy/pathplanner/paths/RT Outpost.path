@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.9593614457831328,
-        "y": 0.7129759036144572
+        "x": 0.75,
+        "y": 0.6364819277108438
       },
       "prevControl": {
-        "x": 1.4730800945110187,
-        "y": 0.7129759036144571
+        "x": 1.263718648727886,
+        "y": 0.6364819277108437
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Outpost"
     }
   ],
   "rotationTargets": [],
@@ -57,7 +57,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,

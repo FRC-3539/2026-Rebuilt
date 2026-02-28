@@ -71,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         rotateMotor.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+                        .withSupplyCurrentLimit(30).withSupplyCurrentLowerLimit(20).withSupplyCurrentLowerTime(2));
 
         shootMotorLeader.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
@@ -97,6 +97,11 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withCommutation(new CommutationConfigs()
                         .withMotorArrangement(MotorArrangementValue.Minion_JST))
                 .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
+
+        hoodMotor.getConfigurator()
+                .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+                        .withSupplyCurrentLimit(30).withSupplyCurrentLowerLimit(20).withSupplyCurrentLowerTime(2));
+
 
         rotateMotor.setNeutralMode(NeutralModeValue.Brake);
         rotateMotor.getConfigurator()

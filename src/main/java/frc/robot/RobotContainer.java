@@ -99,6 +99,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("RevCommand", new RevCommand());
     NamedCommands.registerCommand("HideHoodCommand", new HideHoodCommand());
+   
 
 
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
