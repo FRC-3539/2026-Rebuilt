@@ -75,11 +75,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
         shootMotorLeader.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+                        .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
         shootMotorFollower.getConfigurator()
                 .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-                        .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+                        .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
         shootMotorLeader.getConfigurator()
                 .apply(new TalonFXConfiguration().MotorOutput

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 0.8610120481927708,
-        "y": 0.7676144578313244
+        "x": 0.9593614457831328,
+        "y": 0.7129759036144572
       },
       "prevControl": {
-        "x": 1.3747306969206567,
-        "y": 0.7676144578313243
+        "x": 1.4730800945110187,
+        "y": 0.7129759036144571
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     },
     {
       "name": "ShootCommand",
-      "waypointRelativePos": 0.4951644100580266,
+      "waypointRelativePos": 0.6,
       "endWaypointRelativePos": 1.0,
       "command": {
         "type": "named",
@@ -57,7 +57,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,

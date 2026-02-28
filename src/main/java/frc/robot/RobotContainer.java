@@ -98,7 +98,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("RevCommand", new RevCommand());
-    
+    NamedCommands.registerCommand("HideHoodCommand", new HideHoodCommand());
+
+
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
 
     chooser = AutoBuilder.buildAutoChooser();
