@@ -125,6 +125,24 @@
       }
     },
     {
+      "name": "ShootCommand",
+      "waypointRelativePos": 0.5106382978723294,
+      "endWaypointRelativePos": 5.0,
+      "command": null
+    },
+    {
+      "name": "IntakeBallCommand",
+      "waypointRelativePos": 0.564796905222434,
+      "endWaypointRelativePos": 3.2263056092842923,
+      "command": null
+    },
+    {
+      "name": "RevCommand",
+      "waypointRelativePos": 0.9052224371373235,
+      "endWaypointRelativePos": 5.0,
+      "command": null
+    },
+    {
       "name": "HideHoodCommand",
       "waypointRelativePos": 3.237137330754337,
       "endWaypointRelativePos": 4.0,
