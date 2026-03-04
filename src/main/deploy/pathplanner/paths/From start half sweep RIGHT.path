@@ -167,7 +167,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right Start Points",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 90.0
