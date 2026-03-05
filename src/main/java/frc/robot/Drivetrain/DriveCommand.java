@@ -62,6 +62,11 @@ public class DriveCommand extends Command {
 			speedMultiplier = DriveConstants.TurboSpeedMultiplier;
 			rotationSpeedMultiplier = DriveConstants.TurboRotationSpeedMultiplier;
 		}
+		if (RobotContainer.operatorController.rightTrigger(0.5).getAsBoolean())
+		{
+			speedMultiplier *= 0.75;
+			rotationSpeedMultiplier *= 0.75;
+		}
 
 		if (RobotContainer.leftDriverTrigger.getAsBoolean()) { // Robot Centric
 			request = driveRobotCentric

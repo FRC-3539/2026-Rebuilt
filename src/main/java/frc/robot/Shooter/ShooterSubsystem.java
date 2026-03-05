@@ -4,6 +4,8 @@
 
 package frc.robot.Shooter;
 
+import org.frcteam3539.Byte_Swerve_Lib.math.MathUtils;
+
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CommutationConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -25,11 +27,13 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -123,11 +127,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
         reloadConstants();
     }
+    
+
+
 
     public static double turretRotationsToAngle(double rotations) {
         return rotations * ShooterConstants.TurretDegreesPerRotation;
     }
-
+    public static boolean turretOnTarget()
+    {
+        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 30);
+        // TODO: Make threshhold smaller once we get comp bot
+    }
     public static double turretAngleToRotations(double degrees) {
         return degrees / ShooterConstants.TurretDegreesPerRotation;
     }
@@ -191,7 +202,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.5;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042; // + 0.5
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 

@@ -10,9 +10,11 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.*;
+import frc.robot.Constants.AlignConstants;
 import frc.robot.Drivetrain.*;
 import frc.robot.Hopper.*;
 import frc.robot.Intake.*;
@@ -35,6 +37,7 @@ public class RobotContainer {
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  public static AlignConstants alignConstants = new AlignConstants();
 
 
   public static CommandXboxController driverController = new CommandXboxController(1);
@@ -78,6 +81,13 @@ public class RobotContainer {
     operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeBallCommand());
     // operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
 
+    // Drive Set Positions
+
+    driverController.b().whileTrue(new ParallelDeadlineGroup(new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true)), new HideHoodCommand()));
+
+    
+    // driverController.a().whileTrue(new PIDAutoAlignCommand());
+  
 
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());
