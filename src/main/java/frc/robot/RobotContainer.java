@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.*;
 import frc.robot.Constants.AlignConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Drivetrain.*;
 import frc.robot.Hopper.*;
 import frc.robot.Intake.*;
@@ -38,7 +39,6 @@ public class RobotContainer {
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
   public static AlignConstants alignConstants = new AlignConstants();
-
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
@@ -72,22 +72,21 @@ public class RobotContainer {
   private void configureBindings() {
     driveSubsystem.setDefaultCommand(new DriveCommand());
 
-    
     operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
     operatorController.leftTrigger(0.15).whileTrue(new RevCommand());
 
-    //Intake Commands 
+    // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeBallCommand());
-    // operatorController.leftBumper().onTrue(new IntakeMoveCommand(false));
+    operatorController.axisLessThan(1, -.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions
 
-    driverController.b().whileTrue(new ParallelDeadlineGroup(new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true)), new HideHoodCommand()));
+    driverController.b().whileTrue(new ParallelDeadlineGroup(
+        new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true)), new HideHoodCommand()));
 
-    
     // driverController.a().whileTrue(new PIDAutoAlignCommand());
-  
 
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());
@@ -96,8 +95,8 @@ public class RobotContainer {
     operatorController.povDown().onTrue(new TurretBackCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
     operatorController.back().whileTrue(new ReverseHopperCommand());
-    // climber 
-    //climberSubsystem.setDefaultCommand(new ClimberCommand());
+    // climber
+    // climberSubsystem.setDefaultCommand(new ClimberCommand());
 
   }
 
@@ -109,8 +108,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("RevCommand", new RevCommand());
     NamedCommands.registerCommand("HideHoodCommand", new HideHoodCommand());
-   
-
 
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
 

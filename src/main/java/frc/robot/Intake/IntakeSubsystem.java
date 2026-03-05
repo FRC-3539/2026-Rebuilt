@@ -5,6 +5,7 @@
 package frc.robot.Intake;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -31,14 +33,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs()
-        .withStatorCurrentLimitEnable(false)
-        .withSupplyCurrentLimitEnable(true)
-        .withSupplyCurrentLimit(40)
-        .withSupplyCurrentLowerLimit(20)
-        .withSupplyCurrentLowerTime(2));
+            .withStatorCurrentLimitEnable(false)
+            .withSupplyCurrentLimitEnable(true)
+            .withSupplyCurrentLimit(40)
+            .withSupplyCurrentLowerLimit(20)
+            .withSupplyCurrentLowerTime(2));
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.Clockwise_Positive));
+            .withInverted(InvertedValue.CounterClockwise_Positive));
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.Clockwise_Positive));
@@ -55,15 +57,21 @@ public class IntakeSubsystem extends SubsystemBase {
         .withKP(IntakeConstants.IntakeDeployP)
         .withKI(IntakeConstants.IntakeDeployI)
         .withKD(IntakeConstants.IntakeDeployD));
+    intakeDeployMotor.getConfigurator().apply(new MotionMagicConfigs()
+        .withMotionMagicAcceleration(IntakeConstants.IntakeDeployAcceleration)
+        .withMotionMagicCruiseVelocity(IntakeConstants.IntakeDeployCruiseVelocity));
 
-    intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
-        .withForwardSoftLimitThreshold(
-            (IntakeConstants.IntakeDeploySoftMax - IntakeConstants.IntakeDeployHomePositionOffset)
-                / IntakeConstants.IntakeDeployInchesPerRotation)
-        .withReverseSoftLimitEnable(true)
-        .withReverseSoftLimitThreshold(
-            (IntakeConstants.IntakeDeploySoftMin - IntakeConstants.IntakeDeployHomePositionOffset)
-                / IntakeConstants.IntakeDeployInchesPerRotation));
+    // intakeDeployMotor.getConfigurator().apply(new
+    // SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
+    // .withForwardSoftLimitThreshold(
+    // (IntakeConstants.IntakeDeploySoftMax -
+    // IntakeConstants.IntakeDeployHomePositionOffset)
+    // / IntakeConstants.IntakeDeployInchesPerRotation)
+    // .withReverseSoftLimitEnable(true)
+    // .withReverseSoftLimitThreshold(
+    // (IntakeConstants.IntakeDeploySoftMin -
+    // IntakeConstants.IntakeDeployHomePositionOffset)
+    // / IntakeConstants.IntakeDeployInchesPerRotation));
 
   }
 
@@ -95,8 +103,8 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // intakeDeployMotor.setControl(new
-    // MotionMagicVoltage(inchesToIntakeDeployRotations(requestedIntakeDeployInches)));
+    //  intakeDeployMotor.setControl(new
+    //  MotionMagicVoltage(requestedIntakeDeployInches));
     log();
   }
 }
