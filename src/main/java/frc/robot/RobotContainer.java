@@ -15,7 +15,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Climber.*;
 import frc.robot.Constants.AlignConstants;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.EnumConstants;
+import frc.robot.Constants.HopperConstants;
+import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LedConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Drivetrain.*;
 import frc.robot.Hopper.*;
 import frc.robot.Intake.*;
@@ -38,7 +45,16 @@ public class RobotContainer {
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
+
   public static AlignConstants alignConstants = new AlignConstants();
+  public static ClimberConstants climberConstants = new ClimberConstants();
+  public static DriveConstants driveConstants = new DriveConstants();
+  public static EnumConstants enumConstants = new EnumConstants();
+  public static HopperConstants hopperConstants = new HopperConstants();
+  public static IDConstants idConstants = new IDConstants();
+  public static IntakeConstants intakeConstants = new IntakeConstants();
+  public static LedConstants ledConstants = new LedConstants();
+  public static ShooterConstants shooterConstants = new ShooterConstants();
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
@@ -78,7 +94,7 @@ public class RobotContainer {
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeBallCommand());
-    operatorController.axisLessThan(1, -.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    operatorController.axisLessThan(1, -0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions

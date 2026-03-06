@@ -16,6 +16,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
@@ -35,15 +36,15 @@ public class IntakeSubsystem extends SubsystemBase {
         .apply(new CurrentLimitsConfigs()
             .withStatorCurrentLimitEnable(false)
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(40)
-            .withSupplyCurrentLowerLimit(20)
+            .withSupplyCurrentLimit(120)
+            .withSupplyCurrentLowerLimit(60)
             .withSupplyCurrentLowerTime(2));
     intakeMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
             .withInverted(InvertedValue.CounterClockwise_Positive));
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.Clockwise_Positive));
+            .withInverted(InvertedValue.CounterClockwise_Positive));
 
     intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
     intakeDeployMotor.getConfigurator()
@@ -79,14 +80,6 @@ public class IntakeSubsystem extends SubsystemBase {
     requestedIntakeDeployInches = request;
   }
 
-  public static double inchesToIntakeDeployRotations(double inches) {
-    return inches / IntakeConstants.IntakeDeployInchesPerRotation;
-  }
-
-  public static double intakeDeployRotationsToInches(double rotations) {
-    return rotations * IntakeConstants.IntakeDeployInchesPerRotation;
-  }
-
   public static double getIntakeDeployRotations() {
     return intakeDeployMotor.getPosition().getValueAsDouble();
   }
@@ -97,14 +90,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static void log() {
     // Slider Position
-    SmartDashboard.putNumber("/Intake/Position", intakeDeployRotationsToInches(getIntakeDeployRotations()));
+    SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //  intakeDeployMotor.setControl(new
-    //  MotionMagicVoltage(requestedIntakeDeployInches));
+     intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeployInches));
     log();
   }
 }

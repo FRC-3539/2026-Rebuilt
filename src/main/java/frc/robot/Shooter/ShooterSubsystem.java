@@ -330,14 +330,10 @@ public class ShooterSubsystem extends SubsystemBase {
                 ? turretTargetAngle
                 : otherAngle;
 
-        if (turretTargetAngle > 260)
+        if (turretTargetAngle > 280)
             turretTargetAngle -= 360;
-        else if (turretTargetAngle < -195)
+        else if (turretTargetAngle < -175)
             turretTargetAngle += 360;
-
-
-
-
 
         state.rotation = turretTargetAngle;
 
@@ -399,10 +395,10 @@ public class ShooterSubsystem extends SubsystemBase {
         }
         double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees())
                 % 360;
-        // if (turretTargetAngle > 260)
-        // turretTargetAngle -= 360;
-        // else if (turretTargetAngle < -260)
-        // turretTargetAngle += 360;
+        if (turretTargetAngle > 280)
+        turretTargetAngle -= 360;
+        else if (turretTargetAngle < -175)
+        turretTargetAngle += 360;
 
         state.rotation = turretTargetAngle;
 

@@ -35,6 +35,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
@@ -42,7 +43,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IDConstants;
@@ -64,17 +67,18 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	Field2d field = new Field2d();
 
-	
-  public static HashMap<ParentDevice, Alert> connectedDriveAlerts = new HashMap<>();
-  public static HashMap<ParentDevice, Alert> wasDisconnectedDriveAlerts = new HashMap<>();
+	public static HashMap<ParentDevice, Alert> connectedDriveAlerts = new HashMap<>();
+	public static HashMap<ParentDevice, Alert> wasDisconnectedDriveAlerts = new HashMap<>();
 
+	private Command shortRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.5), new RumbleCommand());
+	private Command longRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(1.5), new RumbleCommand());
 
-  private void createAlert(ParentDevice device, String deviceName) {
-    Alert isAlert = new Alert("Drive Subsystem", deviceName + ": is disconnected", AlertType.kError);
-    connectedDriveAlerts.put(device, isAlert);
-    Alert wasAlert = new Alert("Drive Subsystem", deviceName + ": was disconnected", AlertType.kError);
-    wasDisconnectedDriveAlerts.put(device, wasAlert);
-}
+	private void createAlert(ParentDevice device, String deviceName) {
+		Alert isAlert = new Alert("Drive Subsystem", deviceName + ": is disconnected", AlertType.kError);
+		connectedDriveAlerts.put(device, isAlert);
+		Alert wasAlert = new Alert("Drive Subsystem", deviceName + ": was disconnected", AlertType.kError);
+		wasDisconnectedDriveAlerts.put(device, wasAlert);
+	}
 
 	public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants,
 			SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>... modules) {
@@ -119,7 +123,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		createAlert(this.getModule(3).getSteerMotor(), "BackRightSteer");
 		createAlert(this.getModule(3).getDriveMotor(), "BackRightDrive");
 
-		
 	}
 
 	// public void seedFieldRelative(Trajectory trajectory) {
@@ -133,7 +136,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 	public void applyRequest(SwerveRequest request) {
 		this.swerveRequest = request;
 	}
-
 
 	private void configureAutoBuilder() {
 		try {
@@ -177,22 +179,140 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	@Override
 	public void periodic() {
+		double time = DriverStation.getMatchTime();
+		String message = DriverStation.getGameSpecificMessage();
+		if (DriverStation.getGameSpecificMessage().length() > 0) {
+			switch (message.charAt(0)) {
+				// Blue wins auton, red shoorts first
+				case 'B':
+					if (DriverStation.getAlliance().get() == Alliance.Blue) {
+						// Transition Shift Ends
+						if (time < 130 && time > 129.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 2 Warning
+						if (time < 115 && time > 114.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// Shift 2 Shoot
+						if (time < 107 && time > 106.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 2 Ends
+						if (time < 80 && time > 79.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// End Warning
+						if (time < 65 && time > 64.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// End Shift Starts
+						if (time < 57 && time > 56.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+					}
 
-		
+					else {
+						// Shift 1 Ends
+						if (time < 105 && time > 104.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 3 Warning
+						if (time < 90 && time > 89.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// Shift 3 Shoot
+						if (time < 82 && time > 81.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 3 Ends
+						if (time < 55 && time > 54.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// End Warning
+						if (time < 40 && time > 39.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// End Shift Starts
+						if (time < 32 && time > 31.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+					}
+
+					break;
+
+				default:
+					if (DriverStation.getAlliance().get() == Alliance.Red) {
+						// Transition Shift Ends
+						if (time < 130 && time > 129.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 2 Warning
+						if (time < 115 && time > 114.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// Shift 2 Shoot
+						if (time < 107 && time > 106.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 2 Ends
+						if (time < 80 && time > 79.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// End Warning
+						if (time < 65 && time > 64.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// End Shift Starts
+						if (time < 57 && time > 56.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+					}
+
+					else {
+						// Shift 1 Ends
+						if (time < 105 && time > 104.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 3 Warning
+						if (time < 90 && time > 89.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// Shift 3 Shoot
+						if (time < 82 && time > 81.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// Shift 3 Ends
+						if (time < 55 && time > 54.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+						// End Warning
+						if (time < 40 && time > 39.5 && !longRumbleCommand.isScheduled()) {
+							longRumbleCommand.schedule();
+						}
+						// End Shift Starts
+						if (time < 32 && time > 31.85 && !shortRumbleCommand.isScheduled()) {
+							shortRumbleCommand.schedule();
+						}
+					}
+					break;
+			}
+		}
+
 		for (ParentDevice device : connectedDriveAlerts.keySet()) {
 			Alert isAlert = connectedDriveAlerts.get(device);
 			Alert wasAlert = wasDisconnectedDriveAlerts.get(device);
-	  
+
 			if (!device.isConnected()) {
-			  isAlert.set(true);
-			  wasAlert.set(false);
-	  
-			} else if(isAlert.get()) {
-			  isAlert.set(false);
-			  wasAlert.set(true);
-	  
+				isAlert.set(true);
+				wasAlert.set(false);
+
+			} else if (isAlert.get()) {
+				isAlert.set(false);
+				wasAlert.set(true);
+
 			}
-		  }
+		}
 
 		if (Robot.isSimulation()) {
 			updateSimState(0.020, RobotController.getBatteryVoltage());
@@ -238,9 +358,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 			double randomOffset = (Math.random() - 0.5) * 0.2; // Random offset between -0.1 and 0.1
 			double simulatedVoltage = RobotController.getBatteryVoltage() + randomOffset;
 			SmartDashboard.putNumber("/DriveTrain/BatteryVoltage", simulatedVoltage);
-		}
-		else
-		{
+		} else {
 			SmartDashboard.putNumber("/DriveTrain/BatteryVoltage", RobotController.getBatteryVoltage());
 		}
 
