@@ -478,6 +478,11 @@ public class ShooterSubsystem extends SubsystemBase {
                 shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
             else
                 shootMotorLeader.setControl(new VoltageOut(0));
+        } else {
+            shootMotorLeader.setControl(new VoltageOut(0));
+            hoodMotor.setControl(new VoltageOut(0));
+            rotateMotor.setControl(new VoltageOut(0));
+
         }
 
         // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));
