@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 8.33556626506024,
-        "y": 0.5818433734939767
+        "y": 0.5818433734939772
       },
       "nextControl": {
         "x": 8.400994792926639,
@@ -125,21 +125,20 @@
       }
     },
     {
-      "name": "ShootCommand",
-      "waypointRelativePos": 0.5106382978723294,
+      "name": "RevCommand",
+      "waypointRelativePos": 0.25,
       "endWaypointRelativePos": 5.0,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "RevCommand"
+        }
+      }
     },
     {
       "name": "IntakeBallCommand",
       "waypointRelativePos": 0.564796905222434,
       "endWaypointRelativePos": 3.2263056092842923,
-      "command": null
-    },
-    {
-      "name": "RevCommand",
-      "waypointRelativePos": 0.9052224371373235,
-      "endWaypointRelativePos": 5.0,
       "command": null
     },
     {
@@ -150,6 +149,17 @@
         "type": "named",
         "data": {
           "name": "HideHoodCommand"
+        }
+      }
+    },
+    {
+      "name": "ShootCommand",
+      "waypointRelativePos": 3.95,
+      "endWaypointRelativePos": 5.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ShootCommand"
         }
       }
     }
