@@ -62,6 +62,7 @@ public class RobotContainer {
   public static Trigger leftDriverTrigger = driverController.leftTrigger(0.5);
   public static Trigger rightDriverTrigger = driverController.rightTrigger(0.5);
   public static Trigger rightDriverBumper = driverController.rightBumper();
+  public static Trigger operatorLeftStickUp = operatorController.axisLessThan(1, -0.5);
 
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
@@ -72,11 +73,11 @@ public class RobotContainer {
     putCommands();
     visionSubsystem.start();
   }
-  
+
   public void putCommands() {
-    SmartDashboard.putData (new ZeroHoodMotorCommand().ignoringDisable(true));
-    SmartDashboard.putData (new ZeroIntakeDeployCommand().ignoringDisable(true));
-    SmartDashboard.putData (new ZeroTurretRotateCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
 
   }
 
@@ -102,8 +103,8 @@ public class RobotContainer {
 
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
-    operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeBallCommand());
-    operatorController.axisLessThan(1, -0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    operatorLeftStickUp.whileTrue(new IntakeBallCommand());
+    operatorLeftStickUp.onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions

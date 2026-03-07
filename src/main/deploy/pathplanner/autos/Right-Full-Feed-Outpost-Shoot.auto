@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Outpost"
+            "pathName": "FullSweepOPR-1"
           }
         },
         {
@@ -17,7 +17,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 5.0
+                  "waitTime": 3.0
                 }
               },
               {
@@ -34,17 +34,11 @@
               }
             ]
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Tower"
-          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Right Side Start",
   "choreoAuto": false
 }

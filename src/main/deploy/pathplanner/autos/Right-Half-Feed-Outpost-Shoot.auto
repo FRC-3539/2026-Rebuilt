@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Bump Start To Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost To Climb"
+            "pathName": "From start half sweep RIGHT"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Right Side Start",
   "choreoAuto": false
 }
