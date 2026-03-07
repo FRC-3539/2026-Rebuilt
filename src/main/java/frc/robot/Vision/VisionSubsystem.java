@@ -5,15 +5,19 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
 
@@ -34,20 +38,20 @@ public class VisionSubsystem extends Thread {
 
 	public static PhotonCamera leftCam;
 	Transform3d robotToLeftCam = new Transform3d(new Translation3d(-0.2286, .36195 + 0.44, 0.2032),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(23.58), Math.toRadians(90)));
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(90)));
 
 	// DONE
 	public static PhotonCamera rightCam;
 	Transform3d robotToRightCam = new Transform3d(new Translation3d(-0.2286, -.36195 - 0.22, 0.2032),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(23.58), Math.toRadians(-90)));
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(-90)));
 
 	public static PhotonCamera backLeftCam;
-	Transform3d robotToBackLeftCam = new Transform3d(new Translation3d(-0.29845 - 0.22, 0.2921, 0.2032),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(23.58), Math.toRadians(192)));
+	Transform3d robotToBackLeftCam = new Transform3d(new Translation3d(-0.22615, 0.29715, 0.2159),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(155)));
 
 	public static PhotonCamera backRightCam;
-	Transform3d robotToBackRightCam = new Transform3d(new Translation3d(-0.29845 - 0.28, 0.2921 - 0.55, 0.2032),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(23.58), Math.toRadians(182)));
+	Transform3d robotToBackRightCam = new Transform3d(new Translation3d(-0.22615, -0.29615, 0.2159),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(-180)));
 
 	PhotonPoseEstimator leftPhotonPoseEstimator;
 	PhotonPoseEstimator rightPhotonPoseEstimator;
@@ -66,6 +70,9 @@ public class VisionSubsystem extends Thread {
 	double backRightLastTimeStamp = 0;
 
 	double visionRatio = 10;
+
+	StructPublisher<Pose3d> publisher = NetworkTableInstance.getDefault()
+  .getStructTopic("/Vision/BackRightPose3d", Pose3d.struct).publish();
 
 	public VisionSubsystem() {
 		super();
@@ -282,6 +289,7 @@ public class VisionSubsystem extends Thread {
 				if (timeStamp != backRightLastTimeStamp) {
 				publishPose2d("/Vision/BackRightCamPose", camPose.estimatedPose.toPose2d());
 				SmartDashboard.putString("/Vision/BackRightWeights", weights.toString());
+				publisher.set(camPose.estimatedPose);
 
 				RobotContainer.driveSubsystem.addVisionMeasurement(
 				camPose.estimatedPose.toPose2d(), Utils.fpgaToCurrentTime(timeStamp),
