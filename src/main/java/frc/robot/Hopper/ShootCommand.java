@@ -24,7 +24,7 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ShooterSubsystem.turretOnTarget() && !ShooterSubsystem.hideHoodState) {
+    if (ShooterSubsystem.turretReady()) {
       HopperSubsystem.setKickerVelocity(ShooterSubsystem.getRequestedShootVelocity() * 4 / 2.25);
       HopperSubsystem.setSpinnerMotor(HopperConstants.SpinnerVoltage);
     } else {
