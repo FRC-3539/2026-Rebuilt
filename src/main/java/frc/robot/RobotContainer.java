@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -68,7 +69,15 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     putAutons();
+    putCommands();
     visionSubsystem.start();
+  }
+  
+  public void putCommands() {
+    SmartDashboard.putData (new ZeroHoodMotorCommand().ignoringDisable(true));
+    SmartDashboard.putData (new ZeroIntakeDeployCommand().ignoringDisable(true));
+    SmartDashboard.putData (new ZeroTurretRotateCommand().ignoringDisable(true));
+
   }
 
   /**
@@ -88,7 +97,7 @@ public class RobotContainer {
   private void configureBindings() {
     driveSubsystem.setDefaultCommand(new DriveCommand());
 
-    operatorController.rightTrigger(0.15).whileTrue(new ShootCommand());
+    operatorController.rightTrigger(0.15).whileTrue(new ParallelCommandGroup(new ShootCommand(), new RevCommand()));
     operatorController.leftTrigger(0.15).whileTrue(new RevCommand());
 
     // Intake Commands
@@ -111,6 +120,7 @@ public class RobotContainer {
     operatorController.povDown().onTrue(new TurretBackCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
     operatorController.back().whileTrue(new ReverseHopperCommand());
+    operatorController.start().whileTrue(new ReverseIntakeCommand());
     // climber
     // climberSubsystem.setDefaultCommand(new ClimberCommand());
 

@@ -80,6 +80,10 @@ public class IntakeSubsystem extends SubsystemBase {
     requestedIntakeDeployInches = request;
   }
 
+  public static void zeroIntakeDeployMotor() {
+        intakeDeployMotor.setPosition(0);
+    }
+
   public static double getIntakeDeployRotations() {
     return intakeDeployMotor.getPosition().getValueAsDouble();
   }

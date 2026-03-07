@@ -18,26 +18,25 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ShooterSubsystem.turretOnTarget())
-    {
-      HopperSubsystem.setKickerVelocity(HopperConstants.KickerVelocity);
+    if (ShooterSubsystem.turretOnTarget()) {
+      HopperSubsystem.setKickerVelocity(ShooterSubsystem.getRequestedShootVelocity() * 4 / 2.25);
       HopperSubsystem.setSpinnerMotor(HopperConstants.SpinnerVoltage);
     } else {
       HopperSubsystem.setKickerVoltage(0);
       HopperSubsystem.setSpinnerMotor(0);
     }
-  } 
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-     HopperSubsystem.setKickerVoltage(0);
+    HopperSubsystem.setKickerVoltage(0);
     HopperSubsystem.setSpinnerMotor(0);
   }
 

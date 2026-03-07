@@ -70,7 +70,10 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 	public static HashMap<ParentDevice, Alert> connectedDriveAlerts = new HashMap<>();
 	public static HashMap<ParentDevice, Alert> wasDisconnectedDriveAlerts = new HashMap<>();
 
-	private Command shortRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.5), new RumbleCommand());
+	private Command shortRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand());
+	private Command doubleRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand())
+		.andThen(new WaitCommand(0.3))	
+		.andThen(new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand()));
 	private Command longRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(1.5), new RumbleCommand());
 
 	private void createAlert(ParentDevice device, String deviceName) {
@@ -187,54 +190,54 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 				case 'B':
 					if (DriverStation.getAlliance().get() == Alliance.Blue) {
 						// Transition Shift Ends
-						if (time < 130 && time > 129.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 130 && time > 129.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// Shift 2 Warning
 						if (time < 115 && time > 114.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// Shift 2 Shoot
-						if (time < 107 && time > 106.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 107 && time > 106.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 						// Shift 2 Ends
-						if (time < 80 && time > 79.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 80 && time > 79.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// End Warning
 						if (time < 65 && time > 64.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// End Shift Starts
-						if (time < 57 && time > 56.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 57 && time > 56.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 					}
 
 					else {
 						// Shift 1 Ends
-						if (time < 105 && time > 104.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 105 && time > 104.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// Shift 3 Warning
 						if (time < 90 && time > 89.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// Shift 3 Shoot
-						if (time < 82 && time > 81.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 82 && time > 81.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 						// Shift 3 Ends
-						if (time < 55 && time > 54.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 55 && time > 54.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// End Warning
 						if (time < 40 && time > 39.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// End Shift Starts
-						if (time < 32 && time > 31.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 32 && time > 31.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 					}
@@ -244,54 +247,54 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 				default:
 					if (DriverStation.getAlliance().get() == Alliance.Red) {
 						// Transition Shift Ends
-						if (time < 130 && time > 129.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 130 && time > 129.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// Shift 2 Warning
 						if (time < 115 && time > 114.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// Shift 2 Shoot
-						if (time < 107 && time > 106.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 107 && time > 106.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 						// Shift 2 Ends
-						if (time < 80 && time > 79.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 80 && time > 79.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// End Warning
 						if (time < 65 && time > 64.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// End Shift Starts
-						if (time < 57 && time > 56.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 57 && time > 56.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 					}
 
 					else {
 						// Shift 1 Ends
-						if (time < 105 && time > 104.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 105 && time > 104.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// Shift 3 Warning
 						if (time < 90 && time > 89.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// Shift 3 Shoot
-						if (time < 82 && time > 81.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 82 && time > 81.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 						// Shift 3 Ends
-						if (time < 55 && time > 54.85 && !shortRumbleCommand.isScheduled()) {
-							shortRumbleCommand.schedule();
+						if (time < 55 && time > 54.5 && !doubleRumbleCommand.isScheduled()) {
+							doubleRumbleCommand.schedule();
 						}
 						// End Warning
 						if (time < 40 && time > 39.5 && !longRumbleCommand.isScheduled()) {
 							longRumbleCommand.schedule();
 						}
 						// End Shift Starts
-						if (time < 32 && time > 31.85 && !shortRumbleCommand.isScheduled()) {
+						if (time < 32 && time > 31.5 && !shortRumbleCommand.isScheduled()) {
 							shortRumbleCommand.schedule();
 						}
 					}

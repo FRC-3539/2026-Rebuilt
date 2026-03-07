@@ -134,10 +134,17 @@ public class ShooterSubsystem extends SubsystemBase {
     public static double turretRotationsToAngle(double rotations) {
         return rotations * ShooterConstants.TurretDegreesPerRotation;
     }
+    public static void zeroHoodMotor() {
+        hoodMotor.setPosition(0);
+    }
+    public static void zeroRotateMotor() {
+        rotateMotor.setPosition(0);
+    }
     public static boolean turretOnTarget()
     {
-        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 30);
-        // TODO: Make threshhold smaller once we get comp bot
+        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 15)
+            && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5);
+        // TODO: Make threshhold smaller if it doesnt work properly
     }
     public static double turretAngleToRotations(double degrees) {
         return degrees / ShooterConstants.TurretDegreesPerRotation;
@@ -150,7 +157,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public static double getHoodAngle() {
         return hoodMotor.getPosition().getValueAsDouble();
     }
-
+    public static double getRequestedShootVelocity()
+    {
+        return requestedState.velocity;
+    }
     public static void reloadConstants() {
         shootMotorLeader.getConfigurator().apply(new SlotConfigs()
                 .withKP(ShooterConstants.ShooterP)
@@ -202,7 +212,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042; // + 0.5
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.3;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
