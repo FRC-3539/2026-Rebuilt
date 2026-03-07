@@ -30,6 +30,7 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeployInches;
+  public static boolean autonPulse = false;
 
   private Command intakePulse = new IntakePulseCommand();
 
@@ -105,8 +106,8 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (RobotContainer.operatorController.rightTrigger().getAsBoolean()
-        && !RobotContainer.operatorLeftStickUp.getAsBoolean() && !intakePulse.isScheduled()) {
+    if ((RobotContainer.operatorController.rightTrigger().getAsBoolean()
+        && !RobotContainer.operatorLeftStickUp.getAsBoolean() && !intakePulse.isScheduled()) || autonPulse) {
       intakePulse.schedule();
     } else if ((!RobotContainer.operatorController.rightTrigger().getAsBoolean()
         || RobotContainer.operatorLeftStickUp.getAsBoolean()) && intakePulse.isScheduled()) {

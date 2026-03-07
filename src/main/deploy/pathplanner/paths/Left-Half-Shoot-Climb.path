@@ -114,7 +114,7 @@
     {
       "name": "HideHoodCommand",
       "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 0.2,
+      "endWaypointRelativePos": 3.2,
       "command": {
         "type": "named",
         "data": {
@@ -134,30 +134,24 @@
       }
     },
     {
-      "name": "RevCommand",
+      "name": "IntakeBallCommand",
       "waypointRelativePos": 0.1,
+      "endWaypointRelativePos": 2.8,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeBallCommand"
+        }
+      }
+    },
+    {
+      "name": "RevCommand",
+      "waypointRelativePos": 2.7354838709677525,
       "endWaypointRelativePos": 3.85,
       "command": {
         "type": "named",
         "data": {
           "name": "RevCommand"
-        }
-      }
-    },
-    {
-      "name": "IntakeBallCommand",
-      "waypointRelativePos": 1.044168734491327,
-      "endWaypointRelativePos": 2.81488833746899,
-      "command": null
-    },
-    {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 2.85,
-      "endWaypointRelativePos": 3.2,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
         }
       }
     },
@@ -169,6 +163,17 @@
         "type": "named",
         "data": {
           "name": "ShootCommand"
+        }
+      }
+    },
+    {
+      "name": "AutonPulseCommand",
+      "waypointRelativePos": 3.1404466501240806,
+      "endWaypointRelativePos": 4.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutonPulseCommand"
         }
       }
     }
