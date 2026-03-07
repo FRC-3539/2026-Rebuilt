@@ -18,7 +18,10 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -27,6 +30,8 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeployInches;
+
+  private Command intakePulse = new IntakePulseCommand();
 
   public IntakeSubsystem() {
     intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
@@ -81,8 +86,8 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public static void zeroIntakeDeployMotor() {
-        intakeDeployMotor.setPosition(0);
-    }
+    intakeDeployMotor.setPosition(0);
+  }
 
   public static double getIntakeDeployRotations() {
     return intakeDeployMotor.getPosition().getValueAsDouble();
@@ -100,7 +105,14 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-     intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeployInches));
+    if (RobotContainer.operatorController.rightTrigger().getAsBoolean()
+        && !RobotContainer.operatorLeftStickUp.getAsBoolean() && !intakePulse.isScheduled()) {
+      intakePulse.schedule();
+    } else if ((!RobotContainer.operatorController.rightTrigger().getAsBoolean()
+        || RobotContainer.operatorLeftStickUp.getAsBoolean()) && intakePulse.isScheduled()) {
+      intakePulse.cancel();
+    }
+    intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeployInches));
     log();
   }
 }

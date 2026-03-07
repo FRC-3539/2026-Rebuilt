@@ -4,7 +4,11 @@
 
 package frc.robot.Intake;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.IntakeConstants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,6 +18,8 @@ public class IntakePulseCommand extends SequentialCommandGroup {
   public IntakePulseCommand() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax), new WaitCommand(0.75),
+        new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin), new WaitCommand(0.75));
+
   }
 }
