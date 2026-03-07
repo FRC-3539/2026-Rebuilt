@@ -113,7 +113,14 @@ public class IntakeSubsystem extends SubsystemBase {
         || RobotContainer.operatorLeftStickUp.getAsBoolean()) && intakePulse.isScheduled()) {
       intakePulse.cancel();
     }
+    if(!DriverStation.isTest())
+    {
     intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeployInches));
+
+    }
+    else {
+        intakeDeployMotor.setControl(new VoltageOut(0));
+    }
     log();
   }
 }
