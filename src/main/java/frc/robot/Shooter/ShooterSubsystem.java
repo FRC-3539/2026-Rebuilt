@@ -473,7 +473,7 @@ public class ShooterSubsystem extends SubsystemBase {
             if (hideHoodState || teleopHideHoodState)
                 hoodMotor.setControl(new MotionMagicVoltage(0));
             else
-                hoodMotor.setControl(new MotionMagicVoltage(requestedState.hoodAngle));
+                hoodMotor.setControl(new MotionMagicVoltage(Math.min(requestedState.hoodAngle, ShooterConstants.HoodSoftMax)));
             if (revState)
                 shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
             else
@@ -482,7 +482,6 @@ public class ShooterSubsystem extends SubsystemBase {
             shootMotorLeader.setControl(new VoltageOut(0));
             hoodMotor.setControl(new VoltageOut(0));
             rotateMotor.setControl(new VoltageOut(0));
-
         }
 
         // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));

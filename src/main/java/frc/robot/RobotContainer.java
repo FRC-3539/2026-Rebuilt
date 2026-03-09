@@ -78,6 +78,7 @@ public class RobotContainer {
     SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
     SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
     SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroClimberCommand().ignoringDisable(true));
 
   }
 
