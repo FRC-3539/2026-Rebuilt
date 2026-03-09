@@ -16,12 +16,13 @@ public class RevCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ShooterSubsystem.revState = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    ShooterSubsystem.revState = true;
+  }
 
   // Called once the command ends or is interrupted.
   @Override

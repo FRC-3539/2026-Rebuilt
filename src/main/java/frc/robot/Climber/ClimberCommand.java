@@ -13,6 +13,7 @@ public class ClimberCommand extends Command {
   /** Creates a new ClimbMotorCommand. */
   public ClimberCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.climberSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -20,17 +21,17 @@ public class ClimberCommand extends Command {
   public void initialize() {
     if (RobotContainer.operatorController.getRightY() < -0.2 || RobotContainer.operatorController.getRightY() > 0.2) {
       ClimberSubsystem
-          .setClimberDeployMotor(ClimberConstants.ClimberDeployVoltage * RobotContainer.operatorController.getRightY());
-    } else {
-      ClimberSubsystem.setClimberDeployMotor(0);
-    }
-
-    if (RobotContainer.operatorController.getLeftY() < -0.2 || RobotContainer.operatorController.getLeftY() > 0.2) {
-      ClimberSubsystem
-          .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getLeftY());
+          .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
     } else {
       ClimberSubsystem.setClimberMotor(0);
     }
+
+    // if (RobotContainer.operatorController.getLeftY() < -0.2 || RobotContainer.operatorController.getLeftY() > 0.2) {
+    //   ClimberSubsystem
+    //       .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getLeftY());
+    // } else {
+    //   ClimberSubsystem.setClimberMotor(0);
+    // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +42,7 @@ public class ClimberCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    ClimberSubsystem.setClimberDeployMotor(0);
+    // ClimberSubsystem.setClimberDeployMotor(0);
     ClimberSubsystem.setClimberMotor(0);
   }
 

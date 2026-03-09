@@ -123,7 +123,7 @@ public class RobotContainer {
     operatorController.back().whileTrue(new ReverseHopperCommand());
     operatorController.start().whileTrue(new ReverseIntakeCommand());
     // climber
-    // climberSubsystem.setDefaultCommand(new ClimberCommand());
+    climberSubsystem.setDefaultCommand(new ClimberCommand());
 
   }
 

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.434373493975903,
-        "y": 7.542795180722893
+        "x": 4.45,
+        "y": 7.543
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.417638554216868,
-        "y": 7.553722891566265
+        "x": 7.433265060240966,
+        "y": 7.5539277108433724
       },
       "isLocked": false,
       "linkedName": "Left Trench"
@@ -28,7 +28,7 @@
         "y": 6.255366436775974
       },
       "isLocked": false,
-      "linkedName": "Left NZ"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -44,7 +44,7 @@
         "y": 5.182409638554216
       },
       "isLocked": false,
-      "linkedName": "Mid Left NZ"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -64,16 +64,32 @@
     },
     {
       "anchor": {
-        "x": 1.0122152352212022,
-        "y": 5.936770198770072
+        "x": 2.237903614457831,
+        "y": 6.570228915662651
       },
       "prevControl": {
-        "x": 2.656414361203101,
-        "y": 6.655462884048185
+        "x": 2.740578313253012,
+        "y": 7.029192771084338
+      },
+      "nextControl": {
+        "x": 1.8552821610919272,
+        "y": 6.220878893024217
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.5768915662650604,
+        "y": 5.980132530120483
+      },
+      "prevControl": {
+        "x": 1.8117228915662649,
+        "y": 5.81621686746988
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Depot"
     }
   ],
   "rotationTargets": [
@@ -111,7 +127,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 3.5374689826302594,
-      "maxWaypointRelativePos": 4.0,
+      "maxWaypointRelativePos": 5.0,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 1.5,

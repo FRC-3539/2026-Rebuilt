@@ -25,6 +25,7 @@ public class HopperSubsystem extends SubsystemBase {
 
   public HopperSubsystem() {
     spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "CANivore");
+    spinnerMotor.setNeutralMode(NeutralModeValue.Brake);
     spinnerMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     spinnerMotor.getConfigurator()

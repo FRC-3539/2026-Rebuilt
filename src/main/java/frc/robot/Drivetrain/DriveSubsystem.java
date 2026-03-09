@@ -184,6 +184,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 	public void periodic() {
 		double time = DriverStation.getMatchTime();
 		String message = DriverStation.getGameSpecificMessage();
+		SmartDashboard.putNumber("/Info/Time", time);
 		if (DriverStation.getGameSpecificMessage().length() > 0) {
 			switch (message.charAt(0)) {
 				// Blue wins auton, red shoorts first

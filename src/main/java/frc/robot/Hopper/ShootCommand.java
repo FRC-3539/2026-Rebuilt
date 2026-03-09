@@ -4,13 +4,16 @@
 
 package frc.robot.Hopper;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Shooter.ShooterSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+
 public class ShootCommand extends Command {
   /** Creates a new ShootCommand. */
+  private Timer timer = new Timer();
   public ShootCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -18,16 +21,25 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.restart();
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ShooterSubsystem.turretReady()) {
+    if (ShooterSubsystem.turretReady()) { // && timer.get() < 1.5) {
       HopperSubsystem.setKickerVelocity(ShooterSubsystem.getRequestedShootVelocity() * 4 / 2.25);
       HopperSubsystem.setSpinnerMotor(HopperConstants.SpinnerVoltage);
-    } else {
+    }
+    // else if (timer.get() < 1.75){
+    //   HopperSubsystem.setKickerVelocity(-10);
+    //   HopperSubsystem.setSpinnerMotor(-.5 * HopperConstants.SpinnerVoltage);
+    // }
+    // else if (timer.get() > 1.75){
+    //   timer.restart();
+    // }
+    else {
       HopperSubsystem.setKickerVoltage(0);
       HopperSubsystem.setSpinnerMotor(0);
     }
@@ -38,7 +50,9 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     HopperSubsystem.setKickerVoltage(0);
     HopperSubsystem.setSpinnerMotor(0);
-  }
+
+    timer.stop(); 
+   }
 
   // Returns true when the command should end.
   @Override
