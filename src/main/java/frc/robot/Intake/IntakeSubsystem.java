@@ -29,7 +29,7 @@ import frc.robot.Constants.ShooterConstants;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private static TalonFX intakeMotor, intakeDeployMotor;
-  private static double requestedIntakeDeployInches;
+  private static double requestedIntakeDeploy;
   public static boolean autonPulse = false;
 
   private Command intakePulse = new IntakePulseCommand();
@@ -83,7 +83,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public static void setIntakeDeployPosition(double request) {
-    requestedIntakeDeployInches = request;
+    requestedIntakeDeploy = request;
   }
 
   public static void zeroIntakeDeployMotor() {
@@ -107,7 +107,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if ((RobotContainer.operatorController.rightTrigger().getAsBoolean()
-        && !RobotContainer.operatorLeftStickUp.getAsBoolean() && !intakePulse.isScheduled()) || autonPulse) {
+          && !RobotContainer.operatorLeftStickUp.getAsBoolean()
+          && !intakePulse.isScheduled()
+          && requestedIntakeDeploy > 2)
+        || autonPulse) {
       intakePulse.schedule();
     } else if ((!RobotContainer.operatorController.rightTrigger().getAsBoolean()
         || RobotContainer.operatorLeftStickUp.getAsBoolean()) && intakePulse.isScheduled()) {
@@ -115,7 +118,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     if(!DriverStation.isTest())
     {
-    intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeployInches));
+    intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeploy));
 
     }
     else {

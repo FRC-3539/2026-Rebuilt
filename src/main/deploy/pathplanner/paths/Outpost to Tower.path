@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.75,
+        "x": 0.7,
         "y": 0.6364819277108438
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7499999999999987,
-        "y": 0.6364819277108438
+        "x": 0.9841204819277105,
+        "y": 0.6146265060240967
       },
       "isLocked": false,
       "linkedName": "Outpost"
     },
     {
       "anchor": {
-        "x": 3.035626506024096,
-        "y": 2.1335783132530115
+        "x": 1.166987951807229,
+        "y": 1.7073975903614462
       },
       "prevControl": {
-        "x": 2.962038748703032,
-        "y": 0.8457925601343905
+        "x": 1.1451529780479466,
+        "y": 1.2706981151757986
       },
       "nextControl": {
-        "x": 3.1230481927710843,
-        "y": 3.6634578313253012
+        "x": 1.188843373493976,
+        "y": 2.144506024096386
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.825,
-        "y": 3.707168674698795
+        "x": 1.0358554216867468,
+        "y": 2.7127469879518085
       },
       "prevControl": {
-        "x": 2.567385542168674,
-        "y": 3.6743855421686753
+        "x": 1.0358554216867468,
+        "y": 2.4627469879518085
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,7 +52,34 @@
       "name": "RevCommand",
       "waypointRelativePos": 0.0,
       "endWaypointRelativePos": 2.0,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "RevCommand"
+        }
+      }
+    },
+    {
+      "name": "ShootCommand",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 2.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ShootCommand"
+        }
+      }
+    },
+    {
+      "name": "AutonPulseCommand",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 2.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutonPulseCommand"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -65,7 +92,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,

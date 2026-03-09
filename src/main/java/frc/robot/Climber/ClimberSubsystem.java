@@ -17,9 +17,9 @@ public class ClimberSubsystem extends SubsystemBase {
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
-    climberDeployMotor = new TalonFX(IDConstants.ClimberDeployMotorID, "rio");
-    climberDeployMotor.getConfigurator()
-        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+    // climberDeployMotor = new TalonFX(IDConstants.ClimberDeployMotorID, "rio");
+    // climberDeployMotor.getConfigurator()
+    //     .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     climberMotor = new TalonFX(IDConstants.ClimberMotorID, "rio");
     climberMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
