@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8224216867469876,
-        "y": 0.5272048192771093
+        "x": 4.36,
+        "y": 0.62
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.466698795180722,
-        "y": 0.5818433734939765
+        "x": 9.00427710843373,
+        "y": 0.6746385542168672
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.390204819277107,
-        "y": 3.41212048192771
+        "x": 8.33556626506024,
+        "y": 3.3137710843373496
       },
       "prevControl": {
-        "x": 8.33556626506024,
-        "y": 0.5818433734939772
+        "x": 8.01866265060241,
+        "y": 0.6692650602409649
       },
       "nextControl": {
-        "x": 8.400994792926639,
-        "y": 3.971041116973452
+        "x": 8.365312123476523,
+        "y": 3.5619951442249413
       },
       "isLocked": false,
       "linkedName": null
@@ -52,12 +52,12 @@
         "y": 1.4779156626506016
       },
       "prevControl": {
-        "x": 6.237445783132531,
-        "y": 2.603469879518072
+        "x": 6.197164390886477,
+        "y": 2.6031401164199504
       },
       "nextControl": {
-        "x": 6.2160560339373845,
-        "y": 0.40032571241844117
+        "x": 6.259301204819276,
+        "y": 0.2212289156626499
       },
       "isLocked": false,
       "linkedName": null
@@ -94,12 +94,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.3382550335570452,
-      "rotationDegrees": 67.67
+      "waypointRelativePos": 0.605633802816895,
+      "rotationDegrees": 71.17605129758532
     },
     {
-      "waypointRelativePos": 0.9771812080536635,
-      "rotationDegrees": 67.67
+      "waypointRelativePos": 1.2173038229376079,
+      "rotationDegrees": 69.35802919352405
     },
     {
       "waypointRelativePos": 2.029530201342267,
@@ -165,7 +165,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.5,
+    "maxVelocity": 1.25,
     "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -180,7 +180,7 @@
   "folder": "Right Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.4620527214307427
   },
   "useDefaultConstraints": false
 }
