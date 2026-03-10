@@ -80,12 +80,12 @@
     },
     {
       "anchor": {
-        "x": 0.5768915662650604,
-        "y": 5.980132530120483
+        "x": 0.6206024096385543,
+        "y": 5.969204819277109
       },
       "prevControl": {
-        "x": 1.8117228915662649,
-        "y": 5.81621686746988
+        "x": 1.8554337349397587,
+        "y": 5.805289156626506
       },
       "nextControl": null,
       "isLocked": false,
@@ -215,7 +215,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Left Start Points",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": -90.0
