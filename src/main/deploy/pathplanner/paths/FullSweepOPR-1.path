@@ -9,10 +9,10 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.669204819277109,
-        "y": 0.7348313253012042
+        "y": 0.7348313253012044
       },
       "isLocked": false,
-      "linkedName": "Right Trench"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -97,31 +97,31 @@
     {
       "anchor": {
         "x": 3.4618072289156623,
-        "y": 0.55
+        "y": 0.58
       },
       "prevControl": {
-        "x": 4.543650602409638,
-        "y": 0.58278313253012
+        "x": 4.303682371899718,
+        "y": 0.5964612987254044
       },
       "nextControl": {
-        "x": 2.3799638554216864,
-        "y": 0.5172168674698802
+        "x": 2.3908915662650605,
+        "y": 0.559060240963855
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.76,
-        "y": 0.55
+        "x": 0.7,
+        "y": 0.6364819277108438
       },
       "prevControl": {
-        "x": 1.7434939759036143,
-        "y": 0.5012951807228919
+        "x": 1.1779156626506024,
+        "y": 0.6583373493975899
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Outpost"
     }
   ],
   "rotationTargets": [

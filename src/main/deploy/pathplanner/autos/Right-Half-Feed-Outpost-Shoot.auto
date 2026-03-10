@@ -34,12 +34,6 @@
               }
             ]
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Tower"
-          }
         }
       ]
     }
