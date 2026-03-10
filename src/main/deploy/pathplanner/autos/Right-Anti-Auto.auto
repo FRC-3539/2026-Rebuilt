@@ -23,6 +23,12 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "IntakeBallCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "RevCommand"
                 }
               },
@@ -33,6 +39,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost to Tower"
           }
         }
       ]
