@@ -34,7 +34,7 @@ public class ClimberCommand extends Command {
   public void execute() {
         if (RobotContainer.operatorController.getRightY() < -0.2 || RobotContainer.operatorController.getRightY() > 0.2) {
       ClimberSubsystem
-          .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
+          .setClimberMotor(-ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
     } else {
       ClimberSubsystem.setClimberMotor(0);
     }
