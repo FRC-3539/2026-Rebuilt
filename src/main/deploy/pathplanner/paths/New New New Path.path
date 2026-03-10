@@ -114,24 +114,8 @@
       "rotationDegrees": -90.0
     },
     {
-      "waypointRelativePos": 1.7385892116182582,
-      "rotationDegrees": -100.0
-    },
-    {
-      "waypointRelativePos": 1.9875518672198709,
-      "rotationDegrees": -130.0
-    },
-    {
-      "waypointRelativePos": 2.244813278008263,
-      "rotationDegrees": -160.0
-    },
-    {
-      "waypointRelativePos": 2.4605809128630804,
-      "rotationDegrees": 119.99999999999999
-    },
-    {
       "waypointRelativePos": 2.6348547717842163,
-      "rotationDegrees": 90.0
+      "rotationDegrees": 91.0
     },
     {
       "waypointRelativePos": 4.012448132780129,
@@ -146,6 +130,19 @@
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 1.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
