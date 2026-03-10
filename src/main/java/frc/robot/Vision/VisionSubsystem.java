@@ -37,20 +37,20 @@ public class VisionSubsystem extends Thread {
 	AprilTagFieldLayout aprilTagFieldLayout;
 
 	public static PhotonCamera leftCam;
-	Transform3d robotToLeftCam = new Transform3d(new Translation3d(-0.2286, .36195 + 0.44, 0.2159),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(-29), Math.toRadians(80)));
+	Transform3d robotToLeftCam = new Transform3d(new Translation3d(-0.2749, .3490, 0.2114),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(80)));
 
 	public static PhotonCamera rightCam;
-	Transform3d robotToRightCam = new Transform3d(new Translation3d(-0.2286, -.36195 - 0.22, 0.2159),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(-80)));
+	Transform3d robotToRightCam = new Transform3d(new Translation3d(-0.2870, -0.3582, 0.2114),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(-80)));
 
 	public static PhotonCamera backLeftCam;
-	Transform3d robotToBackLeftCam = new Transform3d(new Translation3d(-0.22615, 0.29715, 0.2159),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(155)));
+	Transform3d robotToBackLeftCam = new Transform3d(new Translation3d(-0.3023, 0.2911, 0.2114),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(155)));
 
 	public static PhotonCamera backRightCam;
-	Transform3d robotToBackRightCam = new Transform3d(new Translation3d(-0.22615, -0.29615, 0.2159),
-			new Rotation3d(Math.toRadians(0), Math.toRadians(-23.58), Math.toRadians(-180)));
+	Transform3d robotToBackRightCam = new Transform3d(new Translation3d(-0.298, -0.2857, 0.2114),
+			new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(-180)));
 
 	PhotonPoseEstimator leftPhotonPoseEstimator;
 	PhotonPoseEstimator rightPhotonPoseEstimator;

@@ -109,7 +109,8 @@ public class IntakeSubsystem extends SubsystemBase {
     if ((RobotContainer.operatorController.rightTrigger().getAsBoolean()
           && !RobotContainer.operatorLeftStickUp.getAsBoolean()
           && !intakePulse.isScheduled()
-          && requestedIntakeDeploy > 2)
+          && requestedIntakeDeploy > 2
+          && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
         || autonPulse) {
       intakePulse.schedule();
     } else if ((!RobotContainer.operatorController.rightTrigger().getAsBoolean()

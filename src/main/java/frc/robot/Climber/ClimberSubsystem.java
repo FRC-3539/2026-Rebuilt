@@ -20,9 +20,9 @@ public class ClimberSubsystem extends SubsystemBase {
     // climberDeployMotor = new TalonFX(IDConstants.ClimberDeployMotorID, "rio");
     // climberDeployMotor.getConfigurator()
     //     .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
-    climberMotor = new TalonFX(IDConstants.ClimberMotorID, "rio");
+    climberMotor = new TalonFX(IDConstants.ClimberMotorID, "CANivore");
     climberMotor.getConfigurator()
-        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+        .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
   }
 
   public static void setClimberDeployMotor(double voltage) {
@@ -31,6 +31,9 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public static void setClimberMotor(double voltage) {
     climberMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
+  public static void zeroClimberMotor() {
+    climberMotor.setPosition(0);
   }
 
   @Override

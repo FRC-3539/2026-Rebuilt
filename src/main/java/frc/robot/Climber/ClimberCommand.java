@@ -19,12 +19,7 @@ public class ClimberCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (RobotContainer.operatorController.getRightY() < -0.2 || RobotContainer.operatorController.getRightY() > 0.2) {
-      ClimberSubsystem
-          .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
-    } else {
-      ClimberSubsystem.setClimberMotor(0);
-    }
+
 
     // if (RobotContainer.operatorController.getLeftY() < -0.2 || RobotContainer.operatorController.getLeftY() > 0.2) {
     //   ClimberSubsystem
@@ -37,6 +32,12 @@ public class ClimberCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+        if (RobotContainer.operatorController.getRightY() < -0.2 || RobotContainer.operatorController.getRightY() > 0.2) {
+      ClimberSubsystem
+          .setClimberMotor(ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
+    } else {
+      ClimberSubsystem.setClimberMotor(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
