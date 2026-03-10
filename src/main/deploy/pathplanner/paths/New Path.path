@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.456228915662651,
-        "y": 0.5272048192771093
+        "y": 0.5272048192771095
       },
       "isLocked": false,
       "linkedName": "Right Trench"
@@ -61,7 +61,7 @@
     "rotation": 88.72696997994329
   },
   "reversed": false,
-  "folder": "Right Start Points",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

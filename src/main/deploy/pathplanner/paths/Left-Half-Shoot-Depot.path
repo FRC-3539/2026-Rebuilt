@@ -165,7 +165,7 @@
     {
       "name": "RevCommand",
       "waypointRelativePos": 0.1,
-      "endWaypointRelativePos": 3.85,
+      "endWaypointRelativePos": 5.0,
       "command": {
         "type": "named",
         "data": {
@@ -198,6 +198,17 @@
         "type": "named",
         "data": {
           "name": "ShootCommand"
+        }
+      }
+    },
+    {
+      "name": "IntakeBallCommand",
+      "waypointRelativePos": 4.703087885985705,
+      "endWaypointRelativePos": 5.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeBallCommand"
         }
       }
     }
