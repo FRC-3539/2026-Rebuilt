@@ -46,6 +46,12 @@
           "data": {
             "pathName": "Depot to Tower"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLiftCommand"
+          }
         }
       ]
     }

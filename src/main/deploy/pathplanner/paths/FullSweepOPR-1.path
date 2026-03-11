@@ -193,7 +193,7 @@
     },
     {
       "name": "RevCommand",
-      "waypointRelativePos": 0.4,
+      "waypointRelativePos": 0.5766749379652573,
       "endWaypointRelativePos": 7.0,
       "command": {
         "type": "named",

@@ -63,6 +63,7 @@ public class RobotContainer {
   public static Trigger rightDriverTrigger = driverController.rightTrigger(0.5);
   public static Trigger rightDriverBumper = driverController.rightBumper();
   public static Trigger operatorLeftStickUp = operatorController.axisLessThan(1, -0.5);
+  public static Trigger operatorRightStickUp = operatorController.axisLessThan(1, -0.5);
 
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
@@ -118,13 +119,15 @@ public class RobotContainer {
     // Turret Set Positions
     operatorController.povLeft().onTrue(new TurretLeftCommand());
     operatorController.povRight().onTrue(new TurretRightCommand());
-    operatorController.povUp().onTrue(new TurretFrontCommand());
-    operatorController.povDown().onTrue(new TurretBackCommand());
+    // operatorController.povUp().onTrue(new TurretFrontCommand());
+    // operatorController.povDown().onTrue(new TurretBackCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
     operatorController.back().whileTrue(new ReverseHopperCommand());
     operatorController.start().whileTrue(new ReverseIntakeCommand());
     // climber
     climberSubsystem.setDefaultCommand(new ClimberCommand());
+    operatorController.povUp().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
+    operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
 
   }
 
@@ -137,7 +140,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("RevCommand", new RevCommand());
     NamedCommands.registerCommand("HideHoodCommand", new HideHoodCommand());
     NamedCommands.registerCommand("AutonPulseCommand", new AutonPulseCommand());
-
+    NamedCommands.registerCommand("ClimberCommand", new ClimberCommand());
+    NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
+   NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
 
     chooser = AutoBuilder.buildAutoChooser();

@@ -188,22 +188,11 @@
     {
       "name": "RevCommand",
       "waypointRelativePos": 0.6699751861042182,
-      "endWaypointRelativePos": 5.0,
+      "endWaypointRelativePos": 6.0,
       "command": {
         "type": "named",
         "data": {
           "name": "RevCommand"
-        }
-      }
-    },
-    {
-      "name": "ShootCommand",
-      "waypointRelativePos": 1.672456575682411,
-      "endWaypointRelativePos": 3.2704714640198778,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "ShootCommand"
         }
       }
     },
@@ -234,6 +223,17 @@
       "waypointRelativePos": 4.4913151364764206,
       "endWaypointRelativePos": 6.0,
       "command": null
+    },
+    {
+      "name": "ClimbDeployCommand",
+      "waypointRelativePos": 4.639205955334951,
+      "endWaypointRelativePos": 6.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ClimbDeployCommand"
+        }
+      }
     }
   ],
   "globalConstraints": {

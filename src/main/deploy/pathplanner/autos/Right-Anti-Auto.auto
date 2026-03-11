@@ -37,6 +37,12 @@
                 "data": {
                   "name": "ShootCommand"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbDeployCommand"
+                }
               }
             ]
           }
@@ -45,6 +51,12 @@
           "type": "path",
           "data": {
             "pathName": "Outpost to Tower"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLiftCommand"
           }
         }
       ]

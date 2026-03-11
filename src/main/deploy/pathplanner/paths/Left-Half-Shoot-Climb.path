@@ -180,6 +180,12 @@
       }
     },
     {
+      "name": "ClimbDeployCommand",
+      "waypointRelativePos": 3.1325062034739357,
+      "endWaypointRelativePos": 3.9344913151364818,
+      "command": null
+    },
+    {
       "name": "AutonPulseCommand",
       "waypointRelativePos": 3.1404466501240806,
       "endWaypointRelativePos": 4.0,
