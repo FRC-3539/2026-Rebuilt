@@ -223,6 +223,17 @@
       "waypointRelativePos": 4.4913151364764206,
       "endWaypointRelativePos": 6.0,
       "command": null
+    },
+    {
+      "name": "ClimbDeployCommand",
+      "waypointRelativePos": 4.639205955334951,
+      "endWaypointRelativePos": 6.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ClimbDeployCommand"
+        }
+      }
     }
   ],
   "globalConstraints": {

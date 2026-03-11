@@ -163,8 +163,14 @@
       }
     },
     {
+      "name": "IntakeBallCommand",
+      "waypointRelativePos": 1.044168734491327,
+      "endWaypointRelativePos": 2.81488833746899,
+      "command": null
+    },
+    {
       "name": "RevCommand",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 2.2183622828783482,
       "endWaypointRelativePos": 5.0,
       "command": {
         "type": "named",
@@ -172,12 +178,6 @@
           "name": "RevCommand"
         }
       }
-    },
-    {
-      "name": "IntakeBallCommand",
-      "waypointRelativePos": 1.044168734491327,
-      "endWaypointRelativePos": 2.81488833746899,
-      "command": null
     },
     {
       "name": "HideHoodCommand",
