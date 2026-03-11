@@ -142,7 +142,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonPulseCommand", new AutonPulseCommand());
     NamedCommands.registerCommand("ClimberCommand", new ClimberCommand());
     NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
-   NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
+    NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
 
     chooser = AutoBuilder.buildAutoChooser();

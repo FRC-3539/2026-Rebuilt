@@ -56,6 +56,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static ShootingMode mode = ShootingMode.AUTO;
 
     public static TurretState requestedState;
+    public static Translation2d turretLocation;
 
     private static final double maxShootingSpeed = 39, minHoodAngle = 51, maxHoodAngle = 77, turretXOffset = -0.0697992,
             turretYOffset = -0.1528572, maxTurretRotation = 270, minTurretRotation = -270;
@@ -293,19 +294,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static TurretState getScoringState() {
         TurretState state = new TurretState();
-
-        Translation2d turretLocation = getTurretLocation();
         double distanceToTarget = 0;
-        // double distanceToTarget = Math.sqrt(Math.pow(
-        // turretLocation.getDistance(ShooterConstants.Hub), 2)
-        // + Math.pow(2.05, 2));
 
         double turretAngle = 0;
         switch (mode) {
             case AUTO:
-                // System.out.println(ShooterConstants.Hub);
-                // System.out.println(getOffsetTarget(turretLocation, ShooterConstants.Hub));
-                // System.out.println("\n\n\n");
                 Translation2d offsetTarget = getOffsetTarget(turretLocation, ShooterConstants.Hub);
                 distanceToTarget = turretLocation.getDistance(offsetTarget);
 
@@ -338,8 +331,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 // do other stuff
                 break;
         }
-        double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees());
 
+        double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees());
         double otherAngle = turretTargetAngle < 0 ? turretTargetAngle + 360 : turretTargetAngle - 360;
         turretTargetAngle = Math.abs(turretTargetAngle - getTurretRotation()) <= Math
                 .abs(otherAngle - getTurretRotation())
@@ -374,8 +367,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static TurretState getFeedingState() {
         TurretState state = new TurretState();
-
-        Translation2d turretLocation = getTurretLocation();
         double distanceToTarget = 0;
 
         double turretAngle = 0;
@@ -452,19 +443,15 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("/Turret/TurretRotation", getTurretRotation());
         SmartDashboard.putNumber("/Turret/HoodAngle", getHoodAngle());
 
-        SmartDashboard.putBoolean("/Turret/ManualTurretHide",
-                RobotContainer.operatorController.rightBumper().getAsBoolean());
-        Utilities.publishTranslation2d("/Turret/Location", getTurretLocation());
+        Utilities.publishTranslation2d("/Turret/Location", turretLocation);
     }
 
     @Override
     public void periodic() {
-        Translation2d turretLocation = getTurretLocation();
+        turretLocation = getTurretLocation();
 
-        if (turretLocation.getX() < 5.3)
-            requestedState = getScoringState();
-        else
-            requestedState = getFeedingState();
+        if (turretLocation.getX() < 5.3) requestedState = getScoringState();
+        else requestedState = getFeedingState();
 
         // Apply turret calculations
         // System.out.println(velocityToRotations(requestedState.velocity));
