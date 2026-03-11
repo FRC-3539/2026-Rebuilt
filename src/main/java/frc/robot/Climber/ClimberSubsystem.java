@@ -8,11 +8,13 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IDConstants;
@@ -53,6 +55,13 @@ public class ClimberSubsystem extends SubsystemBase {
     climberMotor.setPosition(0);
   }
 
+  public static void setClimberPosition( double requestedClimberPosition){
+    climberMotor.setControl(new MotionMagicVoltage(requestedClimberPosition));
+  }
+ public static double getClimberPosition(){
+  return climberMotor.getPosition().getValueAsDouble();
+
+ }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

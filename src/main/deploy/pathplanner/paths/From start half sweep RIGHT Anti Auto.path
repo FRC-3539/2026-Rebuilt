@@ -181,17 +181,6 @@
       }
     },
     {
-      "name": "ShootCommand",
-      "waypointRelativePos": 0.7791563275434109,
-      "endWaypointRelativePos": 2.7741935483870206,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "ShootCommand"
-        }
-      }
-    },
-    {
       "name": "HideHoodCommand",
       "waypointRelativePos": 3.237137330754337,
       "endWaypointRelativePos": 4.0,

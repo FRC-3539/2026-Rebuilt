@@ -188,22 +188,11 @@
     {
       "name": "RevCommand",
       "waypointRelativePos": 0.6699751861042182,
-      "endWaypointRelativePos": 5.0,
+      "endWaypointRelativePos": 6.0,
       "command": {
         "type": "named",
         "data": {
           "name": "RevCommand"
-        }
-      }
-    },
-    {
-      "name": "ShootCommand",
-      "waypointRelativePos": 1.672456575682411,
-      "endWaypointRelativePos": 3.2704714640198778,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "ShootCommand"
         }
       }
     },
