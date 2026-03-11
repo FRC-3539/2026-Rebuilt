@@ -22,7 +22,7 @@ import frc.robot.Constants.EnumConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LedConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Drivetrain.*;
 import frc.robot.Hopper.*;
@@ -54,7 +54,7 @@ public class RobotContainer {
   public static HopperConstants hopperConstants = new HopperConstants();
   public static IDConstants idConstants = new IDConstants();
   public static IntakeConstants intakeConstants = new IntakeConstants();
-  public static LedConstants ledConstants = new LedConstants();
+  public static LEDConstants ledConstants = new LEDConstants();
   public static ShooterConstants shooterConstants = new ShooterConstants();
 
   public static CommandXboxController driverController = new CommandXboxController(1);
