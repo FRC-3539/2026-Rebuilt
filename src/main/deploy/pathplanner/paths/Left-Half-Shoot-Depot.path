@@ -141,17 +141,6 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 0.2,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
-        }
-      }
-    },
-    {
       "name": "IntakeDeployCommand",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": 2.5607940446649464,
@@ -176,17 +165,6 @@
         "type": "named",
         "data": {
           "name": "RevCommand"
-        }
-      }
-    },
-    {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 2.85,
-      "endWaypointRelativePos": 3.2,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
         }
       }
     },

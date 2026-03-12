@@ -125,17 +125,6 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 3.2,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
-        }
-      }
-    },
-    {
       "name": "IntakeDeployCommand",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": 2.5607940446649464,

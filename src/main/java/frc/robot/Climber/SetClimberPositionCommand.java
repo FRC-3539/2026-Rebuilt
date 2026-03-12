@@ -25,7 +25,7 @@ public class SetClimberPositionCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ClimberSubsystem.setClimberPosition(requestedClimberPosition);
+    // ClimberSubsystem.setClimberPosition(requestedClimberPosition);
   }
 
 
@@ -44,7 +44,8 @@ public class SetClimberPositionCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 1);
+    // return MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 1);
+    return true;
 
   }
 }

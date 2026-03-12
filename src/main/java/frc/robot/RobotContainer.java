@@ -112,7 +112,7 @@ public class RobotContainer {
     // Drive Set Positions
 
     driverController.b().whileTrue(new ParallelDeadlineGroup(
-        new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true)), new HideHoodCommand()));
+        new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true))));
 
     // driverController.a().whileTrue(new PIDAutoAlignCommand());
 

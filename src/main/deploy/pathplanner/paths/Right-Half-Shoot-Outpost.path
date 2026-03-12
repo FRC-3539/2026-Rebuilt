@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 7.974951807228916,
-        "y": 0.5709156626506031
+        "y": 0.5709156626506036
       },
       "nextControl": {
         "x": 8.027229074149234,
@@ -112,17 +112,6 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 0.15,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
-        }
-      }
-    },
-    {
       "name": "IntakeDeployCommand",
       "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
@@ -141,17 +130,6 @@
         "type": "named",
         "data": {
           "name": "IntakeBallCommand"
-        }
-      }
-    },
-    {
-      "name": "HideHoodCommand",
-      "waypointRelativePos": 1.766749379652635,
-      "endWaypointRelativePos": 3.0054590570719593,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "HideHoodCommand"
         }
       }
     },

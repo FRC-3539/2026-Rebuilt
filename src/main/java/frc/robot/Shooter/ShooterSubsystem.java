@@ -67,8 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private static double robotVelocityX = 0, robotVelocityY = 0;
     public static boolean revState = false;
-    public static boolean hideHoodState = false;
-    public static boolean teleopHideHoodState = false;
+    public static boolean raiseHoodState = false;
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
@@ -348,18 +347,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Calculate hood angle and shot speed
         state.hoodAngle = calculateHoodShotAngle(distanceToTarget);
-        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
-            teleopHideHoodState = true;
-        else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 4.627) < .4)
-            teleopHideHoodState = true;
+        // if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
+        //     teleopHideHoodState = true;
+        // else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 4.627) < .4)
+        //     teleopHideHoodState = true;
+        // }
 
-        else if (RobotContainer.operatorController.rightBumper().getAsBoolean()
-                || RobotContainer.driverController.rightBumper().getAsBoolean())
-            teleopHideHoodState = true;
-        else {
-            teleopHideHoodState = false;
-
-        }
         state.velocity = calculateShotSpeed(distanceToTarget);
 
         return state;
@@ -416,16 +409,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Calculate hood angle and shot speed
         state.hoodAngle = 2.5;
-        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 11.917) < .4)
-            teleopHideHoodState = true;
-        else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 11.917) < .4)
-            teleopHideHoodState = true;
-        else if (RobotContainer.operatorController.rightBumper().getAsBoolean()
-                || RobotContainer.driverController.rightBumper().getAsBoolean())
-            teleopHideHoodState = true;
-        else {
-            teleopHideHoodState = false;
-        }
+        // if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 11.917) < .4)
+        //     teleopHideHoodState = true;
+        // else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 11.917) < .4)
+        //     teleopHideHoodState = true;
+        
+        // }
 
         state.velocity = calculateFeedSpeed(distanceToTarget);
 
@@ -457,7 +446,7 @@ public class ShooterSubsystem extends SubsystemBase {
         // System.out.println(velocityToRotations(requestedState.velocity));
         if (!DriverStation.isTest()) {
             rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
-            if (hideHoodState || teleopHideHoodState)
+            if (!raiseHoodState)
                 hoodMotor.setControl(new MotionMagicVoltage(0));
             else
                 hoodMotor.setControl(new MotionMagicVoltage(Math.min(requestedState.hoodAngle, ShooterConstants.HoodSoftMax)));
