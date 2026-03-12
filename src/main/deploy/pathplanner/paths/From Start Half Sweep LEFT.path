@@ -299,7 +299,7 @@
   "folder": "Left Start Points",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.44072807276105
+    "rotation": -90.44072807276106
   },
   "useDefaultConstraints": true
 }

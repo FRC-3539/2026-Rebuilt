@@ -13,9 +13,9 @@ public class ClimberConstants extends BBConstants {
     /* =================== DO NOT MODIFY BELOW =================== */
     public static double ClimberDeployVoltage = 0.0;
     public static double ClimberVoltage = 4;
-    public static double ClimberSoftMax = 60;
+    public static double ClimberSoftMax = 63;
     public static double ClimberSoftMin = 0;
-    public static double ClimbHeight = 59;
+    public static double ClimbHeight = 62.5;
     public static double ClimberAirHeight = 25;
     public static double ClimberCruiseVelocity = 80;
     public static double ClimberAcceleration = 120;

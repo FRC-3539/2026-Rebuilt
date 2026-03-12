@@ -32,19 +32,24 @@
     },
     {
       "anchor": {
-        "x": 1.0358554216867468,
-        "y": 2.8
+        "x": 1.077,
+        "y": 2.9
       },
       "prevControl": {
-        "x": 1.0358554216867468,
-        "y": 2.55
+        "x": 1.077,
+        "y": 2.65
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Tower Right Side"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0240663900414915,
+      "rotationDegrees": -90.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
@@ -69,23 +74,12 @@
           "name": "ShootCommand"
         }
       }
-    },
-    {
-      "name": "AutonPulseCommand",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": 2.0,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "AutonPulseCommand"
-        }
-      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.5,
-    "maxAngularVelocity": 540.0,
+    "maxVelocity": 0.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
