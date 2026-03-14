@@ -8,12 +8,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Hopper.HopperSubsystem;
+import frc.robot.LED.LEDSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 
 public class ShootCommand extends Command {
   /** Creates a new ShootCommand. */
-  private Timer timer = new Timer();
+  // private Timer timer = new Timer();
   public ShootCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -21,9 +22,9 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.restart();
+    // timer.restart();
     ShooterSubsystem.raiseHoodState = true;
-
+    LEDSubsystem.shooting = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,8 +53,9 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     HopperSubsystem.setKickerVoltage(0);
     HopperSubsystem.setSpinnerMotor(0);
-    timer.stop(); 
     ShooterSubsystem.raiseHoodState = false;
+    LEDSubsystem.shooting = false;
+    // timer.stop(); 
    }
 
   // Returns true when the command should end.

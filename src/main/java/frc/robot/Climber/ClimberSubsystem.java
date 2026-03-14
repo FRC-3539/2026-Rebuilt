@@ -31,7 +31,7 @@ public class ClimberSubsystem extends SubsystemBase {
     climberMotor = new TalonFX(IDConstants.ClimberMotorID, "CANivore");
     climberMotor.getConfigurator()
         .apply(new TalonFXConfiguration()
-            .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
+            .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
     climberMotor.setNeutralMode(NeutralModeValue.Brake);
     climberMotor.getConfigurator().apply(new SlotConfigs()
         .withKP(ClimberConstants.ClimberP)
@@ -55,7 +55,7 @@ public class ClimberSubsystem extends SubsystemBase {
     climberMotor.setPosition(0);
   }
 
-  public static void setClimberPosition( double requestedClimberPosition){
+  public static void setClimberPosition(double requestedClimberPosition){
     climberMotor.setControl(new MotionMagicVoltage(requestedClimberPosition));
   }
  public static double getClimberPosition(){

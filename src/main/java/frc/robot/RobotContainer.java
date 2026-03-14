@@ -22,11 +22,12 @@ import frc.robot.Constants.EnumConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Drivetrain.*;
 import frc.robot.Hopper.*;
 import frc.robot.Intake.*;
+import frc.robot.LED.LEDConstants;
+import frc.robot.LED.LEDSubsystem;
 import frc.robot.Shooter.*;
 import frc.robot.Vision.*;
 
@@ -46,6 +47,7 @@ public class RobotContainer {
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  public static LEDSubsystem ledSubsystem = new LEDSubsystem(true);
 
   public static AlignConstants alignConstants = new AlignConstants();
   public static ClimberConstants climberConstants = new ClimberConstants();
@@ -117,17 +119,19 @@ public class RobotContainer {
     // driverController.a().whileTrue(new PIDAutoAlignCommand());
 
     // Turret Set Positions
-    operatorController.povLeft().onTrue(new TurretLeftCommand());
-    operatorController.povRight().onTrue(new TurretRightCommand());
-    // operatorController.povUp().onTrue(new TurretFrontCommand());
-    // operatorController.povDown().onTrue(new TurretBackCommand());
+    operatorController.x().onTrue(new TurretLeftCommand());
+    operatorController.b().onTrue(new TurretRightCommand());
+    operatorController.y().onTrue(new TurretFrontCommand());
     operatorController.a().onTrue(new TurretAutoCommand());
+
     operatorController.back().whileTrue(new ReverseHopperCommand());
     operatorController.start().whileTrue(new ReverseIntakeCommand());
+    
     // climber
     climberSubsystem.setDefaultCommand(new ClimberCommand());
     operatorController.povUp().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
-    operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
+    operatorController.povRight().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
+    operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberSoftMin));
 
   }
 

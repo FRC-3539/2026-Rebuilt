@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Anti Climb"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClimbLiftCommand"
+            "pathName": "Middle-Hub"
           }
         }
       ]

@@ -96,12 +96,12 @@
     },
     {
       "anchor": {
-        "x": 1.08,
-        "y": 4.575
+        "x": 1.122,
+        "y": 4.57
       },
       "prevControl": {
-        "x": 1.1123493975903616,
-        "y": 6.417240963855421
+        "x": 1.1543493975903616,
+        "y": 6.412240963855421
       },
       "nextControl": null,
       "isLocked": false,
@@ -136,7 +136,20 @@
       "minWaypointRelativePos": 4.555831265508711,
       "maxWaypointRelativePos": 6.0,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 0.75,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Slow during intake",
+      "minWaypointRelativePos": 1.4260634706279356,
+      "maxWaypointRelativePos": 2.7224848075624295,
+      "constraints": {
+        "maxVelocity": 2.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -184,7 +197,12 @@
       "name": "ShootCommand",
       "waypointRelativePos": 4.4913151364764206,
       "endWaypointRelativePos": 6.0,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ShootCommand"
+        }
+      }
     },
     {
       "name": "ClimbDeployCommand",
@@ -200,7 +218,7 @@
     {
       "name": "AutonPulseCommand",
       "waypointRelativePos": 4.822802850356284,
-      "endWaypointRelativePos": 5.0,
+      "endWaypointRelativePos": 6.0,
       "command": {
         "type": "named",
         "data": {
@@ -210,8 +228,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

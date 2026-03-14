@@ -2,25 +2,32 @@ package frc.robot.LED;
 
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
+import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
+import com.ctre.phoenix6.signals.StripTypeValue;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Climber.ClimberSubsystem;
 import frc.robot.Constants.*;
 
 import org.frcteam3539.Byte_Swerve_Lib.Constants;
 
+import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
 
 public class LEDSubsystem extends SubsystemBase {
+	public static boolean enabled;
 
-	static boolean intaking;
-	static boolean enabled;
-	static boolean aligning;
-	static boolean climbing;
-	static boolean reverseClimbing;
+	public static boolean intaking;
+	public static boolean aligning;
+	public static boolean climbing;
+	public static boolean shooting;
+	public static boolean neutral;
+	
 
 	static CANdle candle;
 
@@ -28,9 +35,17 @@ public class LEDSubsystem extends SubsystemBase {
 		enabled = enable;
 
 		candle = new CANdle(IDConstants.CANdleID, "CANivore");
-		// candle.configLEDType(LEDStripType.GRB);
-		// candle.configBrightnessScalar(LEDConstants.maxBrightness);
-		setLEDs(LEDState.YELLOW);
+		
+		CANdleConfiguration configs = new CANdleConfiguration();
+		// Set the LED strip type and brightness
+		configs.LED.StripType = StripTypeValue.GRB;
+		configs.LED.BrightnessScalar = LEDConstants.maxBrightness;
+		// Disable status LED when being controlled
+		// configs.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
+		// Write these configs to the CANdle
+		candle.getConfigurator().apply(configs);
+
+		setLEDs(LEDState.GREEN);
 	}
 
 	public enum LEDState {
@@ -42,17 +57,16 @@ public class LEDSubsystem extends SubsystemBase {
 
 	private static LEDState state;
 
-	public static void setLEDS(Color color) {
-		candle.setControl(new SolidColor(0, LEDConstants.numLights)
-			.withColor(new RGBWColor((int) color.red, (int) color.green, (int) color.blue)));
-	}
+	// public static void setLEDS(Color color) {
+	// 	candle.setControl(new SolidColor(0, LEDConstants.numLights)
+	// 		.withColor(new RGBWColor((int) color.red, (int) color.green, (int) color.blue)));
+	// }
 
 	public static void setLEDs(LEDState state) {
 		if (LEDSubsystem.state == state)
 			return;
 
 		System.out.println("set state to " + state.toString());
-
 		LEDSubsystem.state = state;
 
 		switch (state) {
@@ -117,10 +131,34 @@ public class LEDSubsystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
+		// Turns red if Estopped!!!
 		if (DriverStation.isEStopped()) {
 			setLEDs(LEDState.ERROR);
 			return;
 		}
+		if (!DriverStation.isEnabled()) {
+			setLEDs(LEDState.GREEN);
+			return;
+		}
+		// Turns Alliance Color when shooting 
+		if( shooting && DriverStation.getAlliance().get() == Alliance.Blue){
+			setLEDs(LEDState.BLUE);
+			return;
+		}
+		if( shooting && DriverStation.getAlliance().get() == Alliance.Red){
+			setLEDs(LEDState.RED);
+			return;
+		}
+		if (ClimberSubsystem.getClimberPosition() > 20) {
+			setLEDs(LEDState.GREEN);
+			return;
+		}
+		// If we are climbing, it will gradually increase the LED bar with a rainbow loading bar.
+		// if( ClimberPosition > 25 ){
+		// 	setLEDs(LEDState.);
+		// 	return;
+		// }
+		
 		// if (aligning && !VisionSubsystem.frontCam.isConnected() && !VisionSubsystem.backCam.isConnected()) {
 		// 	setLEDs(LEDState.ERROR);
 		// 	return;
@@ -130,7 +168,7 @@ public class LEDSubsystem extends SubsystemBase {
 		// 	setLEDs(LEDState.OFF);
 		// 	return;
 		// }
-
-		setLEDs(LEDState.CONNECTED);
+		// if were doing nothing then LEDs turn white
+		setLEDs(LEDState.WHITE);
 	}
 }

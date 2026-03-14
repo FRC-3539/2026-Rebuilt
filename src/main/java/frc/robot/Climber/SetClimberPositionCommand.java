@@ -5,7 +5,6 @@
 package frc.robot.Climber;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.units.MassUnit;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
@@ -15,17 +14,14 @@ public class SetClimberPositionCommand extends Command {
   double requestedClimberPosition;
   /** Creates a new SetClimberCommand. */
   public SetClimberPositionCommand(double requestedClimberPosition) {
-        addRequirements(RobotContainer.climberSubsystem);
-
+    addRequirements(RobotContainer.climberSubsystem);
     this.requestedClimberPosition = requestedClimberPosition;
-
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // ClimberSubsystem.setClimberPosition(requestedClimberPosition);
+    ClimberSubsystem.setClimberPosition(requestedClimberPosition);
   }
 
 
@@ -44,8 +40,8 @@ public class SetClimberPositionCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 1);
-    return true;
+    return MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 2);
+    // return true;
 
   }
 }
