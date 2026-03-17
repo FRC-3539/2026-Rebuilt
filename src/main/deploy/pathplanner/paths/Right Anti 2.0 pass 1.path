@@ -52,44 +52,28 @@
         "y": 1.6309036144578317
       },
       "prevControl": {
-        "x": 6.966615163737749,
-        "y": 2.7104696624222324
+        "x": 6.757052155681434,
+        "y": 2.7503305725563534
       },
       "nextControl": {
-        "x": 6.204662650602408,
-        "y": 0.09009638554216903
+        "x": 6.532493975903614,
+        "y": 0.34143373493975915
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.4727349397590364,
-        "y": 0.5709156626506025
+        "x": 3.8,
+        "y": 0.6036987951807224
       },
       "prevControl": {
-        "x": 5.330291528024196,
-        "y": 0.544752893801796
-      },
-      "nextControl": {
-        "x": 2.6968674698795176,
-        "y": 0.5818433734939765
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 0.607,
-        "y": 0.64
-      },
-      "prevControl": {
-        "x": 1.3034698795180724,
-        "y": 0.6290722891566259
+        "x": 5.657740823979797,
+        "y": 0.6036987951807222
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": "Right pass 1"
     }
   ],
   "rotationTargets": [
@@ -103,7 +87,7 @@
     },
     {
       "waypointRelativePos": 3.3986577181208015,
-      "rotationDegrees": 180.0
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [
@@ -116,19 +100,6 @@
         "maxAcceleration": 2.5,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    },
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 4.064516129032242,
-      "maxWaypointRelativePos": 5.0,
-      "constraints": {
-        "maxVelocity": 1.5,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
         "unlimited": false
       }
@@ -191,7 +162,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,

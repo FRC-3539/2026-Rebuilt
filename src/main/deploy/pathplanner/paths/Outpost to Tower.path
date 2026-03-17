@@ -12,7 +12,7 @@
         "y": 0.6146265060240967
       },
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Tower Right Side"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
@@ -89,7 +89,7 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Done Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

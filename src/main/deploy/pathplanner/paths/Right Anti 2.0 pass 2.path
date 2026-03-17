@@ -1,0 +1,214 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.8,
+        "y": 0.6036987951807224
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.11991143235945,
+        "y": 0.6036987951807224
+      },
+      "isLocked": false,
+      "linkedName": "Right pass 1"
+    },
+    {
+      "anchor": {
+        "x": 7.5,
+        "y": 3.16
+      },
+      "prevControl": {
+        "x": 7.5,
+        "y": 0.5474542305549543
+      },
+      "nextControl": {
+        "x": 7.5,
+        "y": 3.651746987951807
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.466927710843374,
+        "y": 3.630674698795181
+      },
+      "prevControl": {
+        "x": 7.100734939759037,
+        "y": 3.8273734939759034
+      },
+      "nextControl": {
+        "x": 6.006175262535512,
+        "y": 3.487682559665155
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.9,
+        "y": 1.652759036144579
+      },
+      "prevControl": {
+        "x": 5.947711961925377,
+        "y": 2.7760265497203678
+      },
+      "nextControl": {
+        "x": 5.854975903614458,
+        "y": 0.5927710843373495
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.855204819277109,
+        "y": 0.7348313253012042
+      },
+      "prevControl": {
+        "x": 5.712840490135134,
+        "y": 0.7150656116284015
+      },
+      "nextControl": {
+        "x": 0.7741566265060249,
+        "y": 0.7676144578313249
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.045,
+        "y": 2.9
+      },
+      "prevControl": {
+        "x": 1.0467831325301202,
+        "y": 1.9587349397590366
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Tower Right Side"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.535269709543572,
+      "rotationDegrees": 95.0
+    },
+    {
+      "waypointRelativePos": 2.67,
+      "rotationDegrees": -91.0
+    },
+    {
+      "waypointRelativePos": 3.3986577181208015,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.6382978723404247,
+      "maxWaypointRelativePos": 1.9406834300451157,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 2.5,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 360.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 4,
+      "maxWaypointRelativePos": 5.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeBallCommand",
+      "waypointRelativePos": 0.3040380047506056,
+      "endWaypointRelativePos": 3.6674584323040853,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeBallCommand"
+        }
+      }
+    },
+    {
+      "name": "RevCommand",
+      "waypointRelativePos": 3.420427553444168,
+      "endWaypointRelativePos": 5.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "RevCommand"
+        }
+      }
+    },
+    {
+      "name": "ShootCommand",
+      "waypointRelativePos": 3.95,
+      "endWaypointRelativePos": 5.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ShootCommand"
+        }
+      }
+    },
+    {
+      "name": "AutonPulseCommand",
+      "waypointRelativePos": 4.047505938242293,
+      "endWaypointRelativePos": 5.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutonPulseCommand"
+        }
+      }
+    },
+    {
+      "name": "ClimbDeployCommand",
+      "waypointRelativePos": 4.1995249406175885,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ClimbDeployCommand"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

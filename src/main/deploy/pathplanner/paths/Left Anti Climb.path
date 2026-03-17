@@ -88,8 +88,8 @@
         "y": 7.494584763973626
       },
       "nextControl": {
-        "x": 2.2051204819277106,
-        "y": 7.335168674698794
+        "x": 1.9741380821672,
+        "y": 7.306885115544445
       },
       "isLocked": false,
       "linkedName": null
@@ -100,12 +100,12 @@
         "y": 4.57
       },
       "prevControl": {
-        "x": 1.1543493975903616,
-        "y": 6.412240963855421
+        "x": 0.8589847037342029,
+        "y": 5.626773883073425
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Tower"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
@@ -126,7 +126,7 @@
       "rotationDegrees": 180.0
     },
     {
-      "waypointRelativePos": 5.587200000000021,
+      "waypointRelativePos": 5,
       "rotationDegrees": 90.0
     }
   ],
@@ -134,7 +134,7 @@
     {
       "name": "Going into Depot",
       "minWaypointRelativePos": 4.555831265508711,
-      "maxWaypointRelativePos": 6.0,
+      "maxWaypointRelativePos": 5,
       "constraints": {
         "maxVelocity": 0.75,
         "maxAcceleration": 3.0,
@@ -240,7 +240,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Done Paths",
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": -90.0
