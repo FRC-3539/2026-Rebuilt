@@ -15,9 +15,16 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "Right Anti Full"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Right Anti Full"
+                      }
+                    }
+                  ]
                 }
               }
             ]
