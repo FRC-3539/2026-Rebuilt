@@ -18,7 +18,7 @@ public class ReverseIntakeCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    IntakeSubsystem.setIntakeMotor(-4);
+    IntakeSubsystem.setIntakeVoltage(-4);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +28,7 @@ public class ReverseIntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    IntakeSubsystem.setIntakeMotor(0);
+    IntakeSubsystem.setIntakeVoltage(0);
   }
 
   // Returns true when the command should end.

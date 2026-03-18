@@ -31,6 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeploy;
   public static boolean autonPulse = false;
+  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
 
   private Command intakePulse = new IntakePulseCommand();
 
@@ -68,6 +69,10 @@ public class IntakeSubsystem extends SubsystemBase {
         .withMotionMagicAcceleration(IntakeConstants.IntakeDeployAcceleration)
         .withMotionMagicCruiseVelocity(IntakeConstants.IntakeDeployCruiseVelocity));
 
+    intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
+                .withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
+
+
     // intakeDeployMotor.getConfigurator().apply(new
     // SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
     // .withForwardSoftLimitThreshold(
@@ -94,8 +99,12 @@ public class IntakeSubsystem extends SubsystemBase {
     return intakeDeployMotor.getPosition().getValueAsDouble();
   }
 
-  public static void setIntakeMotor(double voltage) {
+  public static void setIntakeVoltage(double voltage) {
     intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+  }
+  public static void setIntakeSpeed(double speed) {
+  intakeMotor.setControl(velocityVoltageControl.withVelocity(speed));
+
   }
 
   public static void log() {
