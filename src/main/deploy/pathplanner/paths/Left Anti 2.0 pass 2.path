@@ -141,6 +141,17 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "IntakeDeployCommand",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeDeployCommand"
+        }
+      }
+    },
+    {
       "name": "IntakeBallCommand",
       "waypointRelativePos": 0.9197149643705074,
       "endWaypointRelativePos": 3.695961995249415,
@@ -187,7 +198,7 @@
     {
       "name": "ClimbDeployCommand",
       "waypointRelativePos": 4.60807600950117,
-      "endWaypointRelativePos": null,
+      "endWaypointRelativePos": 5.0,
       "command": {
         "type": "named",
         "data": {

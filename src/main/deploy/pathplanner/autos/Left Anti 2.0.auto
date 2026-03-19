@@ -56,6 +56,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeDeployCommand"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "Left Anti 2.0 pass 2"
