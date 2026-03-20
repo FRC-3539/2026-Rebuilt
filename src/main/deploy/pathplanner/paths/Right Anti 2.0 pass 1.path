@@ -139,17 +139,6 @@
           "name": "RevCommand"
         }
       }
-    },
-    {
-      "name": "ShootCommand",
-      "waypointRelativePos": 3.95,
-      "endWaypointRelativePos": 5.0,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "ShootCommand"
-        }
-      }
     }
   ],
   "globalConstraints": {
