@@ -33,7 +33,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public static boolean autonPulse = false;
   static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
 
-  private Command intakePulse = new IntakePulseCommand();
+  public static Command intakePulse = new IntakePulseCommand();
 
   public IntakeSubsystem() {
     intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
@@ -118,22 +118,20 @@ public class IntakeSubsystem extends SubsystemBase {
     if ((RobotContainer.operatorController.rightTrigger().getAsBoolean()
           && !RobotContainer.operatorLeftStickUp.getAsBoolean()
           && !intakePulse.isScheduled()
-          && requestedIntakeDeploy > 2
+          && requestedIntakeDeploy > 1
           && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
         || autonPulse) {
+      intakePulse = new IntakePulseCommand();
       intakePulse.schedule();
-    } else if ((!RobotContainer.operatorController.rightTrigger().getAsBoolean()
-        || RobotContainer.operatorLeftStickUp.getAsBoolean()) && intakePulse.isScheduled()) {
-      intakePulse.cancel();
+    } else if (
+      (!RobotContainer.operatorController.rightTrigger().getAsBoolean() || RobotContainer.operatorLeftStickUp.getAsBoolean())
+       && intakePulse.isScheduled()) {
+        intakePulse.cancel();
     }
-    if(!DriverStation.isTest())
-    {
-    intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeploy));
+    
+    if(!DriverStation.isTest()) intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeploy));
+    else intakeDeployMotor.setControl(new VoltageOut(0));
 
-    }
-    else {
-        intakeDeployMotor.setControl(new VoltageOut(0));
-    }
     log();
   }
 }

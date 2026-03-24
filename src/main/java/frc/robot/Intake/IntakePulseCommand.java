@@ -18,8 +18,7 @@ public class IntakePulseCommand extends SequentialCommandGroup {
   public IntakePulseCommand() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax*0.6), new WaitCommand(0.3),
+    addCommands(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax*0.4), new WaitCommand(0.5),
         new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax), new IntakeBallCommand().withTimeout(1));
-
   }
 }

@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -108,7 +109,7 @@ public class RobotContainer {
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorLeftStickUp.whileTrue(new IntakeBallCommand());
-    operatorLeftStickUp.onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    operatorLeftStickUp.onTrue(new InstantCommand(() -> IntakeSubsystem.intakePulse.cancel()).andThen(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax)));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions
