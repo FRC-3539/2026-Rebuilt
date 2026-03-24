@@ -245,8 +245,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
-        double speed = (4.87426 + 0.3) * distanceToTarget + 28.18329
-                + (Math.max(distanceToTarget - 5.715, 0) / 2.54) * 10;
+        double speed = 
+            // Original regression
+            4.87426 * distanceToTarget + 28.18329
+            // Manual adjustment
+            + 0.3 * distanceToTarget
+            + (Math.max(distanceToTarget - 4.715, 0) / 3.54) * 10;
         return speed;
     }
 

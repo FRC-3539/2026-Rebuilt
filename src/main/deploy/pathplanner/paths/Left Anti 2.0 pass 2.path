@@ -64,16 +64,16 @@
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 7.543
+        "x": 4.008192771084337,
+        "y": 7.466301204819277
       },
       "prevControl": {
-        "x": 6.313939759036145,
-        "y": 7.586506024096385
+        "x": 6.639036144578314,
+        "y": 7.498879518072288
       },
       "nextControl": {
-        "x": 1.795297776444035,
-        "y": 7.501547828356891
+        "x": 2.617353959037552,
+        "y": 7.449078141310509
       },
       "isLocked": false,
       "linkedName": null
@@ -84,8 +84,8 @@
         "y": 4.57
       },
       "prevControl": {
-        "x": 1.2325542168674697,
-        "y": 7.291457831325301
+        "x": 1.0904939759036143,
+        "y": 6.657650602409639
       },
       "nextControl": null,
       "isLocked": false,
@@ -106,22 +106,18 @@
       "rotationDegrees": 91.0
     },
     {
-      "waypointRelativePos": 3.6415999999999964,
-      "rotationDegrees": 0.0
-    },
-    {
-      "waypointRelativePos": 4.103999999999966,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 3.705394190871367,
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [
     {
       "name": "Slow during intake",
       "minWaypointRelativePos": 1.4260634706279356,
-      "maxWaypointRelativePos": 3.6575682382134107,
+      "maxWaypointRelativePos": 3.0620347394540963,
       "constraints": {
         "maxVelocity": 2.5,
-        "maxAcceleration": 3.0,
+        "maxAcceleration": 2.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -201,8 +197,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.4,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

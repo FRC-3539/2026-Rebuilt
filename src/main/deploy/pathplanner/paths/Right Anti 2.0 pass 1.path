@@ -93,11 +93,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6789081885856065,
+      "minWaypointRelativePos": 0.48833746898263075,
       "maxWaypointRelativePos": 1.9406834300451157,
       "constraints": {
-        "maxVelocity": 4.0,
-        "maxAcceleration": 4.4,
+        "maxVelocity": 2.5,
+        "maxAcceleration": 4.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0,
         "nominalVoltage": 12.0,
@@ -131,8 +131,8 @@
     },
     {
       "name": "RevCommand",
-      "waypointRelativePos": 2.5062034739452974,
-      "endWaypointRelativePos": 5.0,
+      "waypointRelativePos": 3.1325062034739264,
+      "endWaypointRelativePos": 4.0,
       "command": {
         "type": "named",
         "data": {
