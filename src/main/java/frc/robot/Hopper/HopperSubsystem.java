@@ -59,7 +59,12 @@ public class HopperSubsystem extends SubsystemBase {
   {
     kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
   }
-  
+  public static double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    totalDraw += kickerMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += spinnerMotor.getSupplyCurrent().getValueAsDouble();
+    return totalDraw;
+  }
 
   @Override
   public void periodic() {

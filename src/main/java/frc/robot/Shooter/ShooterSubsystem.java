@@ -438,6 +438,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
         Utilities.publishTranslation2d("/Turret/Location", turretLocation);
     }
+    public static double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    totalDraw += rotateMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += hoodMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += shootMotorLeader.getSupplyCurrent().getValueAsDouble();
+    totalDraw += shootMotorFollower.getSupplyCurrent().getValueAsDouble();
+    return totalDraw;
+    }
 
     @Override
     public void periodic() {

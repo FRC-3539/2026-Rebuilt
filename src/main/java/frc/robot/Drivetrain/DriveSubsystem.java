@@ -88,7 +88,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		super(TalonFX::new, TalonFX::new, CANcoder::new, driveTrainConstants, modules);
 
 		maxVelocity = modules[0].SpeedAt12Volts;
-
 		Translation2d[] moduleLocations = new Translation2d[modules.length];
 
 		for (int i = 0; i < modules.length; i++) {
@@ -179,6 +178,16 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 	public HolonomicMotionProfiledTrajectoryFollower getFollower() {
 		return follower;
 	}
+
+	public double getTotalCurrentDraw() {
+		double totalDraw = 0;
+		for (var module : this.getModules()) {
+			totalDraw += module.getDriveMotor().getSupplyCurrent().getValueAsDouble();
+			totalDraw += module.getSteerMotor().getSupplyCurrent().getValueAsDouble();
+		}
+    
+    return totalDraw;
+    }
 
 	@Override
 	public void periodic() {

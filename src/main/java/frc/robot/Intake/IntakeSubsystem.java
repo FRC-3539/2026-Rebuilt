@@ -107,6 +107,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   }
 
+  public static double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    totalDraw += intakeMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += intakeDeployMotor.getSupplyCurrent().getValueAsDouble();
+    return totalDraw;
+  }
+
   public static void log() {
     // Slider Position
     SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());

@@ -136,6 +136,28 @@ public class RobotContainer {
 
   }
 
+  public double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    
+    var intakeDraw = IntakeSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Intake/TotalCurrentDraw", intakeDraw);
+    totalDraw += intakeDraw;
+
+    var hopperDraw = HopperSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Hopper/TotalCurrentDraw", hopperDraw);
+    totalDraw += hopperDraw;
+
+    var shootDraw = ShooterSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Shoot/TotalCurrentDraw", shootDraw);
+    totalDraw += shootDraw;
+
+    var driveDraw = driveSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Drive/TotalCurrentDraw", driveDraw);
+    totalDraw += driveDraw;
+
+    return totalDraw;
+  }
+
   public void putAutons() {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
     NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
