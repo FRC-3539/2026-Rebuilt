@@ -80,12 +80,12 @@
     },
     {
       "anchor": {
-        "x": 1.122,
+        "x": 1.095,
         "y": 4.57
       },
       "prevControl": {
-        "x": 1.0904939759036143,
-        "y": 6.657650602409639
+        "x": 1.244308131241084,
+        "y": 6.668017118402283
       },
       "nextControl": null,
       "isLocked": false,
@@ -175,7 +175,7 @@
     },
     {
       "name": "AutonPulseCommand",
-      "waypointRelativePos": 4.465558194774343,
+      "waypointRelativePos": 4.2,
       "endWaypointRelativePos": 5.0,
       "command": {
         "type": "named",
@@ -198,7 +198,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 4.4,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
