@@ -20,7 +20,8 @@ public class IntakeConstants extends BBConstants {
     public static double IntakeDeployAcceleration = 50;
     public static double IntakeDeployCruiseVelocity = 30;
     public static double IntakeDeployV = .09;
-    public static double IntakeP = 15;
+    /** was .5 3/28 */
+    public static double IntakeP = 1;
     public static double IntakeV = .14;
     public static double IntakeAcceleration = 50;
     /** RPS */

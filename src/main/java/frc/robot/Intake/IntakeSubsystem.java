@@ -31,9 +31,9 @@ public class IntakeSubsystem extends SubsystemBase {
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeploy;
   public static boolean autonPulse = false;
-  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
+  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
 
-  public static Command intakePulse = new IntakePulseCommand();
+  public static Command intakePulse = new IntakePulseCommand(false);
 
   public IntakeSubsystem() {
     intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
@@ -71,6 +71,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
                 .withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
+    intakeMotor.getConfigurator().apply(new SlotConfigs()
+        .withKP(IntakeConstants.IntakeP).withKV(IntakeConstants.IntakeV));
+            
 
     // intakeDeployMotor.getConfigurator().apply(new
     // SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
@@ -126,17 +129,19 @@ public class IntakeSubsystem extends SubsystemBase {
           && requestedIntakeDeploy > 1
           && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
         || autonPulse) {
-      intakePulse = new IntakePulseCommand();
+      intakePulse = new IntakePulseCommand(DriverStation.isAutonomous());
       intakePulse.schedule();
     } else if (
       (!RobotContainer.operatorController.rightTrigger().getAsBoolean() || RobotContainer.operatorLeftStickUp.getAsBoolean())
        && intakePulse.isScheduled()) {
         intakePulse.cancel();
     }
+
+    if (DriverStation.isAutonomous() && !autonPulse && intakePulse.isScheduled()) intakePulse.cancel();
     
     if(!DriverStation.isTest()) intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeploy));
     else intakeDeployMotor.setControl(new VoltageOut(0));
-
+// System.out.println(requestedIntakeDeploy);
     log();
   }
 }
