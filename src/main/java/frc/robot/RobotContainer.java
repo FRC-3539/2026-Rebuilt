@@ -109,7 +109,7 @@ public class RobotContainer {
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorLeftStickUp.whileTrue(new IntakeBallCommand());
-    operatorLeftStickUp.onTrue(new InstantCommand(() -> IntakeSubsystem.intakePulse.cancel()).andThen(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax)));
+    operatorLeftStickUp.onTrue(new InstantCommand(() -> IntakeSubsystem.intakePulse.cancel()).andThen(new SetIntakeCommand(IntakeConstants.IntakeOutPosition)));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions
@@ -160,8 +160,8 @@ public class RobotContainer {
 
   public void putAutons() {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
-    NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
-    NamedCommands.registerCommand("IntakeRetractCommand", new IntakeMoveCommand(false));
+    NamedCommands.registerCommand("IntakeDeployCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    NamedCommands.registerCommand("IntakeRetractCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("RevCommand", new RevCommand());

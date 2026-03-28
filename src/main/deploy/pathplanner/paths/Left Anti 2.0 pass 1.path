@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 7.536964740671088,
-        "y": 7.5
+        "y": 7.49
       },
       "prevControl": {
-        "x": 6.539785458375617,
-        "y": 7.575056505119013
+        "x": 6.630843373493977,
+        "y": 7.564650602409639
       },
       "nextControl": {
-        "x": 8.55324184910482,
-        "y": 7.423506024096386
+        "x": 8.552675476121564,
+        "y": 7.406320902450925
       },
       "isLocked": false,
       "linkedName": null
@@ -93,7 +93,7 @@
   "constraintZones": [
     {
       "name": "Slow during intake",
-      "minWaypointRelativePos": 1.4260634706279356,
+      "minWaypointRelativePos": 1.3,
       "maxWaypointRelativePos": 2.7224848075624295,
       "constraints": {
         "maxVelocity": 2.5,

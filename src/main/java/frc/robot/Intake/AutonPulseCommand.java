@@ -26,8 +26,7 @@ public class AutonPulseCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-        IntakeSubsystem.autonPulse = false;
-
+    IntakeSubsystem.autonPulse = false;
   }
 
   // Returns true when the command should end.

@@ -72,7 +72,6 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
                 .withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
 
-
     // intakeDeployMotor.getConfigurator().apply(new
     // SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
     // .withForwardSoftLimitThreshold(
@@ -84,7 +83,6 @@ public class IntakeSubsystem extends SubsystemBase {
     // (IntakeConstants.IntakeDeploySoftMin -
     // IntakeConstants.IntakeDeployHomePositionOffset)
     // / IntakeConstants.IntakeDeployInchesPerRotation));
-
   }
 
   public static void setIntakeDeployPosition(double request) {
