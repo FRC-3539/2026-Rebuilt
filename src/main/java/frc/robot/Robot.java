@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.driveSubsystem.setDriveCurrentLimits(40);
+    RobotContainer.driveSubsystem.setDriveCurrentLimits(30);
   }
 
   /** This function is called periodically during operator control. */

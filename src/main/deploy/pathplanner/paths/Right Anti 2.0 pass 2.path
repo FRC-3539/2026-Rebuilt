@@ -32,15 +32,15 @@
     },
     {
       "anchor": {
-        "x": 6.029819277108434,
+        "x": 6.5,
         "y": 3.586963855421687
       },
       "prevControl": {
-        "x": 6.39043373493976,
+        "x": 6.860614457831327,
         "y": 3.586963855421687
       },
       "nextControl": {
-        "x": 5.559800661613995,
+        "x": 6.029981384505561,
         "y": 3.586963855421687
       },
       "isLocked": false,
@@ -48,15 +48,15 @@
     },
     {
       "anchor": {
-        "x": 5.854975903614458,
+        "x": 6.0,
         "y": 1.641831325301205
       },
       "prevControl": {
-        "x": 5.843844960423036,
+        "x": 5.988869056808578,
         "y": 2.766056587634859
       },
       "nextControl": {
-        "x": 5.865903614457832,
+        "x": 6.010927710843373,
         "y": 0.5381325301204825
       },
       "isLocked": false,
@@ -103,7 +103,7 @@
     },
     {
       "waypointRelativePos": 2.67,
-      "rotationDegrees": -91.0
+      "rotationDegrees": 90.0
     },
     {
       "waypointRelativePos": 3.3986577181208015,
@@ -122,6 +122,19 @@
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Intake Balls ",
+      "minWaypointRelativePos": 0.46683046683047746,
+      "maxWaypointRelativePos": 2.353808353808383,
+      "constraints": {
+        "maxVelocity": 2.25,
+        "maxAcceleration": 3.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,

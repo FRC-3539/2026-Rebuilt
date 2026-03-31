@@ -43,7 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
         .apply(new CurrentLimitsConfigs()
             .withStatorCurrentLimitEnable(false)
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(80)
+            .withSupplyCurrentLimit(45)
             .withSupplyCurrentLowerLimit(45)
             .withSupplyCurrentLowerTime(2));
     intakeMotor.getConfigurator().apply(
@@ -56,7 +56,7 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
     intakeDeployMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(60).withSupplyCurrentLowerTime(2));
+            .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(40).withSupplyCurrentLowerTime(2));
     intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
         .withForwardSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMax)
         .withReverseSoftLimitEnable(true)
@@ -101,7 +101,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public static void setIntakeVoltage(double voltage) {
-    intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
   public static void setIntakeSpeed(double speed) {
   intakeMotor.setControl(velocityVoltageControl.withVelocity(speed));

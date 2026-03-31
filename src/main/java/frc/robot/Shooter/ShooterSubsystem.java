@@ -62,8 +62,8 @@ public class ShooterSubsystem extends SubsystemBase {
             turretYOffset = -0.1528572, maxTurretRotation = 270, minTurretRotation = -270;
 
     static StatusSignal<AngularVelocity> velocitySignal;
-    static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-    static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(true);
+    static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+    static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(false);
 
     private static double robotVelocityX = 0, robotVelocityY = 0;
     public static boolean revState = false;

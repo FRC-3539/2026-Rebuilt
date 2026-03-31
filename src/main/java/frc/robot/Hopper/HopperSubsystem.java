@@ -21,8 +21,8 @@ import frc.robot.Constants.IDConstants;
 public class HopperSubsystem extends SubsystemBase {
   private static TalonFX spinnerMotor, kickerMotor;
 
-  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-  static VoltageOut voltageOutControl = new VoltageOut(0).withEnableFOC(true);
+  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+  static VoltageOut voltageOutControl = new VoltageOut(0).withEnableFOC(false);
 
   public HopperSubsystem() {
     spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "CANivore");
@@ -48,7 +48,7 @@ public class HopperSubsystem extends SubsystemBase {
   }
 
   public static void setSpinnerMotor(double voltage) {
-    spinnerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    spinnerMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
 
   public static void setKickerVelocity(double velocity) {
@@ -57,7 +57,7 @@ public class HopperSubsystem extends SubsystemBase {
 
   public static void setKickerVoltage(double voltage)
   {
-    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
   public static double getTotalCurrentDraw() {
     double totalDraw = 0;

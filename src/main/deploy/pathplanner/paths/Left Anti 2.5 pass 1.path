@@ -94,9 +94,9 @@
     {
       "name": "Slow during intake",
       "minWaypointRelativePos": 1.2147420147420245,
-      "maxWaypointRelativePos": 3.439803439803386,
+      "maxWaypointRelativePos": 3.2568745808182515,
       "constraints": {
-        "maxVelocity": 2.0,
+        "maxVelocity": 1.75,
         "maxAcceleration": 2.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
