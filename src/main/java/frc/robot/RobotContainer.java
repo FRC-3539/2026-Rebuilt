@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -154,6 +155,8 @@ public class RobotContainer {
     var driveDraw = driveSubsystem.getTotalCurrentDraw();
     SmartDashboard.putNumber("/Drive/TotalCurrentDraw", driveDraw);
     totalDraw += driveDraw;
+
+    SignalLogger.writeDouble("Total Current Draw", totalDraw);
 
     return totalDraw;
   }

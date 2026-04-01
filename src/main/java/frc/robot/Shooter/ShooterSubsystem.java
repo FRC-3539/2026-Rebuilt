@@ -437,6 +437,11 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("/Turret/HoodAngle", getHoodAngle());
 
         Utilities.publishTranslation2d("/Turret/Location", turretLocation);
+
+        SmartDashboard.putNumber("/Turret/ShootLeadTemp", shootMotorLeader.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("/Turret/ShootFollowTemp", shootMotorFollower.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("/Turret/RotateTemp", rotateMotor.getDeviceTemp().getValueAsDouble());
+
     }
     public static double getTotalCurrentDraw() {
     double totalDraw = 0;

@@ -118,6 +118,9 @@ public class IntakeSubsystem extends SubsystemBase {
   public static void log() {
     // Slider Position
     SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
+    SmartDashboard.putNumber("/Intake/IntakeTemp", intakeMotor.getDeviceTemp().getValueAsDouble());
+    SmartDashboard.putNumber("/Intake/IntakeDeployTemp", intakeDeployMotor.getDeviceTemp().getValueAsDouble());
+
   }
 
   @Override

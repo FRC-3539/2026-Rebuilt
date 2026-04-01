@@ -69,5 +69,6 @@ public class HopperSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("/Hopper/KickerTemp", kickerMotor.getDeviceTemp().getValueAsDouble());
+    SmartDashboard.putNumber("/Hopper/SpinnerTemp", spinnerMotor.getDeviceTemp().getValueAsDouble());
   }
 }
