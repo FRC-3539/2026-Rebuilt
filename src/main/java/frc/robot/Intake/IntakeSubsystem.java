@@ -17,6 +17,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -26,18 +27,21 @@ import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 
+
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private static TalonFX intakeMotor, intakeDeployMotor;
   private static double requestedIntakeDeploy;
   public static boolean autonPulse = false;
   static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+  private static Timer timer = new Timer();
 
   public static Command intakePulse = new IntakePulseCommand(false);
 
   public IntakeSubsystem() {
     intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
     intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
+    timer.start();
 
     intakeMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs()
@@ -51,7 +55,7 @@ public class IntakeSubsystem extends SubsystemBase {
             .withInverted(InvertedValue.CounterClockwise_Positive));
     intakeDeployMotor.getConfigurator().apply(
         new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.CounterClockwise_Positive));
+            .withInverted(InvertedValue.Clockwise_Positive));
 
     intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
     intakeDeployMotor.getConfigurator()
@@ -125,26 +129,33 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    if ((RobotContainer.operatorController.rightTrigger().getAsBoolean()
-          && !RobotContainer.operatorLeftStickUp.getAsBoolean()
-          && !intakePulse.isScheduled()
-          && requestedIntakeDeploy > 1
-          && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
-        || autonPulse) {
-      intakePulse = new IntakePulseCommand(DriverStation.isAutonomous());
-      intakePulse.schedule();
-    } else if (
-      (!RobotContainer.operatorController.rightTrigger().getAsBoolean() || RobotContainer.operatorLeftStickUp.getAsBoolean())
-       && intakePulse.isScheduled()) {
-        intakePulse.cancel();
+    if(DriverStation.isTest()) {
+      intakeDeployMotor.setControl(new VoltageOut(0));
+      return;
     }
 
-    if (DriverStation.isAutonomous() && !autonPulse && intakePulse.isScheduled()) intakePulse.cancel();
+    double intakePosition = requestedIntakeDeploy;
+    boolean shouldPulse = (RobotContainer.operatorController.rightTrigger().getAsBoolean()
+          && !RobotContainer.operatorLeftStickUp.getAsBoolean()
+          && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
+        || autonPulse; 
     
-    if(!DriverStation.isTest()) intakeDeployMotor.setControl(new MotionMagicVoltage(requestedIntakeDeploy));
-    else intakeDeployMotor.setControl(new VoltageOut(0));
-// System.out.println(requestedIntakeDeploy);
+    if (timer.get() < 1)
+    {
+      // Out
+      if (shouldPulse) intakePosition = IntakeConstants.IntakeOutPosition;
+    }
+    
+    else if (timer.get() < 1.5)
+    {
+      // In
+      if (shouldPulse) intakePosition = IntakeConstants.IntakeOutPosition*0.4;
+
+    } 
+    else timer.restart();
+    
+    intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
+
     log();
   }
 }

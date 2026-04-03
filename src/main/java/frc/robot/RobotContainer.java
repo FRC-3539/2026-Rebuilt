@@ -43,14 +43,6 @@ import frc.robot.Vision.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public static DriveSubsystem driveSubsystem = TunerConstants.createDrivetrain();
-  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static VisionSubsystem visionSubsystem = new VisionSubsystem();
-  public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  public static LEDSubsystem ledSubsystem = new LEDSubsystem(true);
-
   public static AlignConstants alignConstants = new AlignConstants();
   public static ClimberConstants climberConstants = new ClimberConstants();
   public static DriveConstants driveConstants = new DriveConstants();
@@ -60,6 +52,18 @@ public class RobotContainer {
   public static IntakeConstants intakeConstants = new IntakeConstants();
   public static LEDConstants ledConstants = new LEDConstants();
   public static ShooterConstants shooterConstants = new ShooterConstants();
+  
+  
+  
+  public static DriveSubsystem driveSubsystem = TunerConstants.createDrivetrain();
+  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static VisionSubsystem visionSubsystem = new VisionSubsystem();
+  public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  public static LEDSubsystem ledSubsystem = new LEDSubsystem(true);
+
+  
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
