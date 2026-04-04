@@ -20,142 +20,134 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
-
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsystem. */
-  private static TalonFX intakeMotor, intakeDeployMotor;
-  private static double requestedIntakeDeploy;
-  public static boolean autonPulse = false;
-  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
-  private static Timer timer = new Timer();
+	/** Creates a new IntakeSubsystem. */
+	private static TalonFX intakeMotor, intakeDeployMotor;
+	private static double requestedIntakeDeploy;
+	public static boolean autonPulse = false, intaking = false;
+	static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+	private static Timer timer = new Timer();
 
-  public static Command intakePulse = new IntakePulseCommand(false);
+	public static Command intakePulse = new IntakePulseCommand(false);
 
-  public IntakeSubsystem() {
-    intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
-    intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
-    timer.start();
+	public IntakeSubsystem() {
+		intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
+		intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
+		timer.start();
 
-    intakeMotor.getConfigurator()
-        .apply(new CurrentLimitsConfigs()
-            .withStatorCurrentLimitEnable(false)
-            .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(45)
-            .withSupplyCurrentLowerLimit(45)
-            .withSupplyCurrentLowerTime(2));
-    intakeMotor.getConfigurator().apply(
-        new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.CounterClockwise_Positive));
-    intakeDeployMotor.getConfigurator().apply(
-        new TalonFXConfiguration().MotorOutput
-            .withInverted(InvertedValue.Clockwise_Positive));
+		intakeMotor.getConfigurator()
+				.apply(new CurrentLimitsConfigs()
+						.withStatorCurrentLimitEnable(false)
+						.withSupplyCurrentLimitEnable(true)
+						.withSupplyCurrentLimit(45)
+						.withSupplyCurrentLowerLimit(45)
+						.withSupplyCurrentLowerTime(2));
+		intakeMotor.getConfigurator().apply(
+				new TalonFXConfiguration().MotorOutput
+						.withInverted(InvertedValue.CounterClockwise_Positive));
+		intakeDeployMotor.getConfigurator().apply(
+				new TalonFXConfiguration().MotorOutput
+						.withInverted(IDConstants.PracticeBot ? InvertedValue.CounterClockwise_Positive: InvertedValue.Clockwise_Positive));
 
-    intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
-    intakeDeployMotor.getConfigurator()
-        .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(40).withSupplyCurrentLowerTime(2));
-    intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
-        .withForwardSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMax)
-        .withReverseSoftLimitEnable(true)
-        .withReverseSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMin));
-    intakeDeployMotor.getConfigurator().apply(new SlotConfigs()
-        .withKP(IntakeConstants.IntakeDeployP)
-        .withKI(IntakeConstants.IntakeDeployI)
-        .withKD(IntakeConstants.IntakeDeployD));
-    intakeDeployMotor.getConfigurator().apply(new MotionMagicConfigs()
-        .withMotionMagicAcceleration(IntakeConstants.IntakeDeployAcceleration)
-        .withMotionMagicCruiseVelocity(IntakeConstants.IntakeDeployCruiseVelocity));
+		intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
+		intakeDeployMotor.getConfigurator()
+				.apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
+						.withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(40).withSupplyCurrentLowerTime(2));
+		intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs()
+				.withForwardSoftLimitEnable(true)
+				.withForwardSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMax)
+				.withReverseSoftLimitEnable(true)
+				.withReverseSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMin));
+		intakeDeployMotor.getConfigurator().apply(new SlotConfigs()
+				.withKP(IntakeConstants.IntakeDeployP)
+				.withKI(IntakeConstants.IntakeDeployI)
+				.withKD(IntakeConstants.IntakeDeployD));
+		intakeDeployMotor.getConfigurator().apply(new MotionMagicConfigs()
+				.withMotionMagicAcceleration(IntakeConstants.IntakeDeployAcceleration)
+				.withMotionMagicCruiseVelocity(IntakeConstants.IntakeDeployCruiseVelocity));
 
-    intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
-                .withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
-    intakeMotor.getConfigurator().apply(new SlotConfigs()
-        .withKP(IntakeConstants.IntakeP).withKV(IntakeConstants.IntakeV));
-            
+		intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
+				.withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
+		intakeMotor.getConfigurator().apply(new SlotConfigs()
+				.withKP(IntakeConstants.IntakeP).withKV(IntakeConstants.IntakeV));
+	}
 
-    // intakeDeployMotor.getConfigurator().apply(new
-    // SoftwareLimitSwitchConfigs().withForwardSoftLimitEnable(true)
-    // .withForwardSoftLimitThreshold(
-    // (IntakeConstants.IntakeDeploySoftMax -
-    // IntakeConstants.IntakeDeployHomePositionOffset)
-    // / IntakeConstants.IntakeDeployInchesPerRotation)
-    // .withReverseSoftLimitEnable(true)
-    // .withReverseSoftLimitThreshold(
-    // (IntakeConstants.IntakeDeploySoftMin -
-    // IntakeConstants.IntakeDeployHomePositionOffset)
-    // / IntakeConstants.IntakeDeployInchesPerRotation));
-  }
+	public static void setIntakeDeployPosition(double request) {
+		requestedIntakeDeploy = request;
+	}
 
-  public static void setIntakeDeployPosition(double request) {
-    requestedIntakeDeploy = request;
-  }
+	public static void zeroIntakeDeployMotor() {
+		intakeDeployMotor.setPosition(0);
+	}
 
-  public static void zeroIntakeDeployMotor() {
-    intakeDeployMotor.setPosition(0);
-  }
+	public static double getIntakeDeployRotations() {
+		return intakeDeployMotor.getPosition().getValueAsDouble();
+	}
 
-  public static double getIntakeDeployRotations() {
-    return intakeDeployMotor.getPosition().getValueAsDouble();
-  }
+	public static void setIntakeVoltage(double voltage) {
+		intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
+	}
 
-  public static void setIntakeVoltage(double voltage) {
-    intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
-  }
-  public static void setIntakeSpeed(double speed) {
-  intakeMotor.setControl(velocityVoltageControl.withVelocity(speed));
+	public static void setIntakeSpeed(double speed) {
+		intakeMotor.setControl(velocityVoltageControl.withVelocity(speed));
 
-  }
+	}
 
-  public static double getTotalCurrentDraw() {
-    double totalDraw = 0;
-    totalDraw += intakeMotor.getSupplyCurrent().getValueAsDouble();
-    totalDraw += intakeDeployMotor.getSupplyCurrent().getValueAsDouble();
-    return totalDraw;
-  }
+	public static double getTotalCurrentDraw() {
+		double totalDraw = 0;
+		totalDraw += intakeMotor.getSupplyCurrent().getValueAsDouble();
+		totalDraw += intakeDeployMotor.getSupplyCurrent().getValueAsDouble();
+		return totalDraw;
+	}
 
-  public static void log() {
-    // Slider Position
-    SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
-    SmartDashboard.putNumber("/Intake/IntakeTemp", intakeMotor.getDeviceTemp().getValueAsDouble());
-    SmartDashboard.putNumber("/Intake/IntakeDeployTemp", intakeDeployMotor.getDeviceTemp().getValueAsDouble());
+	public static void log() {
+		// Slider Position
+		SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
+		SmartDashboard.putNumber("/Intake/IntakeTemp", intakeMotor.getDeviceTemp().getValueAsDouble());
+		SmartDashboard.putNumber("/Intake/IntakeDeployTemp", intakeDeployMotor.getDeviceTemp().getValueAsDouble());
 
-  }
+	}
 
-  @Override
-  public void periodic() {
-    if(DriverStation.isTest()) {
-      intakeDeployMotor.setControl(new VoltageOut(0));
-      return;
-    }
+	@Override
+	public void periodic() {
+		log();
+		if (DriverStation.isTest()) {
+			intakeDeployMotor.setControl(new VoltageOut(0));
+			setIntakeVoltage(0);
+			return;
+		}
 
-    double intakePosition = requestedIntakeDeploy;
-    boolean shouldPulse = (RobotContainer.operatorController.rightTrigger().getAsBoolean()
-          && !RobotContainer.operatorLeftStickUp.getAsBoolean()
-          && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
-        || autonPulse; 
-    
-    if (timer.get() < 1)
-    {
-      // Out
-      if (shouldPulse) intakePosition = IntakeConstants.IntakeOutPosition;
-    }
-    
-    else if (timer.get() < 1.5)
-    {
-      // In
-      if (shouldPulse) intakePosition = IntakeConstants.IntakeOutPosition*0.4;
+		double intakePosition = requestedIntakeDeploy;
+		boolean shouldPulse = (RobotContainer.operatorController.rightTrigger().getAsBoolean()
+				&& !RobotContainer.operatorLeftStickUp.getAsBoolean()
+				&& RobotContainer.driveSubsystem.getPose2d().getX() < 5.3
+				&& requestedIntakeDeploy > 1)
+				|| autonPulse;
 
-    } 
-    else timer.restart();
-    
-    intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
+		if (timer.get() < 1) {
+			// Out
+			if (shouldPulse)
+				intakePosition = IntakeConstants.IntakeOutPosition;
+		}
 
-    log();
-  }
+		else if (timer.get() < 1.5) {
+			// In
+			if (shouldPulse)
+				intakePosition = IntakeConstants.IntakeOutPosition * 0.4;
+
+		} else
+			timer.restart();
+
+		intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
+
+		if (intaking || shouldPulse)
+			setIntakeVoltage(12);
+		else
+			setIntakeVoltage(0);
+	}
 }

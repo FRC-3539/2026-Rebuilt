@@ -55,7 +55,7 @@ public class RobotContainer {
   
   
   
-  public static DriveSubsystem driveSubsystem = TunerConstants.createDrivetrain();
+  public static DriveSubsystem driveSubsystem;
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -76,11 +76,14 @@ public class RobotContainer {
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
   public RobotContainer() {
+    if(IDConstants.PracticeBot){driveSubsystem = TunerConstantsPractice.createDrivetrain();}
+    else driveSubsystem = TunerConstants.createDrivetrain();
     // Configure the trigger bindings
     configureBindings();
     putAutons();
     putCommands();
     visionSubsystem.start();
+
   }
 
   public void putCommands() {
