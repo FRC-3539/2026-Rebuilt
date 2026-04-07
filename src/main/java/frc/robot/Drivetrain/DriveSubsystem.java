@@ -72,8 +72,8 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	private Command shortRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand());
 	private Command doubleRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand())
-		.andThen(new WaitCommand(0.3))	
-		.andThen(new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand()));
+			.andThen(new WaitCommand(0.3))
+			.andThen(new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand()));
 	private Command longRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(1.5), new RumbleCommand());
 
 	private void createAlert(ParentDevice device, String deviceName) {
@@ -88,7 +88,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		super(TalonFX::new, TalonFX::new, CANcoder::new, driveTrainConstants, modules);
 
 		maxVelocity = modules[0].SpeedAt12Volts;
-
 		Translation2d[] moduleLocations = new Translation2d[modules.length];
 
 		for (int i = 0; i < modules.length; i++) {
@@ -125,6 +124,16 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		createAlert(this.getModule(2).getDriveMotor(), "BackLeftDrive");
 		createAlert(this.getModule(3).getSteerMotor(), "BackRightSteer");
 		createAlert(this.getModule(3).getDriveMotor(), "BackRightDrive");
+
+	}
+
+	public void setDriveCurrentLimits(double limit) {
+		for (int i = 0; i < this.getModules().length; i++) {
+			this.getModule(i).getDriveMotor().getConfigurator()
+					.apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(limit)
+							.withSupplyCurrentLimitEnable(true)
+							.withStatorCurrentLimit(120).withStatorCurrentLimitEnable(true));
+		}
 
 	}
 
@@ -178,6 +187,16 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	public HolonomicMotionProfiledTrajectoryFollower getFollower() {
 		return follower;
+	}
+
+	public double getTotalCurrentDraw() {
+		double totalDraw = 0;
+		for (var module : this.getModules()) {
+			totalDraw += module.getDriveMotor().getSupplyCurrent().getValueAsDouble();
+			totalDraw += module.getSteerMotor().getSupplyCurrent().getValueAsDouble();
+		}
+
+		return totalDraw;
 	}
 
 	@Override

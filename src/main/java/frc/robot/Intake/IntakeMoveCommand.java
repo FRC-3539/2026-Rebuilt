@@ -4,6 +4,7 @@
 
 package frc.robot.Intake;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 
@@ -21,9 +22,13 @@ public class IntakeMoveCommand extends Command {
   @Override
   public void initialize() {
     if (intakeDeploy) {
-      
-      IntakeSubsystem.setIntakeDeployPosition(IntakeConstants.IntakeDeploySoftMax);
+      if(DriverStation.isAutonomous()){
+        IntakeSubsystem.setIntakeDeployPosition(IntakeConstants.IntakeOutPosition + .3);
+      }
+      else{
+      IntakeSubsystem.setIntakeDeployPosition(IntakeConstants.IntakeOutPosition);
     }
+  }
     else
     {
       IntakeSubsystem.setIntakeDeployPosition(IntakeConstants.IntakeDeploySoftMin);

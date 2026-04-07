@@ -5,8 +5,6 @@
 package frc.robot.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Shooter.ShooterSubsystem;
-import frc.robot.Utilities.Utilities;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeBallCommand extends Command {
@@ -18,7 +16,7 @@ public class IntakeBallCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    IntakeSubsystem.setIntakeMotor(8);
+    IntakeSubsystem.intaking = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +26,7 @@ public class IntakeBallCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    IntakeSubsystem.setIntakeMotor(0);
+    IntakeSubsystem.intaking = false;
   }
 
   // Returns true when the command should end.

@@ -44,11 +44,11 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public static void setClimberDeployMotor(double voltage) {
-    climberDeployMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    climberDeployMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
 
   public static void setClimberMotor(double voltage) {
-    climberMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    climberMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
 
   public static void zeroClimberMotor() {

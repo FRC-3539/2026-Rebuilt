@@ -62,8 +62,8 @@ public class ShooterSubsystem extends SubsystemBase {
             turretYOffset = -0.1528572, maxTurretRotation = 270, minTurretRotation = -270;
 
     static StatusSignal<AngularVelocity> velocitySignal;
-    static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-    static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(true);
+    static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+    static VoltageOut voltageOutControlTop = new VoltageOut(0).withEnableFOC(false);
 
     private static double robotVelocityX = 0, robotVelocityY = 0;
     public static boolean revState = false;
@@ -143,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static boolean turretReady() {
-        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 15)
+        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 10)
                 && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly
@@ -216,7 +216,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.3;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.2;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
@@ -245,8 +245,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
-        double speed = (4.87426 + 0.3) * distanceToTarget + 28.18329
-                + (Math.max(distanceToTarget - 5.715, 0) / 2.54) * 10;
+        double speed = 
+            // Original regression
+            4.87426 * distanceToTarget + 28.18329
+            // Manual adjustment
+            + 0.3 * distanceToTarget
+            + (Math.max(distanceToTarget - 4.715, 0) / 3.54) * 10;
         return speed;
     }
 
@@ -433,6 +437,19 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("/Turret/HoodAngle", getHoodAngle());
 
         Utilities.publishTranslation2d("/Turret/Location", turretLocation);
+
+        SmartDashboard.putNumber("/Turret/ShootLeadTemp", shootMotorLeader.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("/Turret/ShootFollowTemp", shootMotorFollower.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("/Turret/RotateTemp", rotateMotor.getDeviceTemp().getValueAsDouble());
+
+    }
+    public static double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    totalDraw += rotateMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += hoodMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += shootMotorLeader.getSupplyCurrent().getValueAsDouble();
+    totalDraw += shootMotorFollower.getSupplyCurrent().getValueAsDouble();
+    return totalDraw;
     }
 
     @Override

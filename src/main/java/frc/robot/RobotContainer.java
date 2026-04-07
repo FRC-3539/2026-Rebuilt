@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -41,14 +43,6 @@ import frc.robot.Vision.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public static DriveSubsystem driveSubsystem = TunerConstants.createDrivetrain();
-  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static VisionSubsystem visionSubsystem = new VisionSubsystem();
-  public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  public static LEDSubsystem ledSubsystem = new LEDSubsystem(true);
-
   public static AlignConstants alignConstants = new AlignConstants();
   public static ClimberConstants climberConstants = new ClimberConstants();
   public static DriveConstants driveConstants = new DriveConstants();
@@ -58,6 +52,18 @@ public class RobotContainer {
   public static IntakeConstants intakeConstants = new IntakeConstants();
   public static LEDConstants ledConstants = new LEDConstants();
   public static ShooterConstants shooterConstants = new ShooterConstants();
+  
+  
+  
+  public static DriveSubsystem driveSubsystem;
+  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static VisionSubsystem visionSubsystem = new VisionSubsystem();
+  public static HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  public static LEDSubsystem ledSubsystem = new LEDSubsystem(true);
+
+  
 
   public static CommandXboxController driverController = new CommandXboxController(1);
   public static CommandXboxController operatorController = new CommandXboxController(0);
@@ -70,11 +76,14 @@ public class RobotContainer {
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
   public RobotContainer() {
+    if(IDConstants.PracticeBot){driveSubsystem = TunerConstantsPractice.createDrivetrain();}
+    else driveSubsystem = TunerConstants.createDrivetrain();
     // Configure the trigger bindings
     configureBindings();
     putAutons();
     putCommands();
     visionSubsystem.start();
+
   }
 
   public void putCommands() {
@@ -108,7 +117,7 @@ public class RobotContainer {
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorLeftStickUp.whileTrue(new IntakeBallCommand());
-    operatorLeftStickUp.onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    operatorLeftStickUp.onTrue(new InstantCommand(() -> IntakeSubsystem.intakePulse.cancel()).andThen(new SetIntakeCommand(IntakeConstants.IntakeOutPosition)));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
 
     // Drive Set Positions
@@ -135,10 +144,34 @@ public class RobotContainer {
 
   }
 
+  public double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    
+    var intakeDraw = IntakeSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Intake/TotalCurrentDraw", intakeDraw);
+    totalDraw += intakeDraw;
+
+    var hopperDraw = HopperSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Hopper/TotalCurrentDraw", hopperDraw);
+    totalDraw += hopperDraw;
+
+    var shootDraw = ShooterSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Shoot/TotalCurrentDraw", shootDraw);
+    totalDraw += shootDraw;
+
+    var driveDraw = driveSubsystem.getTotalCurrentDraw();
+    SmartDashboard.putNumber("/Drive/TotalCurrentDraw", driveDraw);
+    totalDraw += driveDraw;
+
+    SignalLogger.writeDouble("Total Current Draw", totalDraw);
+
+    return totalDraw;
+  }
+
   public void putAutons() {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
-    NamedCommands.registerCommand("IntakeDeployCommand", new IntakeMoveCommand(true));
-    NamedCommands.registerCommand("IntakeRetractCommand", new IntakeMoveCommand(false));
+    NamedCommands.registerCommand("IntakeDeployCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
+    NamedCommands.registerCommand("IntakeRetractCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
     NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("RevCommand", new RevCommand());

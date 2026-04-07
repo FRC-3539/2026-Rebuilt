@@ -13,6 +13,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IDConstants;
@@ -20,8 +21,8 @@ import frc.robot.Constants.IDConstants;
 public class HopperSubsystem extends SubsystemBase {
   private static TalonFX spinnerMotor, kickerMotor;
 
-  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(true);
-  static VoltageOut voltageOutControl = new VoltageOut(0).withEnableFOC(true);
+  static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+  static VoltageOut voltageOutControl = new VoltageOut(0).withEnableFOC(false);
 
   public HopperSubsystem() {
     spinnerMotor = new TalonFX(IDConstants.SpinnerMotorID, "CANivore");
@@ -30,7 +31,7 @@ public class HopperSubsystem extends SubsystemBase {
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     spinnerMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+            .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
     kickerMotor = new TalonFX(IDConstants.KickerMotorID, "rio");
     kickerMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -47,7 +48,7 @@ public class HopperSubsystem extends SubsystemBase {
   }
 
   public static void setSpinnerMotor(double voltage) {
-    spinnerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    spinnerMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
 
   public static void setKickerVelocity(double velocity) {
@@ -56,12 +57,18 @@ public class HopperSubsystem extends SubsystemBase {
 
   public static void setKickerVoltage(double voltage)
   {
-    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(true));
+    kickerMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
   }
-  
+  public static double getTotalCurrentDraw() {
+    double totalDraw = 0;
+    totalDraw += kickerMotor.getSupplyCurrent().getValueAsDouble();
+    totalDraw += spinnerMotor.getSupplyCurrent().getValueAsDouble();
+    return totalDraw;
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("/Hopper/KickerTemp", kickerMotor.getDeviceTemp().getValueAsDouble());
+    SmartDashboard.putNumber("/Hopper/SpinnerTemp", spinnerMotor.getDeviceTemp().getValueAsDouble());
   }
 }
