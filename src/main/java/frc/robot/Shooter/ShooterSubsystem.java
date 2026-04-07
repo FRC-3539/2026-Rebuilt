@@ -143,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static boolean turretReady() {
-        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 15)
+        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 10)
                 && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly

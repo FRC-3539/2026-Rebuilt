@@ -31,7 +31,7 @@ public class HopperSubsystem extends SubsystemBase {
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
     spinnerMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(60).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
+            .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(30).withSupplyCurrentLowerTime(2));
 
     kickerMotor = new TalonFX(IDConstants.KickerMotorID, "rio");
     kickerMotor.setNeutralMode(NeutralModeValue.Brake);
