@@ -52,7 +52,7 @@ public class IntakeSubsystem extends SubsystemBase {
 						.withInverted(InvertedValue.CounterClockwise_Positive));
 		intakeDeployMotor.getConfigurator().apply(
 				new TalonFXConfiguration().MotorOutput
-						.withInverted(IDConstants.PracticeBot ? InvertedValue.CounterClockwise_Positive: InvertedValue.Clockwise_Positive));
+						.withInverted(InvertedValue.Clockwise_Positive));
 
 		intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
 		intakeDeployMotor.getConfigurator()
@@ -138,7 +138,7 @@ public class IntakeSubsystem extends SubsystemBase {
 		else if (timer.get() < 1.5) {
 			// In
 			if (shouldPulse)
-				intakePosition = IntakeConstants.IntakeOutPosition * 0.5;
+				intakePosition = IntakeConstants.IntakeOutPosition * 0.6;
 
 		} else
 			timer.restart();
@@ -146,7 +146,7 @@ public class IntakeSubsystem extends SubsystemBase {
 		intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
 
 		if (intaking || shouldPulse)
-			setIntakeVoltage(5);
+			setIntakeVoltage(12);
 		else if (reversing)
 			setIntakeVoltage(-6);
 		else
