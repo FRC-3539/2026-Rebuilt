@@ -101,6 +101,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    RobotContainer.driveSubsystem.setDriveCurrentLimits(70,90);
+
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -122,7 +124,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.driveSubsystem.setDriveCurrentLimits(30);
+    RobotContainer.driveSubsystem.setDriveCurrentLimits(30,90);
   }
 
   /** This function is called periodically during operator control. */

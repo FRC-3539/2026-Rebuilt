@@ -5,6 +5,7 @@
 package frc.robot.Climber;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
@@ -12,6 +13,7 @@ import frc.robot.RobotContainer;
 public class SetClimberPositionCommand extends Command {
 
   double requestedClimberPosition;
+  Timer timer = new Timer();
   /** Creates a new SetClimberCommand. */
   public SetClimberPositionCommand(double requestedClimberPosition) {
     addRequirements(RobotContainer.climberSubsystem);
@@ -40,7 +42,13 @@ public class SetClimberPositionCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 2);
+    if(MathUtil.isNear(requestedClimberPosition, ClimberSubsystem.getClimberPosition(), 2)){
+      timer.start();
+    }
+    else{ timer.reset();
+
+    }
+    return timer.advanceIfElapsed(1);
     // return true;
 
   }

@@ -66,7 +66,7 @@ public class LEDSubsystem extends SubsystemBase {
 		if (LEDSubsystem.state == state)
 			return;
 
-		System.out.println("set state to " + state.toString());
+		// System.out.println("set state to " + state.toString());
 		LEDSubsystem.state = state;
 
 		switch (state) {

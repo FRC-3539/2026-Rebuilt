@@ -45,6 +45,8 @@ public class ShooterConstants extends BBConstants {
     public static Translation2d FeedLeft= new Translation2d(1, 6.352);
     public static Translation2d FeedRight = new Translation2d(1, 1.717);
     public static Translation2d FeedMiddle = new Translation2d(2.548, 4.035);
+    public static Translation2d FeedLeftTrench= new Translation2d(5.3, 7.4);
+    public static Translation2d FeedRightTrench = new Translation2d(5.3, 0.5);
     // public static Translation2d Turret = new Translation2d(20.768,9.502);
 }
     //old

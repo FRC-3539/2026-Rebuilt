@@ -127,12 +127,12 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	}
 
-	public void setDriveCurrentLimits(double limit) {
+	public void setDriveCurrentLimits(double limit, double statorLimit) {
 		for (int i = 0; i < this.getModules().length; i++) {
 			this.getModule(i).getDriveMotor().getConfigurator()
 					.apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(limit)
 							.withSupplyCurrentLimitEnable(true)
-							.withStatorCurrentLimit(120).withStatorCurrentLimitEnable(true));
+							.withStatorCurrentLimit(statorLimit).withStatorCurrentLimitEnable(true));
 		}
 
 	}

@@ -144,7 +144,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static boolean turretReady() {
         return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 10)
-                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
+                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 10)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly
     }
@@ -216,7 +216,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.2;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.1;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
@@ -245,17 +245,17 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
-        double speed = 
-            // Original regression
-            4.87426 * distanceToTarget + 28.18329
-            // Manual adjustment
-            + 0.3 * distanceToTarget
-            + (Math.max(distanceToTarget - 4.715, 0) / 3.54) * 10;
+        double speed =
+                // Original regression
+                4.87426 * distanceToTarget + 28.18329
+                // Manual adjustment
+                        + 0.3 * distanceToTarget
+                        + (Math.max(distanceToTarget - 4.715, 0) / 3.54) * 10;
         return speed;
     }
 
     public static double calculateFeedSpeed(double distanceToTarget) {
-        double speed = 0.4333 * Math.pow(distanceToTarget, 2) + 0.1842 * distanceToTarget + 31.09767;
+        double speed = 0.4333 * Math.pow(distanceToTarget, 2) + 0.1842 * distanceToTarget + 31.09767 + 6;
         return speed;
     }
 
@@ -356,7 +356,8 @@ public class ShooterSubsystem extends SubsystemBase {
             teleopHideHoodState = true;
         else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 4.627) < .4)
             teleopHideHoodState = true;
-        else teleopHideHoodState = false;
+        else
+            teleopHideHoodState = false;
 
         state.velocity = calculateShotSpeed(distanceToTarget);
 
@@ -371,10 +372,20 @@ public class ShooterSubsystem extends SubsystemBase {
         switch (mode) {
             case AUTO:
                 Translation2d feedTarget;
-                if (RobotContainer.driveSubsystem.getPose2d().getY() < 4.05)
-                    feedTarget = ShooterConstants.FeedRight;
-                else
-                    feedTarget = ShooterConstants.FeedLeft;
+                if (turretLocation.getY() < 4.05) {
+                    if (turretLocation.getX() < 12) {
+                        feedTarget = ShooterConstants.FeedRight;
+                    } else {
+                        feedTarget = ShooterConstants.FeedRightTrench;
+                    }
+                } else {
+                    if (turretLocation.getX() < 12) {
+                        feedTarget = ShooterConstants.FeedLeft;
+                    } else {
+                        feedTarget = ShooterConstants.FeedLeftTrench;
+                    }
+                }
+
                 Translation2d offsetTarget = getOffsetTarget(turretLocation, feedTarget);
                 distanceToTarget = turretLocation.getDistance(offsetTarget);
                 turretAngle = turretLocation.minus(offsetTarget)
@@ -418,7 +429,8 @@ public class ShooterSubsystem extends SubsystemBase {
             teleopHideHoodState = true;
         else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 11.917) < .4)
             teleopHideHoodState = true;
-        else teleopHideHoodState = false;
+        else
+            teleopHideHoodState = false;
 
         state.velocity = calculateFeedSpeed(distanceToTarget);
 
@@ -443,30 +455,36 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("/Turret/RotateTemp", rotateMotor.getDeviceTemp().getValueAsDouble());
 
     }
+
     public static double getTotalCurrentDraw() {
-    double totalDraw = 0;
-    totalDraw += rotateMotor.getSupplyCurrent().getValueAsDouble();
-    totalDraw += hoodMotor.getSupplyCurrent().getValueAsDouble();
-    totalDraw += shootMotorLeader.getSupplyCurrent().getValueAsDouble();
-    totalDraw += shootMotorFollower.getSupplyCurrent().getValueAsDouble();
-    return totalDraw;
+        double totalDraw = 0;
+        totalDraw += rotateMotor.getSupplyCurrent().getValueAsDouble();
+        totalDraw += hoodMotor.getSupplyCurrent().getValueAsDouble();
+        totalDraw += shootMotorLeader.getSupplyCurrent().getValueAsDouble();
+        totalDraw += shootMotorFollower.getSupplyCurrent().getValueAsDouble();
+        return totalDraw;
     }
 
     @Override
     public void periodic() {
         turretLocation = getTurretLocation();
 
-        if (turretLocation.getX() < 5.3) requestedState = getScoringState();
-        else requestedState = getFeedingState();
+        if (turretLocation.getX() < 5.3)
+            requestedState = getScoringState();
+        else
+            requestedState = getFeedingState();
 
+        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35, 88);
+        requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
         // Apply turret calculations
-        // System.out.println(velocityToRotations(requestedState.velocity));
+        // System.out.println(velocityToRotations(requestedState.velocity))
         if (!DriverStation.isTest()) {
             rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
             if (!raiseHoodState || teleopHideHoodState)
                 hoodMotor.setControl(new MotionMagicVoltage(0));
             else
-                hoodMotor.setControl(new MotionMagicVoltage(Math.min(requestedState.hoodAngle, ShooterConstants.HoodSoftMax)));
+                hoodMotor.setControl(
+                        new MotionMagicVoltage(Math.min(requestedState.hoodAngle, ShooterConstants.HoodSoftMax)));
             if (revState)
                 shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
             else
