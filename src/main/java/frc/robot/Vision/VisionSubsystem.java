@@ -201,7 +201,10 @@ public class VisionSubsystem extends Thread {
 	@Override
 	public void run() {
 		/* Run as fast as possible, our signals will control the timing */
+
+		try{
 		while (true) {
+			// currentTimeStamp = Robotcontroller.
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -233,10 +236,13 @@ public class VisionSubsystem extends Thread {
 			if (useVision) {
 				// Left camera
 				if (resultLeft.isPresent()) {
+					System.out.println("left camera has something!");
 					EstimatedRobotPose camPose = resultLeft.get();
 					double timeStamp = camPose.timestampSeconds;
 					Matrix<N3, N1> weights = evaluateMeasurement(resultLeft);
 
+					
+					System.out.println("current timestamp: " + timeStamp + " last timestamp: " + leftLastTimeStamp);
 					if (timeStamp != leftLastTimeStamp) {
 						publishPose2d("/Vision/LeftCamPose", camPose.estimatedPose.toPose2d());
 						SmartDashboard.putString("/Vision/LeftWeights", weights.toString());
@@ -300,4 +306,9 @@ public class VisionSubsystem extends Thread {
 			log();
 		}
 	}
+	catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
