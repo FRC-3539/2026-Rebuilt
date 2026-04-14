@@ -4,12 +4,15 @@
 
 package frc.robot.Intake;
 
+import java.util.Map;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -143,7 +146,13 @@ public class IntakeSubsystem extends SubsystemBase {
 		} else
 			timer.restart();
 
-		intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
+		if (getIntakeDeployRotations() > IntakeConstants.IntakeOutPosition - 1
+				&& intakePosition == IntakeConstants.IntakeOutPosition) {
+			intakeDeployMotor.setControl(new TorqueCurrentFOC(5));
+		} else {
+			intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
+
+		}
 
 		if (intaking || shouldPulse)
 			setIntakeVoltage(12);
