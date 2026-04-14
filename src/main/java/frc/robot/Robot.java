@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
 
     // 3. Convert to Celsius
     double tempC = steinhart - 273.15;
-    SmartDashboard.putNumber("/Robot/TempSensor", tempC);
+    SmartDashboard.putNumber("/Robot/TempSensor", resistance);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
