@@ -13,7 +13,7 @@ public class IntakeConstants extends BBConstants {
     /* =================== DO NOT MODIFY BELOW =================== */
     public static double IntakeDeploySoftMin = 0.0;
     /** Was 5.4 */
-    public static double IntakeDeploySoftMax = 10.5;
+    public static double IntakeDeploySoftMax = 12;
     public static double IntakeDeployP = 40.0;
     public static double IntakeDeployI = 0.0;
     public static double IntakeDeployD = 0.0;

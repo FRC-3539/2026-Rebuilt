@@ -146,9 +146,9 @@ public class IntakeSubsystem extends SubsystemBase {
 		} else
 			timer.restart();
 
-		if (getIntakeDeployRotations() > IntakeConstants.IntakeOutPosition - 1
+		if (getIntakeDeployRotations() > IntakeConstants.IntakeOutPosition - .4 && DriverStation.isAutonomous()
 				&& intakePosition == IntakeConstants.IntakeOutPosition) {
-			intakeDeployMotor.setControl(new TorqueCurrentFOC(5));
+			intakeDeployMotor.setControl(new TorqueCurrentFOC(35));
 		} else {
 			intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
 
