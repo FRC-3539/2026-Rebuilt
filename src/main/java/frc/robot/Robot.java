@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 
     // 1. Calculate Resistance
     // Rearranged voltage divider: R_therm = R_fixed * (Vin / Vout - 1)
-    double resistance = R_FIXED * (5.0 / voltage - 1.0);
+    double resistance = (5*(10.0/voltage))*1000;
 
     // 2. Beta Equation calculation
     double steinhart;
