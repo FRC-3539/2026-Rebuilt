@@ -144,7 +144,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static boolean turretReady() {
         return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 10)
-                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 10)
+                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly
     }
@@ -216,9 +216,10 @@ public class ShooterSubsystem extends SubsystemBase {
         double distanceToTarget = Math.sqrt(Math.pow(
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.1;
+        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.2;
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
+
 
         // Step 3: adjust the target point by the distance the robot travels in the
         // above time

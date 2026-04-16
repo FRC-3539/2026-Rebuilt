@@ -236,13 +236,13 @@ public class VisionSubsystem extends Thread {
 			if (useVision) {
 				// Left camera
 				if (resultLeft.isPresent()) {
-					System.out.println("left camera has something!");
+					// System.out.println("left camera has something!");
 					EstimatedRobotPose camPose = resultLeft.get();
 					double timeStamp = camPose.timestampSeconds;
 					Matrix<N3, N1> weights = evaluateMeasurement(resultLeft);
 
 					
-					System.out.println("current timestamp: " + timeStamp + " last timestamp: " + leftLastTimeStamp);
+					// System.out.println("current timestamp: " + timeStamp + " last timestamp: " + leftLastTimeStamp);
 					if (timeStamp != leftLastTimeStamp) {
 						publishPose2d("/Vision/LeftCamPose", camPose.estimatedPose.toPose2d());
 						SmartDashboard.putString("/Vision/LeftWeights", weights.toString());
