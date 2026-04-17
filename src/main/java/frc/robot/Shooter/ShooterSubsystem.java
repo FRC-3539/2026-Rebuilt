@@ -197,6 +197,8 @@ public class ShooterSubsystem extends SubsystemBase {
         double dy = direction.getSin();
 
         double dot = offset.getX() * dx + offset.getY() * dy;
+        scale = (dot >= 0) ? 0.8 : 1.1;
+
         return offset.plus(new Translation2d(dx * (scale - 1) * dot, dy * (scale - 1) * dot));
     }
 
@@ -217,6 +219,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 turret.getDistance(target), 2)
                 + Math.pow(2.05, 2));
         double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.2;
+
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
@@ -226,10 +229,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // TEST
         Translation2d offsetAmount = new Translation2d(-robotVelocityX * timeToTarget, -robotVelocityY * timeToTarget);
-        // Translation2d scaledOffset = scaleOffset(offsetAmount,
-        // turret.minus(target).getAngle(), 1.1);
+        SmartDashboard.putNumber("Offset/Original", offsetAmount.getNorm());
 
-        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(offsetAmount);
+        Translation2d scaledOffset = scaleOffset(offsetAmount, turret.minus(target).getAngle(), 1.1);
+        SmartDashboard.putNumber("Offset/Scaled", scaledOffset.getNorm());
+
+        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(scaledOffset);
 
         return offsetTarget;
     }
