@@ -329,6 +329,12 @@
       }
     },
     {
+      "name": "RightBumpPosition",
+      "waypointRelativePos": 2.72,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
       "name": "AutonPulseCommand",
       "waypointRelativePos": 3.0213399503721976,
       "endWaypointRelativePos": 3.9344913151364818,
@@ -419,7 +425,7 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right Paths",
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": 90.0

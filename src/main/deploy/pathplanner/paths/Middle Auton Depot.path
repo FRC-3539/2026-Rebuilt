@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6206024096385543,
-        "y": 5.969204819277109
+        "x": 3.5710843373493972,
+        "y": 4.024072289156626
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6206024096385543,
-        "y": 5.969204819277109
+        "x": 3.0356265060240952,
+        "y": 4.898289156626505
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.045,
-        "y": 4.57
+        "x": 0.6206024096385543,
+        "y": 5.969204819277109
       },
       "prevControl": {
-        "x": 1.045,
-        "y": 5.57
+        "x": 2.828602409638555,
+        "y": 5.969204819277109
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,20 +33,9 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "ClimbDeployCommand",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": 1.0,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "ClimbDeployCommand"
-        }
-      }
-    },
-    {
       "name": "RevCommand",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 1.0,
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.8722090261282636,
       "command": {
         "type": "named",
         "data": {
@@ -55,8 +44,19 @@
       }
     },
     {
-      "name": "ShootCommand",
+      "name": "IntakeDeployCommand",
       "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeDeployCommand"
+        }
+      }
+    },
+    {
+      "name": "ShootCommand",
+      "waypointRelativePos": 0.29263657957244693,
       "endWaypointRelativePos": 1.0,
       "command": {
         "type": "named",
@@ -67,9 +67,14 @@
     },
     {
       "name": "IntakeBallCommand",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
+      "waypointRelativePos": 0.8168734491315177,
+      "endWaypointRelativePos": 1.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeBallCommand"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -82,10 +87,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Middle Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

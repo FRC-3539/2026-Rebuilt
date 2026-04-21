@@ -3,16 +3,16 @@
   "robotLength": 0.8,
   "holonomicMode": true,
   "pathFolders": [
-    "Done Paths",
-    "Left Start Points",
-    "WIP 4-20",
+    "Middle Paths",
+    "Left Paths",
     "Other Start Points",
-    "Right Start Points"
+    "Right Paths",
+    "WIP 4-20"
   ],
   "autoFolders": [
-    "Left Side Start",
-    "Other",
-    "Right Side Start",
+    "Left Autos",
+    "Middle Autos",
+    "Right Autos",
     "WIP 4-20"
   ],
   "defaultMaxVel": 3.0,

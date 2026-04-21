@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "poopoo auton pt. 1"
+            "pathName": "Middle Auton Depot"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "poopoo auton pt. 2"
+            "pathName": "Middle Auton Climb"
           }
         },
         {
@@ -94,6 +94,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Middle Autos",
   "choreoAuto": false
 }
