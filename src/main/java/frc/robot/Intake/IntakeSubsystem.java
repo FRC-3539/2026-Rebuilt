@@ -141,7 +141,7 @@ public class IntakeSubsystem extends SubsystemBase {
 		else if (timer.get() < 1.5) {
 			// In
 			if (shouldPulse)
-				intakePosition = IntakeConstants.IntakeOutPosition * 0.5;
+				intakePosition = IntakeConstants.IntakeOutPosition * 0.4;
 
 		} else
 			timer.restart();

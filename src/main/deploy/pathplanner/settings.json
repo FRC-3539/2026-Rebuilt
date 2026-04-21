@@ -5,14 +5,15 @@
   "pathFolders": [
     "Done Paths",
     "Left Start Points",
+    "WIP 4-20",
     "Other Start Points",
     "Right Start Points"
   ],
   "autoFolders": [
     "Left Side Start",
-    "WIP",
     "Other",
-    "Right Side Start"
+    "Right Side Start",
+    "WIP 4-20"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

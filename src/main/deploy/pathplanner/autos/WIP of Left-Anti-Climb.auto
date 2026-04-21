@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Anti Outpost"
+            "pathName": "Left Anti Climb"
           }
         },
         {
@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "IntakeBallCommand"
+                  "name": "ShootCommand"
                 }
               },
               {
@@ -35,22 +35,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ShootCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ClimbDeployCommand"
+                  "name": "AutonPulseCommand"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Tower"
           }
         },
         {
@@ -63,6 +51,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "WIP",
+  "folder": "WIP 4-20",
   "choreoAuto": false
 }

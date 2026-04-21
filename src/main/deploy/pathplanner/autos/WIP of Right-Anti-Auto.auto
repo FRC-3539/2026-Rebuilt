@@ -5,9 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.1
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Left Anti Climb"
+            "pathName": "WIP of Right Anti Outpost"
           }
         },
         {
@@ -17,19 +23,19 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootCommand"
+                  "waitTime": 6.067
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "RevCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootCommand"
                 }
               },
               {
@@ -51,6 +57,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "WIP",
+  "folder": "WIP 4-20",
   "choreoAuto": false
 }
