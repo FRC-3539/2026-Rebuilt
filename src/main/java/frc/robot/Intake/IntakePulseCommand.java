@@ -15,10 +15,10 @@ import frc.robot.Constants.IntakeConstants;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakePulseCommand extends SequentialCommandGroup {
   /** Creates a new IntakePulseCommand. */
-  public IntakePulseCommand(boolean auton) {
+  public IntakePulseCommand() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetIntakeCommand(IntakeConstants.IntakeOutPosition*0.4), new IntakeBallCommand().withTimeout(.5),
-        new SetIntakeCommand(IntakeConstants.IntakeOutPosition + (auton ? 0.3 : 0)), new IntakeBallCommand().withTimeout(1));
+    addCommands(new SetIntakeCommand(IntakeConstants.IntakeOutPosition*0.4), new WaitCommand(0.5),
+        new SetIntakeCommand(IntakeConstants.IntakeOutPosition));
   }
 }

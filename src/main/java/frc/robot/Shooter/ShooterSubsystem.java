@@ -143,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static boolean turretReady() {
-        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 10)
+        return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 5)
                 && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly
@@ -215,14 +215,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Step 2: Calculate time for shot to hit target from distance
         // double distanceToTarget =
-        double distanceToTarget = Math.sqrt(Math.pow(
-                turret.getDistance(target), 2)
-                + Math.pow(2.05, 2));
-        double timeToTarget = -0.000178 * Math.pow(distanceToTarget, 2) + 0.044045 * distanceToTarget + 0.576042 + 0.2;
+        double distanceToTarget = turret.getDistance(target);
+        double timeToTarget = 0.213162 + 0.669271 * distanceToTarget - 0.148146 * Math.pow(distanceToTarget, 2)
+                + 0.011309 * Math.pow(distanceToTarget, 3)
+                //manual adjust
+                -0.20;
 
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
-
 
         // Step 3: adjust the target point by the distance the robot travels in the
         // above time
@@ -234,13 +234,13 @@ public class ShooterSubsystem extends SubsystemBase {
         Translation2d scaledOffset = scaleOffset(offsetAmount, turret.minus(target).getAngle(), 1.1);
         SmartDashboard.putNumber("Offset/Scaled", scaledOffset.getNorm());
 
-        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(scaledOffset);
+        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(offsetAmount);
 
         return offsetTarget;
     }
 
     public static double calculateHoodShotAngle(double distanceToTarget) {
-        double angle = -0.053169 * Math.pow(distanceToTarget, 2) + 0.810263 * distanceToTarget - 0.552642;
+        double angle = (distanceToTarget - 1.4) / 7.0 * 2.5;
         return angle;
     }
 
@@ -251,12 +251,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
-        double speed =
-                // Original regression
-                4.87426 * distanceToTarget + 28.18329
-                // Manual adjustment
-                        + 0.3 * distanceToTarget
-                        + (Math.max(distanceToTarget - 4.715, 0) / 3.54) * 10;
+        double speed = 20.72878
+                + (5.564528 + 0.15) * (distanceToTarget)
+                - 0.926687 * Math.pow(distanceToTarget, 2)
+                + 0.093775 * Math.pow(distanceToTarget, 3)
+                // Manuel Adjustments
+                - 1;
         return speed;
     }
 
@@ -356,6 +356,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
         state.rotation = turretTargetAngle;
 
+        SmartDashboard.putNumber("/Turret/DistanceToTarget", distanceToTarget);
+
         // Calculate hood angle and shot speed
         state.hoodAngle = calculateHoodShotAngle(distanceToTarget);
         if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
@@ -379,17 +381,12 @@ public class ShooterSubsystem extends SubsystemBase {
             case AUTO:
                 Translation2d feedTarget;
                 if (turretLocation.getY() < 4.05) {
-                    if (turretLocation.getX() < 12) {
-                        feedTarget = ShooterConstants.FeedRight;
-                    } else {
-                        feedTarget = ShooterConstants.FeedRightTrench;
-                    }
+                    feedTarget = ShooterConstants.FeedRight;
+
                 } else {
-                    if (turretLocation.getX() < 12) {
-                        feedTarget = ShooterConstants.FeedLeft;
-                    } else {
-                        feedTarget = ShooterConstants.FeedLeftTrench;
-                    }
+
+                    feedTarget = ShooterConstants.FeedLeft;
+
                 }
 
                 Translation2d offsetTarget = getOffsetTarget(turretLocation, feedTarget);
@@ -428,6 +425,8 @@ public class ShooterSubsystem extends SubsystemBase {
             turretTargetAngle += 360;
 
         state.rotation = turretTargetAngle;
+        SmartDashboard.putNumber("/Turret/DistanceToTarget", distanceToTarget);
+
 
         // Calculate hood angle and shot speed
         state.hoodAngle = 2.5;
@@ -480,8 +479,11 @@ public class ShooterSubsystem extends SubsystemBase {
         else
             requestedState = getFeedingState();
 
-        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35, 88);
+        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 82);
         requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
+
+        log();
+
         // Apply turret calculations
         // System.out.println(velocityToRotations(requestedState.velocity))
         if (!DriverStation.isTest()) {
@@ -501,11 +503,5 @@ public class ShooterSubsystem extends SubsystemBase {
             rotateMotor.setControl(new VoltageOut(0));
         }
 
-        // shootMotorLeader.setControl(velocityVoltageControl.withVelocity(50));
-        // System.out.println(hoodAngleToRotations(minHoodAngle + 5));
-        // hoodMotor.setControl(new MotionMagicVoltage(hoodAngleToRotations(minHoodAngle
-        // + 5)));
-
-        log();
     }
 }

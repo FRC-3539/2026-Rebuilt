@@ -36,8 +36,6 @@ public class IntakeSubsystem extends SubsystemBase {
 	static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
 	private static Timer timer = new Timer();
 
-	public static Command intakePulse = new IntakePulseCommand(false);
-
 	public IntakeSubsystem() {
 		intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
 		intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
@@ -126,11 +124,12 @@ public class IntakeSubsystem extends SubsystemBase {
 		}
 
 		double intakePosition = requestedIntakeDeploy;
-		boolean shouldPulse = (RobotContainer.operatorController.rightTrigger().getAsBoolean()
+		boolean shouldPulse = 
+		/*(RobotContainer.operatorController.rightTrigger().getAsBoolean()
 				&& !RobotContainer.operatorLeftStickUp.getAsBoolean()
 				&& RobotContainer.driveSubsystem.getPose2d().getX() < 5.3
 				&& requestedIntakeDeploy > 1)
-				|| autonPulse;
+				||*/ autonPulse;
 
 		if (timer.get() < 1) {
 			// Out

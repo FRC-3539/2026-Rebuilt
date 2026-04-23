@@ -117,8 +117,9 @@ public class RobotContainer {
     // Intake Commands
     // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
     operatorLeftStickUp.whileTrue(new IntakeBallCommand());
-    operatorLeftStickUp.onTrue(new InstantCommand(() -> IntakeSubsystem.intakePulse.cancel()).andThen(new SetIntakeCommand(IntakeConstants.IntakeOutPosition)));
+    operatorLeftStickUp.onTrue(new SetIntakeCommand(IntakeConstants.IntakeOutPosition));
     operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
+    operatorController.leftBumper().onTrue(new IntakePulseCommand());
 
     // Drive Set Positions
 
@@ -181,6 +182,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
     NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
+    NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
+    NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
 
     chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(chooser);

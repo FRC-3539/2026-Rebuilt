@@ -199,6 +199,10 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 		return totalDraw;
 	}
 
+	public void setOdometry(double x, double y) {
+		this.getState().Pose = new Pose2d(x, y, this.getState().Pose.getRotation());
+	}
+
 	@Override
 	public void periodic() {
 		double time = DriverStation.getMatchTime();

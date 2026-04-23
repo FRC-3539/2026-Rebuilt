@@ -5,9 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.1
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Left Anti Climb"
+            "pathName": "Right Follow Path"
           }
         },
         {
@@ -23,13 +29,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ShootCommand"
+                  "name": "RevCommand"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "RevCommand"
+                  "name": "ShootCommand"
                 }
               },
               {
@@ -51,6 +57,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "WIP 4-20",
+  "folder": "Right Autos",
   "choreoAuto": false
 }

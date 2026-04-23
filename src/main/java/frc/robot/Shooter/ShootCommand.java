@@ -31,8 +31,9 @@ public class ShootCommand extends Command {
   @Override
   public void execute() {
     if (ShooterSubsystem.turretReady()) { // && timer.get() < 1.5) {
-      HopperSubsystem.setKickerVelocity(ShooterSubsystem.getRequestedShootVelocity() * 4 / 2.25);
+      HopperSubsystem.setKickerVelocity(ShooterSubsystem.getShooterVelocity() * 4 / 2.25);
       HopperSubsystem.setSpinnerMotor(HopperConstants.SpinnerVoltage);
+
     }
     // else if (timer.get() < 1.75){
     //   HopperSubsystem.setKickerVelocity(-10);
