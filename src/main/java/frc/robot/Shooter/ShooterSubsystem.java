@@ -5,6 +5,7 @@
 package frc.robot.Shooter;
 
 import org.frcteam3539.Byte_Swerve_Lib.math.MathUtils;
+import org.opencv.core.Mat;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CommutationConfigs;
@@ -143,10 +144,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static boolean turretReady() {
+        
         return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 5)
-                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
-                && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
-        // TODO: Make threshhold smaller if it doesnt work properly
+        && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
+        && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
+        // TODO: Make threshhold smaller if it doesnt work properly;
     }
 
     public static double turretAngleToRotations(double degrees) {
@@ -216,10 +218,16 @@ public class ShooterSubsystem extends SubsystemBase {
         // Step 2: Calculate time for shot to hit target from distance
         // double distanceToTarget =
         double distanceToTarget = turret.getDistance(target);
-        double timeToTarget = 0.213162 + 0.669271 * distanceToTarget - 0.148146 * Math.pow(distanceToTarget, 2)
-                + 0.011309 * Math.pow(distanceToTarget, 3)
-                //manual adjust
-                -0.20;
+        double timeToTarget = 0;
+        if (turretLocation.getX() < 5.3) {
+
+            timeToTarget = 0.213162 + 0.669271 * distanceToTarget - 0.148146 * Math.pow(distanceToTarget, 2)
+                    + 0.011309 * Math.pow(distanceToTarget, 3)
+                    // manual adjust
+                    - 0.20;
+        } else {
+            timeToTarget = 0.07371219 * distanceToTarget + 0.790204;
+        }
 
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
@@ -261,7 +269,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateFeedSpeed(double distanceToTarget) {
-        double speed = 0.4333 * Math.pow(distanceToTarget, 2) + 0.1842 * distanceToTarget + 31.09767 + 6;
+        double speed = 25.290074 - .79563 * distanceToTarget + 0.328796 * Math.pow(distanceToTarget, 2);
         return speed;
     }
 
@@ -427,7 +435,6 @@ public class ShooterSubsystem extends SubsystemBase {
         state.rotation = turretTargetAngle;
         SmartDashboard.putNumber("/Turret/DistanceToTarget", distanceToTarget);
 
-
         // Calculate hood angle and shot speed
         state.hoodAngle = 2.5;
         if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 11.917) < .4)
@@ -488,15 +495,17 @@ public class ShooterSubsystem extends SubsystemBase {
         // System.out.println(velocityToRotations(requestedState.velocity))
         if (!DriverStation.isTest()) {
             rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
+            // return;
             if (!raiseHoodState || teleopHideHoodState)
-                hoodMotor.setControl(new MotionMagicVoltage(0));
+            hoodMotor.setControl(new MotionMagicVoltage(0));
             else
-                hoodMotor.setControl(
-                        new MotionMagicVoltage(Math.min(requestedState.hoodAngle, ShooterConstants.HoodSoftMax)));
+            hoodMotor.setControl(
+            new MotionMagicVoltage(Math.min(requestedState.hoodAngle,
+            ShooterConstants.HoodSoftMax)));
             if (revState)
-                shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
+            shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
             else
-                shootMotorLeader.setControl(new VoltageOut(0));
+            shootMotorLeader.setControl(new VoltageOut(0));
         } else {
             shootMotorLeader.setControl(new VoltageOut(0));
             hoodMotor.setControl(new VoltageOut(0));
