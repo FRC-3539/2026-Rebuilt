@@ -64,12 +64,6 @@
           "name": "ShootCommand"
         }
       }
-    },
-    {
-      "name": "IntakeBallCommand",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
     }
   ],
   "globalConstraints": {

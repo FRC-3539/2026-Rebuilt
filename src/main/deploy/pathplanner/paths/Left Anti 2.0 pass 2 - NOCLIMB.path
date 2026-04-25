@@ -64,11 +64,11 @@
     },
     {
       "anchor": {
-        "x": 4.008192771084337,
+        "x": 4.1,
         "y": 7.466301204819277
       },
       "prevControl": {
-        "x": 6.639036144578314,
+        "x": 6.730843373493976,
         "y": 7.498879518072288
       },
       "nextControl": null,
@@ -127,7 +127,7 @@
     {
       "name": "IntakeBallCommand",
       "waypointRelativePos": 0.18362282878415442,
-      "endWaypointRelativePos": 3.695961995249415,
+      "endWaypointRelativePos": 3.7,
       "command": {
         "type": "named",
         "data": {

@@ -11,7 +11,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 19.2
+                  "waitTime": 20.0
                 }
               },
               {
@@ -21,7 +21,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Right Anti 2.0 pass 1"
+                        "pathName": "Left Anti 2.0 pass 1"
                       }
                     },
                     {
@@ -31,7 +31,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 5.0
+                              "waitTime": 6.0
                             }
                           },
                           {
@@ -57,7 +57,7 @@
                                       {
                                         "type": "wait",
                                         "data": {
-                                          "waitTime": 8.0
+                                          "waitTime": 5.0
                                         }
                                       },
                                       {
@@ -84,7 +84,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Right Anti 2.0 pass 2 - NOCLIMB"
+                        "pathName": "Left Anti 2.0 pass 2 - NOCLIMB"
                       }
                     },
                     {
@@ -94,7 +94,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 5.0
+                              "waitTime": 10.0
                             }
                           },
                           {
@@ -110,9 +110,35 @@
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "AutonPulseCommand"
+                              "commands": [
+                                {
+                                  "type": "deadline",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 2.0
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AutonPulseCommand"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "IntakeRetractCommand"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -123,11 +149,17 @@
               }
             ]
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeRetractCommand"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Right Autos",
+  "folder": "Left Autos",
   "choreoAuto": false
 }

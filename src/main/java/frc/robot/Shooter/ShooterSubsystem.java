@@ -264,7 +264,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 1;
+                - 0.25;
         return speed;
     }
 
