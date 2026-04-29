@@ -144,10 +144,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static boolean turretReady() {
-        
         return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 5)
-        && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), 5)
-        && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
+                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), turretLocation.getX() < 5.3 ? 5 : 10)
+                && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly;
     }
 
@@ -194,12 +193,13 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withMotionMagicCruiseVelocity(ShooterConstants.HoodCruiseVelocity));
     }
 
+    // Used for scaling towards/away SOTM adjustment
     public static Translation2d scaleOffset(Translation2d offset, Rotation2d direction, double scale) {
         double dx = direction.getCos();
         double dy = direction.getSin();
 
         double dot = offset.getX() * dx + offset.getY() * dy;
-        scale = (dot >= 0) ? 0.8 : 1.1;
+        scale = (dot >= 0) ? 0.9 : 1.2;
 
         return offset.plus(new Translation2d(dx * (scale - 1) * dot, dy * (scale - 1) * dot));
     }
@@ -242,7 +242,7 @@ public class ShooterSubsystem extends SubsystemBase {
         Translation2d scaledOffset = scaleOffset(offsetAmount, turret.minus(target).getAngle(), 1.1);
         SmartDashboard.putNumber("Offset/Scaled", scaledOffset.getNorm());
 
-        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(offsetAmount);
+        Translation2d offsetTarget = new Translation2d(target.getX(), target.getY()).plus(scaledOffset);
 
         return offsetTarget;
     }
@@ -260,11 +260,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static double calculateShotSpeed(double distanceToTarget) {
         double speed = 20.72878
-                + (5.564528 + 0.15) * (distanceToTarget)
+                + (5.564528 + 0.25) * (distanceToTarget)
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 0.25;
+                - 1 + 3;
         return speed;
     }
 
@@ -390,11 +390,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 Translation2d feedTarget;
                 if (turretLocation.getY() < 4.05) {
                     feedTarget = ShooterConstants.FeedRight;
-
                 } else {
-
                     feedTarget = ShooterConstants.FeedLeft;
-
                 }
 
                 Translation2d offsetTarget = getOffsetTarget(turretLocation, feedTarget);
@@ -486,7 +483,7 @@ public class ShooterSubsystem extends SubsystemBase {
         else
             requestedState = getFeedingState();
 
-        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 82);
+        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 85);
         requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
 
         log();
@@ -497,20 +494,19 @@ public class ShooterSubsystem extends SubsystemBase {
             rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
             // return;
             if (!raiseHoodState || teleopHideHoodState)
-            hoodMotor.setControl(new MotionMagicVoltage(0));
+                hoodMotor.setControl(new MotionMagicVoltage(0));
             else
-            hoodMotor.setControl(
-            new MotionMagicVoltage(Math.min(requestedState.hoodAngle,
-            ShooterConstants.HoodSoftMax)));
+                hoodMotor.setControl(
+                        new MotionMagicVoltage(Math.min(requestedState.hoodAngle,
+                                ShooterConstants.HoodSoftMax)));
             if (revState)
-            shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
+                shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
             else
-            shootMotorLeader.setControl(new VoltageOut(0));
+                shootMotorLeader.setControl(new VoltageOut(0));
         } else {
             shootMotorLeader.setControl(new VoltageOut(0));
             hoodMotor.setControl(new VoltageOut(0));
             rotateMotor.setControl(new VoltageOut(0));
         }
-
     }
 }
