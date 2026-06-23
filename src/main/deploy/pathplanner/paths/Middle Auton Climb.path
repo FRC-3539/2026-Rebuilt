@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6206024096385543,
+        "x": 0.545,
         "y": 5.969204819277109
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6206024096385543,
+        "x": 1.545,
         "y": 5.969204819277109
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.045,
-        "y": 4.57
+        "x": 1.11,
+        "y": 4.56
       },
       "prevControl": {
-        "x": 1.045,
-        "y": 5.57
+        "x": 1.11,
+        "y": 5.56
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Tower"
     }
   ],
   "rotationTargets": [],

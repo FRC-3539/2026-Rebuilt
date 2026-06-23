@@ -33,8 +33,6 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
@@ -67,22 +65,12 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
 	Field2d field = new Field2d();
 
-	public static HashMap<ParentDevice, Alert> connectedDriveAlerts = new HashMap<>();
-	public static HashMap<ParentDevice, Alert> wasDisconnectedDriveAlerts = new HashMap<>();
 
 	private Command shortRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand());
 	private Command doubleRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand())
 			.andThen(new WaitCommand(0.3))
 			.andThen(new ParallelDeadlineGroup(new WaitCommand(0.4), new RumbleCommand()));
 	private Command longRumbleCommand = new ParallelDeadlineGroup(new WaitCommand(1.5), new RumbleCommand());
-
-	private void createAlert(ParentDevice device, String deviceName) {
-		Alert isAlert = new Alert("Drive Subsystem", deviceName + ": is disconnected", AlertType.kError);
-		connectedDriveAlerts.put(device, isAlert);
-		Alert wasAlert = new Alert("Drive Subsystem", deviceName + ": was disconnected", AlertType.kError);
-		wasDisconnectedDriveAlerts.put(device, wasAlert);
-	}
-
 	public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants,
 			SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>... modules) {
 		super(TalonFX::new, TalonFX::new, CANcoder::new, driveTrainConstants, modules);
@@ -115,15 +103,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 				new HolonomicFeedforward(FEEDFORWARD_CONSTANTS));
 
 		SmartDashboard.putData("Field", field);
-
-		createAlert(this.getModule(0).getSteerMotor(), "FrontLeftSteer");
-		createAlert(this.getModule(0).getDriveMotor(), "FrontLeftDrive");
-		createAlert(this.getModule(1).getSteerMotor(), "FrontRightSteer");
-		createAlert(this.getModule(1).getDriveMotor(), "FrontRightDrive");
-		createAlert(this.getModule(2).getSteerMotor(), "BackLeftSteer");
-		createAlert(this.getModule(2).getDriveMotor(), "BackLeftDrive");
-		createAlert(this.getModule(3).getSteerMotor(), "BackRightSteer");
-		createAlert(this.getModule(3).getDriveMotor(), "BackRightDrive");
 
 	}
 
@@ -324,21 +303,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 					}
 					break;
 			}
-		}
 
-		for (ParentDevice device : connectedDriveAlerts.keySet()) {
-			Alert isAlert = connectedDriveAlerts.get(device);
-			Alert wasAlert = wasDisconnectedDriveAlerts.get(device);
-
-			if (!device.isConnected()) {
-				isAlert.set(true);
-				wasAlert.set(false);
-
-			} else if (isAlert.get()) {
-				isAlert.set(false);
-				wasAlert.set(true);
-
-			}
 		}
 
 		if (Robot.isSimulation()) {

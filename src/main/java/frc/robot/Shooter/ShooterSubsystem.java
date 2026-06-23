@@ -145,7 +145,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static boolean turretReady() {
         return MathUtil.isNear(requestedState.rotation, getTurretRotation(), 5)
-                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), turretLocation.getX() < 5.3 ? 5 : 10)
+                && MathUtil.isNear(requestedState.velocity, getShooterVelocity(), turretLocation.getX() < 8 ? 5 : turretLocation.getX() < 11 ? 15 : 30)
                 && MathUtil.isNear(requestedState.hoodAngle, getHoodAngle(), .2);
         // TODO: Make threshhold smaller if it doesnt work properly;
     }
@@ -229,6 +229,8 @@ public class ShooterSubsystem extends SubsystemBase {
             timeToTarget = 0.07371219 * distanceToTarget + 0.790204;
         }
 
+
+        // }
         // double timeToTarget = -0.007 * (distanceToTarget * distanceToTarget) + 0.265
         // * distanceToTarget + 1.35;
 
@@ -264,12 +266,15 @@ public class ShooterSubsystem extends SubsystemBase {
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 1 + 3;
+                - 1 + 2;    
         return speed;
     }
 
     public static double calculateFeedSpeed(double distanceToTarget) {
-        double speed = 25.290074 - .79563 * distanceToTarget + 0.328796 * Math.pow(distanceToTarget, 2);
+        double speed = 25.290074 - .79563 * distanceToTarget + 0.328796 * Math.pow(distanceToTarget, 2) + 5;
+        if (turretLocation.getX() > 11.9) {
+            speed = 83;
+        }
         return speed;
     }
 
@@ -483,7 +488,7 @@ public class ShooterSubsystem extends SubsystemBase {
         else
             requestedState = getFeedingState();
 
-        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 85);
+        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 83);
         requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
 
         log();
