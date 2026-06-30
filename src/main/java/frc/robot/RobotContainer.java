@@ -112,6 +112,7 @@ public class RobotContainer {
     driveSubsystem.setDefaultCommand(new DriveCommand());
 
     // Link commands to controller buttons here
+    operatorController.rightTrigger(.2).whileTrue(new ShootCommand());
   }
 
   public void putAutons() {
