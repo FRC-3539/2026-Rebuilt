@@ -149,10 +149,10 @@ public class LEDSubsystem extends SubsystemBase {
 			setLEDs(LEDState.RED);
 			return;
 		}
-		if (ClimberSubsystem.getClimberPosition() > 20) {
-			setLEDs(LEDState.GREEN);
-			return;
-		}
+		// if (ClimberSubsystem.getClimberPosition() > 20) {
+		// 	setLEDs(LEDState.GREEN);
+		// 	return;
+		// }
 		// If we are climbing, it will gradually increase the LED bar with a rainbow loading bar.
 		// if( ClimberPosition > 25 ){
 		// 	setLEDs(LEDState.);

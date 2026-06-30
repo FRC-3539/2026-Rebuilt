@@ -29,94 +29,23 @@ import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
-	/** Creates a new IntakeSubsystem. */
-	private static TalonFX intakeMotor, intakeDeployMotor;
-	private static double requestedIntakeDeploy;
-	public static boolean autonPulse = false, intaking = false, reversing = false;
-	static VelocityVoltage velocityVoltageControl = new VelocityVoltage(0).withEnableFOC(false);
+  	// Create (declare) objects here
 	private static Timer timer = new Timer();
 
 	public IntakeSubsystem() {
-		intakeMotor = new TalonFX(IDConstants.IntakeMotorID, "CANivore");
-		intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
-		timer.start();
-
-		intakeMotor.getConfigurator()
-				.apply(new CurrentLimitsConfigs()
-						.withStatorCurrentLimitEnable(false)
-						.withSupplyCurrentLimitEnable(true)
-						.withSupplyCurrentLimit(70)
-						.withSupplyCurrentLowerLimit(45)
-						.withSupplyCurrentLowerTime(2));
-		intakeMotor.getConfigurator().apply(
-				new TalonFXConfiguration().MotorOutput
-						.withInverted(InvertedValue.CounterClockwise_Positive));
-		intakeDeployMotor.getConfigurator().apply(
-				new TalonFXConfiguration().MotorOutput
-						.withInverted(InvertedValue.Clockwise_Positive));
-
-		intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
-		intakeDeployMotor.getConfigurator()
-				.apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
-						.withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(40).withSupplyCurrentLowerTime(2));
-		intakeDeployMotor.getConfigurator().apply(new SoftwareLimitSwitchConfigs()
-				.withForwardSoftLimitEnable(true)
-				.withForwardSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMax)
-				.withReverseSoftLimitEnable(true)
-				.withReverseSoftLimitThreshold(IntakeConstants.IntakeDeploySoftMin));
-		intakeDeployMotor.getConfigurator().apply(new SlotConfigs()
-				.withKP(IntakeConstants.IntakeDeployP)
-				.withKI(IntakeConstants.IntakeDeployI)
-				.withKD(IntakeConstants.IntakeDeployD));
-		intakeDeployMotor.getConfigurator().apply(new MotionMagicConfigs()
-				.withMotionMagicAcceleration(IntakeConstants.IntakeDeployAcceleration)
-				.withMotionMagicCruiseVelocity(IntakeConstants.IntakeDeployCruiseVelocity));
-
-		intakeMotor.getConfigurator().apply(new MotionMagicConfigs()
-				.withMotionMagicAcceleration(IntakeConstants.IntakeAcceleration));
-		intakeMotor.getConfigurator().apply(new SlotConfigs()
-				.withKP(IntakeConstants.IntakeP).withKV(IntakeConstants.IntakeV));
+    	// Set up (initialize) objects here
 	}
 
-	public static void setIntakeDeployPosition(double request) {
-		requestedIntakeDeploy = request;
-	}
-
-	public static void zeroIntakeDeployMotor() {
-		intakeDeployMotor.setPosition(0);
-	}
-
-	public static double getIntakeDeployRotations() {
-		return intakeDeployMotor.getPosition().getValueAsDouble();
-	}
-
-	public static void setIntakeVoltage(double voltage) {
-		intakeMotor.setControl(new VoltageOut(voltage).withEnableFOC(false));
-	}
-
-	public static void setIntakeSpeed(double speed) {
-		intakeMotor.setControl(velocityVoltageControl.withVelocity(speed));
-
-	}
-
-	public static double getTotalCurrentDraw() {
-		double totalDraw = 0;
-		totalDraw += intakeMotor.getSupplyCurrent().getValueAsDouble();
-		totalDraw += intakeDeployMotor.getSupplyCurrent().getValueAsDouble();
-		return totalDraw;
-	}
-
-	public static void log() {
-		// Slider Position
-		SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
-		SmartDashboard.putNumber("/Intake/IntakeTemp", intakeMotor.getDeviceTemp().getValueAsDouble());
-		SmartDashboard.putNumber("/Intake/IntakeDeployTemp", intakeDeployMotor.getDeviceTemp().getValueAsDouble());
-
-	}
+	// public static void log() {
+	// 	// Slider Position
+	// 	SmartDashboard.putNumber("/Intake/Position", getIntakeDeployRotations());
+	// 	SmartDashboard.putNumber("/Intake/IntakeTemp", intakeMotor.getDeviceTemp().getValueAsDouble());
+	// 	SmartDashboard.putNumber("/Intake/IntakeDeployTemp", intakeDeployMotor.getDeviceTemp().getValueAsDouble());
+	// }
 
 	@Override
 	public void periodic() {
-		log();
+		/* 
 		if (DriverStation.isTest()) {
 			intakeDeployMotor.setControl(new VoltageOut(0));
 			setIntakeVoltage(0);
@@ -125,11 +54,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
 		double intakePosition = requestedIntakeDeploy;
 		boolean shouldPulse = 
-		/*(RobotContainer.operatorController.rightTrigger().getAsBoolean()
-				&& !RobotContainer.operatorLeftStickUp.getAsBoolean()
-				&& RobotContainer.driveSubsystem.getPose2d().getX() < 5.3
-				&& requestedIntakeDeploy > 1)
-				||*/ autonPulse;
+			// (RobotContainer.operatorController.rightTrigger().getAsBoolean()
+			// 	&& !RobotContainer.operatorLeftStickUp.getAsBoolean()
+			// 	&& RobotContainer.driveSubsystem.getPose2d().getX() < 5.3
+			// 	&& requestedIntakeDeploy > 1) ||
+				autonPulse;
 
 		if (timer.get() < 1) {
 			// Out
@@ -142,22 +71,14 @@ public class IntakeSubsystem extends SubsystemBase {
 			if (shouldPulse)
 				intakePosition = IntakeConstants.IntakeOutPosition * 0.4;
 
-		} else
-			timer.restart();
+		} else timer.restart();
 
 		if (getIntakeDeployRotations() > IntakeConstants.IntakeOutPosition - .4 && DriverStation.isAutonomous()
 				&& intakePosition == IntakeConstants.IntakeOutPosition) {
 			intakeDeployMotor.setControl(new TorqueCurrentFOC(35));
 		} else {
 			intakeDeployMotor.setControl(new MotionMagicVoltage(intakePosition));
-
 		}
-
-		if (intaking || shouldPulse)
-			setIntakeVoltage(12);
-		else if (reversing)
-			setIntakeVoltage(-6);
-		else
-			setIntakeVoltage(0);
+		*/
 	}
 }

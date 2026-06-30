@@ -87,10 +87,10 @@ public class RobotContainer {
   }
 
   public void putCommands() {
-    SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
-    SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
-    SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
-    SmartDashboard.putData(new ZeroClimberCommand().ignoringDisable(true));
+    // SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
+    // SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
+    // SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
+    // SmartDashboard.putData(new ZeroClimberCommand().ignoringDisable(true));
 
   }
 
@@ -111,77 +111,10 @@ public class RobotContainer {
   private void configureBindings() {
     driveSubsystem.setDefaultCommand(new DriveCommand());
 
-    operatorController.rightTrigger(0.15).whileTrue(new ParallelCommandGroup(new ShootCommand(), new RevCommand()));
-    operatorController.leftTrigger(0.15).whileTrue(new RevCommand());
-
-    // Intake Commands
-    // operatorController.leftTrigger(.15).onTrue(new IntakeMoveCommand(true));
-    operatorLeftStickUp.whileTrue(new IntakeBallCommand());
-    operatorLeftStickUp.onTrue(new SetIntakeCommand(IntakeConstants.IntakeOutPosition));
-    operatorController.axisGreaterThan(1, 0.5).onTrue(new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
-    operatorController.leftBumper().onTrue(new IntakePulseCommand());
-
-    // Drive Set Positions
-
-    driverController.b().whileTrue(new ParallelDeadlineGroup(
-        new PIDAutoAlignCommand(false).andThen(new PIDAutoAlignCommand(true))));
-
-    // driverController.a().whileTrue(new PIDAutoAlignCommand());
-
-    // Turret Set Positions
-    operatorController.x().onTrue(new TurretLeftCommand());
-    operatorController.b().onTrue(new TurretRightCommand());
-    operatorController.y().onTrue(new TurretFrontCommand());
-    operatorController.a().onTrue(new TurretAutoCommand());
-
-    operatorController.back().whileTrue(new ReverseHopperCommand());
-    operatorController.start().whileTrue(new ReverseIntakeCommand());
-    
-    // climber
-    climberSubsystem.setDefaultCommand(new ClimberCommand());
-    operatorController.povUp().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
-    operatorController.povRight().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
-    operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberSoftMin));
-
-  }
-
-  public double getTotalCurrentDraw() {
-    double totalDraw = 0;
-    
-    var intakeDraw = IntakeSubsystem.getTotalCurrentDraw();
-    SmartDashboard.putNumber("/Intake/TotalCurrentDraw", intakeDraw);
-    totalDraw += intakeDraw;
-
-    var hopperDraw = HopperSubsystem.getTotalCurrentDraw();
-    SmartDashboard.putNumber("/Hopper/TotalCurrentDraw", hopperDraw);
-    totalDraw += hopperDraw;
-
-    var shootDraw = ShooterSubsystem.getTotalCurrentDraw();
-    SmartDashboard.putNumber("/Shoot/TotalCurrentDraw", shootDraw);
-    totalDraw += shootDraw;
-
-    var driveDraw = driveSubsystem.getTotalCurrentDraw();
-    SmartDashboard.putNumber("/Drive/TotalCurrentDraw", driveDraw);
-    totalDraw += driveDraw;
-
-    SignalLogger.writeDouble("Total Current Draw", totalDraw);
-
-    return totalDraw;
+    // Link commands to controller buttons here
   }
 
   public void putAutons() {
-    // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
-    NamedCommands.registerCommand("IntakeDeployCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMax));
-    NamedCommands.registerCommand("IntakeRetractCommand", new SetIntakeCommand(IntakeConstants.IntakeDeploySoftMin));
-    NamedCommands.registerCommand("IntakeBallCommand", new IntakeBallCommand());
-    NamedCommands.registerCommand("ShootCommand", new ShootCommand());
-    NamedCommands.registerCommand("RevCommand", new RevCommand());
-    NamedCommands.registerCommand("HideHoodCommand", new HideHoodCommand());
-    NamedCommands.registerCommand("AutonPulseCommand", new AutonPulseCommand());
-    NamedCommands.registerCommand("ClimberCommand", new ClimberCommand());
-    NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
-    NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
-    // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
     NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
 

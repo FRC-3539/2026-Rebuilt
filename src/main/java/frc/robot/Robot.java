@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("/Robot/TotalCurrentDraw", m_robotContainer.getTotalCurrentDraw());
+    // SmartDashboard.putNumber("/Robot/TotalCurrentDraw", m_robotContainer.getTotalCurrentDraw());
     double voltage = tempSensor.getVoltage();
 
     // 1. Calculate Resistance
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    RobotContainer.intakeSubsystem.setIntakeDeployPosition(RobotContainer.intakeSubsystem.getIntakeDeployRotations());
+    // RobotContainer.intakeSubsystem.setIntakeDeployPosition(RobotContainer.intakeSubsystem.getIntakeDeployRotations());
   }
 
   /**
