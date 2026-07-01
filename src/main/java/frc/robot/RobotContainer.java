@@ -113,6 +113,11 @@ public class RobotContainer {
 
     // Link commands to controller buttons here
     operatorController.rightTrigger(.2).whileTrue(new ShootCommand());
+    operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeCommand());
+    operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeDeployCommand());
+    operatorController.axisGreaterThan(1, 0.5).whileTrue(new IntakeRetractCommand());
+    operatorController.back().whileTrue(new IntakeReverseCommand());
+
   }
 
   public void putAutons() {
