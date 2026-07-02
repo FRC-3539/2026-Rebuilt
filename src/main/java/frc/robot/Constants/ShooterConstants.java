@@ -25,7 +25,7 @@ public class ShooterConstants extends BBConstants {
     public static double ShooterI = 0.0;
     public static double ShooterD = 0.0;
     public static double ShooterV = 0.14;
-    public static double HoodAcceleration = 750;
+    public static double HoodAcceleration = 750.0;
     public static double HoodCruiseVelocity = 50.0;
     public static double TurretRotateAcceleration = 400.0;
     public static double TurretRotateCruiseVelocity = 80.0;
