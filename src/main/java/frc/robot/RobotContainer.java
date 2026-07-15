@@ -134,6 +134,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
+    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand());
+    // NamedCommands.registerCommand("ClimbCommand", new ClimbLiftCommand());
+
+
 
     chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(chooser);
