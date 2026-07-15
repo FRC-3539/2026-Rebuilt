@@ -69,19 +69,21 @@ public class DriveCommand extends Command {
 			rotationSpeedMultiplier *= 0.75;
 		}
 
+		Translation2d translationInput = modifyJoystick(new Translation2d(-RobotContainer.driverController.getLeftY(),
+				-RobotContainer.driverController.getLeftX()));
+		double rotationInput = modifyAxis(-RobotContainer.driverController.getRightX());
+
 		if (RobotContainer.leftDriverTrigger.getAsBoolean()) { // Robot Centric
 			request = driveRobotCentric
-					.withVelocityX(-RobotContainer.driverController.getLeftY() * maxVelocity * speedMultiplier)
-					.withVelocityY(-RobotContainer.driverController.getLeftX() * maxVelocity * speedMultiplier)
-					.withRotationalRate(-RobotContainer.driverController.getRightX() * maxRotationalVelocity
-							* rotationSpeedMultiplier)
+					.withVelocityX(translationInput.getX() * maxVelocity * speedMultiplier)
+					.withVelocityY(translationInput.getY() * maxVelocity * speedMultiplier)
+					.withRotationalRate(rotationInput * maxRotationalVelocity * rotationSpeedMultiplier)
 					.withRotationalDeadband(rotationDeadband);
 		} else {
 			request = driveFieldCentric
-					.withVelocityX(-RobotContainer.driverController.getLeftY() * maxVelocity * speedMultiplier)
-					.withVelocityY(-RobotContainer.driverController.getLeftX() * maxVelocity * speedMultiplier)
-					.withRotationalRate(-RobotContainer.driverController.getRightX() * maxRotationalVelocity
-							* rotationSpeedMultiplier)
+					.withVelocityX(translationInput.getX() * maxVelocity * speedMultiplier)
+					.withVelocityY(translationInput.getY() * maxVelocity * speedMultiplier)
+					.withRotationalRate(rotationInput * maxRotationalVelocity * rotationSpeedMultiplier)
 					.withRotationalDeadband(rotationDeadband);
 		}
 
@@ -107,5 +109,9 @@ public class DriveCommand extends Command {
 		double distanceModified = Math.copySign(Math.pow(distance, 3), distance);
 
 		return new Translation2d(distanceModified, rotation);
+	}
+
+	private static double modifyAxis(double value) {
+		return Math.copySign(Math.pow(value, 3), value);
 	}
 }
