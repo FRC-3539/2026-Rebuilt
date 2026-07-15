@@ -23,8 +23,7 @@ public class ClimbLiftCommand extends Command {
   @Override
   public void execute() {
     if (RobotContainer.operatorController.getRightY() < -0.2 || RobotContainer.operatorController.getRightY() > 0.2) {
-      ClimberSubsystem
-        .setClimberMotor(-ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
+      ClimberSubsystem.setClimberMotor(-ClimberConstants.ClimberVoltage * RobotContainer.operatorController.getRightY());
     } else {
       ClimberSubsystem.setClimberDeployMotor(0);
     }

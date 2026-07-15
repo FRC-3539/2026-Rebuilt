@@ -87,9 +87,9 @@ public class RobotContainer {
   }
 
   public void putCommands() {
-    // SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
-    // SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
-    // SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroHoodMotorCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroIntakeDeployCommand().ignoringDisable(true));
+    SmartDashboard.putData(new ZeroTurretRotateCommand().ignoringDisable(true));
     SmartDashboard.putData(new ZeroClimberCommand().ignoringDisable(true));
 
   }
@@ -117,6 +117,8 @@ public class RobotContainer {
     operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeDeployCommand());
     operatorController.axisGreaterThan(1, 0.5).whileTrue(new IntakeRetractCommand());
     operatorController.back().whileTrue(new IntakeReverseCommand());
+    operatorController.rightBumper().whileTrue(new RevCommand());
+    operatorController.start().whileTrue(new ReverseHopperCommand());
 
     // climb like a diamond
     climberSubsystem.setDefaultCommand(new ClimbLiftCommand());
@@ -131,6 +133,7 @@ public class RobotContainer {
   public void putAutons() {
     NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
+    NamedCommands.registerCommand("ShootCommand", new ShootCommand());
 
     chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(chooser);

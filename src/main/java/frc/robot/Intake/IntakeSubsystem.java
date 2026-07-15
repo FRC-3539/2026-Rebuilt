@@ -44,10 +44,11 @@ public class IntakeSubsystem extends SubsystemBase {
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(70).withSupplyCurrentLowerLimit(45).withSupplyCurrentLowerTime(2));
 
-		intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");
-		intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
+		intakeDeployMotor = new TalonFX(IDConstants.IntakeDeployMotorID, "CANivore");			
+
 		intakeDeployMotor.getConfigurator()
         .apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+		intakeDeployMotor.setNeutralMode(NeutralModeValue.Brake);
     	intakeDeployMotor.getConfigurator()
         .apply(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(false).withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(40).withSupplyCurrentLowerLimit(40).withSupplyCurrentLowerTime(2));
@@ -66,7 +67,7 @@ public class IntakeSubsystem extends SubsystemBase {
 	}
 
 	public static void setIntakeMotor(double voltage) {
-		intakeMotor.setControl( new VoltageOut(voltage));
+		intakeMotor.setControl(new VoltageOut(voltage));
 	}
 
 	public static double getIntakeCurrent() {
@@ -77,8 +78,18 @@ public class IntakeSubsystem extends SubsystemBase {
 		intakeDeployPosition = Position;
 	}
 
+	public static void zeroIntakeDeploy() {
+		intakeDeployMotor.setPosition(0);
+	}
+
 	@Override
-	public void periodic() {
+	public void periodic() { 
+		if (DriverStation.isTest()) {
+			intakeDeployMotor.setControl(new VoltageOut(0));
+			setIntakeMotor(0);
+			return;
+		}
+
 		intakeDeployMotor.setControl(new MotionMagicVoltage(intakeDeployPosition));
 	}
 }
@@ -90,12 +101,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
 
-		/* 
-		if (DriverStation.isTest()) {
-			intakeDeployMotor.setControl(new VoltageOut(0));
-			setIntakeVoltage(0);
-			return;
-		}
+		/*
 
 		double intakePosition = requestedIntakeDeploy;
 		boolean shouldPulse = 

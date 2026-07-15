@@ -25,7 +25,7 @@ public class ShootCommand extends Command {
   public void execute() {
     HopperSubsystem.setKickerVelocity(10);
     if (ShooterSubsystem.turretReady()) {
-      HopperSubsystem.setSpinnerMotor(8);
+      HopperSubsystem.setSpinnerMotor(10);
     } else {
       HopperSubsystem.setSpinnerMotor(0);
     }
