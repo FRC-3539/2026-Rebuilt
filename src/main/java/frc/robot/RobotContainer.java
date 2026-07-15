@@ -135,7 +135,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
     NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("IntakeCommand", new IntakeCommand());
-    // NamedCommands.registerCommand("ClimbCommand", new ClimbLiftCommand());
+    NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
+    NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
+
 
 
 
