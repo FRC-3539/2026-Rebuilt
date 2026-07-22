@@ -117,7 +117,7 @@ public class RobotContainer {
     operatorController.axisLessThan(1, -0.5).whileTrue(new IntakeDeployCommand());
     operatorController.axisGreaterThan(1, 0.5).whileTrue(new IntakeRetractCommand());
     operatorController.back().whileTrue(new IntakeReverseCommand());
-    operatorController.rightBumper().whileTrue(new RevCommand());
+    operatorController.leftTrigger().whileTrue(new RevCommand());
     operatorController.start().whileTrue(new ReverseHopperCommand());
 
     // climb like a diamond
@@ -137,6 +137,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeCommand", new IntakeCommand());
     NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
     NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
+    NamedCommands.registerCommand("ClimberCommand", new ClimbLiftCommand());
+    // sonion city
+
 
 
 

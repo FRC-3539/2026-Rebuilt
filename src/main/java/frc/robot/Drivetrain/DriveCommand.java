@@ -106,12 +106,12 @@ public class DriveCommand extends Command {
 		Rotation2d rotation = joystick.getAngle();
 		double distance = joystick.getNorm();
 
-		double distanceModified = Math.copySign(Math.pow(distance, 3), distance);
+		double distanceModified = Math.copySign(Math.pow(distance, 2), distance);
 
 		return new Translation2d(distanceModified, rotation);
 	}
 
 	private static double modifyAxis(double value) {
-		return Math.copySign(Math.pow(value, 3), value);
+		return Math.copySign(Math.pow(value, 1), value);
 	}
 }
