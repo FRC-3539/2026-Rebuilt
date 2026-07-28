@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathfindingCommand;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Autos.*;
 import frc.robot.Climber.*;
 import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.ClimberConstants;
@@ -83,6 +85,9 @@ public class RobotContainer {
     putAutons();
     putCommands();
     visionSubsystem.start();
+    // Pre-warms PathPlanner's on-the-fly pathfinder so the first real pathfindToPose call (used by
+    // AdaptiveAuto) isn't the one that eats the JIT/pathfinding warmup delay. No robot motion.
+    PathfindingCommand.warmupCommand().schedule();
 
   }
 
@@ -186,6 +191,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
 
     chooser = AutoBuilder.buildAutoChooser();
+    chooser.addOption("Adaptive Auto (Java)", AdaptiveAuto.adaptiveAuto());
     SmartDashboard.putData(chooser);
   }
 
