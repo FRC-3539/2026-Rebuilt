@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.AdaptiveAutos.RngPathCommand;
 import frc.robot.Climber.*;
 import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.ClimberConstants;
@@ -133,11 +134,11 @@ public class RobotContainer {
   public void putAutons() {
     NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
-    NamedCommands.registerCommand("ShootCommand", new ShootCommand());
     NamedCommands.registerCommand("IntakeCommand", new IntakeCommand());
     NamedCommands.registerCommand("ClimbDeployCommand", new SetClimberPositionCommand(ClimberConstants.ClimbHeight));
     NamedCommands.registerCommand("ClimbLiftCommand", new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     NamedCommands.registerCommand("ClimberCommand", new ClimbLiftCommand());
+    NamedCommands.registerCommand("RngPathCommand", new RngPathCommand());
     // sonion city
 
 
