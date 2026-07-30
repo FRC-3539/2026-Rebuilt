@@ -12,10 +12,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Vision.VisionSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class RngPathCommand extends Command {
+private Debouncer cameraCheck;
+private Debouncer targetCheck;
  private Command path;
  PathPlannerPath PPpath;
   /** Creates a new RngPathCommand. */
@@ -43,7 +47,9 @@ public class RngPathCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+ 
+    cameraCheck = new Debouncer(5);
+    targetCheck = new Debouncer(5);
     path = AutoBuilder.followPath(PPpath);
     path.schedule();
 
@@ -51,7 +57,24 @@ public class RngPathCommand extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+      boolean hasTarget = VisionSubsystem.resultBackLeft.isPresent()
+      || VisionSubsystem.resultLeft.isPresent()
+      || VisionSubsystem.resultBackRight.isPresent()
+      || VisionSubsystem.resultRight.isPresent();
+
+
+
+      boolean missingACamera = 
+        !VisionSubsystem.leftCam.isConnected() 
+        || !VisionSubsystem.backLeftCam.isConnected() 
+        || !VisionSubsystem.rightCam.isConnected() 
+        || !VisionSubsystem.backRightCam.isConnected();
+      if (cameraCheck.calculate(missingACamera) || targetCheck.calculate(!hasTarget)) 
+      {
+       path.cancel();
+      }
+  }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -57,10 +57,10 @@ public class VisionSubsystem extends Thread {
 	PhotonPoseEstimator backLeftPhotonPoseEstimator;
 	PhotonPoseEstimator backRightPhotonPoseEstimator;
 
-	Optional<EstimatedRobotPose> resultLeft;
-	Optional<EstimatedRobotPose> resultRight;
-	Optional<EstimatedRobotPose> resultBackLeft;
-	Optional<EstimatedRobotPose> resultBackRight;
+	public static Optional<EstimatedRobotPose> resultLeft;
+	public static Optional<EstimatedRobotPose> resultRight;
+	public static Optional<EstimatedRobotPose> resultBackLeft;
+	public static Optional<EstimatedRobotPose> resultBackRight;
 	boolean useVision = true;
 
 	double leftLastTimeStamp = 0;
