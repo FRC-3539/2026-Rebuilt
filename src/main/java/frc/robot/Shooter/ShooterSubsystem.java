@@ -250,7 +250,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateHoodShotAngle(double distanceToTarget) {
-        double angle = (distanceToTarget - 1.4) / 7.0 * 2.5;
+        double angle = (distanceToTarget - 1.4) / 7.0 * 2.5 * 8.0/9.0;
         return angle;
     }
 
@@ -261,12 +261,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public static double calculateShotSpeed(double distanceToTarget) {
-        double speed = 20.72878
-                + (5.564528 + 0.25) * (distanceToTarget)
+        double speed = 20.72878 
+                + (5.564528 + 0.8) * (distanceToTarget)
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 1 + 2;    
+                - 1 + 2 - 4;    
         return speed;
     }
 

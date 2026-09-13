@@ -14,13 +14,13 @@ public class IntakeConstants extends BBConstants {
     public static double IntakeDeploySoftMin = 0.0;
     /** Was 5.4 */
     public static double IntakeDeploySoftMax = 9.25;
-    public static double IntakeDeployP = 30.0;
+    public static double IntakeDeployP = 45.0;
     public static double IntakeDeployI = 0.0;
     public static double IntakeDeployD = 0.0;
     /** 150 */
-    public static double IntakeDeployAcceleration = 20.0;
+    public static double IntakeDeployAcceleration = 50.0;
     /** 90 */
-    public static double IntakeDeployCruiseVelocity = 20.0;
+    public static double IntakeDeployCruiseVelocity = 50.0;
     public static double IntakeDeployV = 0.09;
     /** was .5 3/28 */
     public static double IntakeP = 1.0;
