@@ -71,6 +71,8 @@ public class ShooterSubsystem extends SubsystemBase {
     public static boolean raiseHoodState = false;
     public static boolean teleopHideHoodState = false;
 
+    public static int turretRotateAdjustment = 0;
+
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
         rotateMotor = new TalonFXS(IDConstants.TurretRotateMotorID, "rio");
@@ -266,7 +268,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 1 + 2 - 4;    
+                - 1 + 2 - 4 + 2;    
         return speed;
     }
 
@@ -325,7 +327,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 Translation2d offsetTarget = getOffsetTarget(turretLocation, ShooterConstants.Hub);
                 distanceToTarget = turretLocation.getDistance(offsetTarget);
 
-                turretAngle = turretLocation.minus(offsetTarget).getAngle().getDegrees() - 180;
+                turretAngle = turretLocation.minus(offsetTarget).getAngle().getDegrees() - 180 + turretRotateAdjustment;
                 double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
                 turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
                         ? turretAngle

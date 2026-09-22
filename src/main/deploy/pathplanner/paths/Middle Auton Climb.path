@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.11,
+        "x": 1.01,
         "y": 4.56
       },
       "prevControl": {
-        "x": 1.11,
+        "x": 1.01,
         "y": 5.56
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Tower"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

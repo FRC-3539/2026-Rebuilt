@@ -143,6 +143,11 @@ public class RobotContainer {
     operatorController.povRight().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberSoftMin));
 
+    //Turret Adjustment
+    driverController.leftBumper().onTrue(new IncreaseTurretAdjustmentCommand());
+    driverController.rightBumper().onTrue(new DecreaseTurretAdjustmentCommand());
+
+
   }
 
   public double getTotalCurrentDraw() {
