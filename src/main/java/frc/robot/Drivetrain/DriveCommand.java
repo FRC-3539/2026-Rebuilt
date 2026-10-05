@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Shooter.ShooterSubsystem;
 
 
 public class DriveCommand extends Command {
@@ -65,8 +64,8 @@ public class DriveCommand extends Command {
 		}
 		if (RobotContainer.operatorController.rightTrigger(0.5).getAsBoolean() && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
 		{
-			speedMultiplier *= 0.75;
-			rotationSpeedMultiplier *= 0.75;
+			speedMultiplier *= 0.40;
+			rotationSpeedMultiplier *= 0.65;
 		}
 
 		if (RobotContainer.leftDriverTrigger.getAsBoolean()) { // Robot Centric
