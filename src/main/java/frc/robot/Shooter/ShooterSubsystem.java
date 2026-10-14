@@ -262,11 +262,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static double calculateShotSpeed(double distanceToTarget) {
         double speed = 20.72878 
-                + (5.564528 + 0.8) * (distanceToTarget)
+                + (5.564528 + 0.5) * (distanceToTarget)
                 - 0.926687 * Math.pow(distanceToTarget, 2)
                 + 0.093775 * Math.pow(distanceToTarget, 3)
                 // Manuel Adjustments
-                - 1 + 2 - 4;    
+                - 1 + 2 - 1
+                // Pre girls comp
+                ;
         return speed;
     }
 

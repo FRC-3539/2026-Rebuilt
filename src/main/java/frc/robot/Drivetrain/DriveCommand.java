@@ -65,8 +65,8 @@ public class DriveCommand extends Command {
 		}
 		if (RobotContainer.operatorController.rightTrigger(0.5).getAsBoolean() && RobotContainer.driveSubsystem.getPose2d().getX() < 5.3)
 		{
-			speedMultiplier *= 0.75;
-			rotationSpeedMultiplier *= 0.75;
+			speedMultiplier *= 0.40;
+			rotationSpeedMultiplier *= 0.80;
 		}
 
 		if (RobotContainer.leftDriverTrigger.getAsBoolean()) { // Robot Centric

@@ -203,6 +203,7 @@ public class VisionSubsystem extends Thread {
 		/* Run as fast as possible, our signals will control the timing */
 
 		try{
+			
 		while (true) {
 			// currentTimeStamp = Robotcontroller.
 			try {
@@ -234,6 +235,7 @@ public class VisionSubsystem extends Thread {
 			this.resultBackRight = getEstimatedBackRightGlobalPose();
 
 			if (useVision) {
+				try {
 				// Left camera
 				if (resultLeft.isPresent()) {
 					// System.out.println("left camera has something!");
@@ -301,7 +303,12 @@ public class VisionSubsystem extends Thread {
 					}
 					backRightLastTimeStamp = timeStamp;
 				}
+			} catch (Exception e) {
+				System.out.println("\n\n\n\n\n\n");
+				e.printStackTrace();
+				System.out.println("\n\n\n\n\n\n");
 			}
+		}
 
 			log();
 		}
