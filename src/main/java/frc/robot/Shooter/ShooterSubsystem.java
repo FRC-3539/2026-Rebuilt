@@ -317,75 +317,75 @@ public class ShooterSubsystem extends SubsystemBase {
         return new Translation2d(robotPose.getX() + rotatedX, robotPose.getY() + rotatedY);
     }
 
-    public static TurretState getScoringState() {
-        TurretState state = new TurretState();
-        double distanceToTarget = 0;
+    // public static TurretState getScoringState() {
+    //     TurretState state = new TurretState();
+    //     double distanceToTarget = 0;
 
-        double turretAngle = 0;
-        switch (mode) {
-            case AUTO:
-                Translation2d offsetTarget = getOffsetTarget(turretLocation, ShooterConstants.Hub);
-                distanceToTarget = turretLocation.getDistance(offsetTarget);
+    //     double turretAngle = 0;
+    //     switch (mode) {
+    //         case AUTO:
+    //             Translation2d offsetTarget = getOffsetTarget(turretLocation, ShooterConstants.Hub);
+    //             distanceToTarget = turretLocation.getDistance(offsetTarget);
 
-                turretAngle = turretLocation.minus(offsetTarget).getAngle().getDegrees() - 180;
-                double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
-                turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
-                        ? turretAngle
-                        : otherAngle;
-                break;
-            case LEFT:
-                turretAngle = -85;
-                distanceToTarget = 2;
-                // do other stuff
-                break;
-            case RIGHT:
-                turretAngle = 85;
-                distanceToTarget = 2;
-                // do other stuff
-                break;
-            case FRONT:
-                turretAngle = 0;
-                distanceToTarget = 2;
-                // facing front
-                // do other stuff
-                break;
-            case BACK:
-                turretAngle = 0;
-                distanceToTarget = 2;
-                // facing front
-                // do other stuff
-                break;
-        }
+    //             turretAngle = turretLocation.minus(offsetTarget).getAngle().getDegrees() - 180;
+    //             double otherAngle = turretAngle < 0 ? turretAngle + 360 : turretAngle - 360;
+    //             turretAngle = Math.abs(turretAngle - getTurretRotation()) <= Math.abs(otherAngle - getTurretRotation())
+    //                     ? turretAngle
+    //                     : otherAngle;
+    //             break;
+    //         case LEFT:
+    //             turretAngle = -85;
+    //             distanceToTarget = 2;
+    //             // do other stuff
+    //             break;
+    //         case RIGHT:
+    //             turretAngle = 85;
+    //             distanceToTarget = 2;
+    //             // do other stuff
+    //             break;
+    //         case FRONT:
+    //             turretAngle = 0;
+    //             distanceToTarget = 2;
+    //             // facing front
+    //             // do other stuff
+    //             break;
+    //         case BACK:
+    //             turretAngle = 0;
+    //             distanceToTarget = 2;
+    //             // facing front
+    //             // do other stuff
+    //             break;
+    //     }
 
-        double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees());
-        double otherAngle = turretTargetAngle < 0 ? turretTargetAngle + 360 : turretTargetAngle - 360;
-        turretTargetAngle = Math.abs(turretTargetAngle - getTurretRotation()) <= Math
-                .abs(otherAngle - getTurretRotation())
-                        ? turretTargetAngle
-                        : otherAngle;
+    //     double turretTargetAngle = (turretAngle - RobotContainer.driveSubsystem.getPose2d().getRotation().getDegrees());
+    //     double otherAngle = turretTargetAngle < 0 ? turretTargetAngle + 360 : turretTargetAngle - 360;
+    //     turretTargetAngle = Math.abs(turretTargetAngle - getTurretRotation()) <= Math
+    //             .abs(otherAngle - getTurretRotation())
+    //                     ? turretTargetAngle
+    //                     : otherAngle;
 
-        if (turretTargetAngle > 280)
-            turretTargetAngle -= 360;
-        else if (turretTargetAngle < -175)
-            turretTargetAngle += 360;
+    //     if (turretTargetAngle > 280)
+    //         turretTargetAngle -= 360;
+    //     else if (turretTargetAngle < -175)
+    //         turretTargetAngle += 360;
 
-        state.rotation = turretTargetAngle;
+    //     state.rotation = turretTargetAngle;
 
-        SmartDashboard.putNumber("/Turret/DistanceToTarget", distanceToTarget);
+    //     SmartDashboard.putNumber("/Turret/DistanceToTarget", distanceToTarget);
 
-        // Calculate hood angle and shot speed
-        state.hoodAngle = calculateHoodShotAngle(distanceToTarget);
-        if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
-            teleopHideHoodState = true;
-        else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 4.627) < .4)
-            teleopHideHoodState = true;
-        else
-            teleopHideHoodState = false;
+    //     // Calculate hood angle and shot speed
+    //     state.hoodAngle = calculateHoodShotAngle(distanceToTarget);
+    //     if (turretLocation.getY() > 6.7 && Math.abs(turretLocation.getX() - 4.627) < .4)
+    //         teleopHideHoodState = true;
+    //     else if (turretLocation.getY() < 1.45 && Math.abs(turretLocation.getX() - 4.627) < .4)
+    //         teleopHideHoodState = true;
+    //     else
+    //         teleopHideHoodState = false;
 
-        state.velocity = calculateShotSpeed(distanceToTarget);
+    //     state.velocity = calculateShotSpeed(distanceToTarget);
 
-        return state;
-    }
+    //     return state;
+    // }
 
     public static TurretState getFeedingState() {
         TurretState state = new TurretState();
@@ -483,37 +483,39 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        turretLocation = getTurretLocation();
+        return;
 
-        if (turretLocation.getX() < 5.3)
-            requestedState = getScoringState();
-        else
-            requestedState = getFeedingState();
+//         turretLocation = getTurretLocation();
 
-        requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 83);
-        requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
+//         if (turretLocation.getX() < 5.3)
+//             requestedState = getScoringState();
+//         else
+//             requestedState = getFeedingState();
 
-        log();
+//         requestedState.velocity = MathUtil.clamp(requestedState.velocity, 35 - 20, 83);
+//         requestedState.hoodAngle = MathUtil.clamp(requestedState.hoodAngle, 0, ShooterConstants.HoodSoftMax);
 
-        // Apply turret calculations
-        // System.out.println(velocityToRotations(requestedState.velocity))
-        if (!DriverStation.isTest()) {
-            rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
-            // return;
-            if (!raiseHoodState || teleopHideHoodState)
-                hoodMotor.setControl(new MotionMagicVoltage(0));
-            else
-                hoodMotor.setControl(
-                        new MotionMagicVoltage(Math.min(requestedState.hoodAngle,
-                                ShooterConstants.HoodSoftMax)));
-            if (revState)
-                shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
-            else
-                shootMotorLeader.setControl(new VoltageOut(0));
-        } else {
-            shootMotorLeader.setControl(new VoltageOut(0));
-            hoodMotor.setControl(new VoltageOut(0));
-            rotateMotor.setControl(new VoltageOut(0));
-        }
+//         log();
+
+//         // Apply turret calculations
+//         // System.out.println(velocityToRotations(requestedState.velocity))
+//         if (!DriverStation.isTest()) {
+//             rotateMotor.setControl(new MotionMagicVoltage(turretAngleToRotations(requestedState.rotation)));
+//             // return;
+//             if (!raiseHoodState || teleopHideHoodState)
+//                 hoodMotor.setControl(new MotionMagicVoltage(0));
+//             else
+//                 hoodMotor.setControl(
+//                         new MotionMagicVoltage(Math.min(requestedState.hoodAngle,
+//                                 ShooterConstants.HoodSoftMax)));
+//             if (revState)
+//                 shootMotorLeader.setControl(velocityVoltageControl.withVelocity(requestedState.velocity));
+//             else
+//                 shootMotorLeader.setControl(new VoltageOut(0));
+//         } else {
+//             shootMotorLeader.setControl(new VoltageOut(0));
+//             hoodMotor.setControl(new VoltageOut(0));
+//             rotateMotor.setControl(new VoltageOut(0));
+        // }
     }
 }

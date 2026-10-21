@@ -82,11 +82,13 @@ public class PIDAutoAlignCommand extends Command {
     double deceleratedY = robotPose.getY() + RobotContainer.driveSubsystem.velocityY * translateAccel;
     double deceleratedTheta = robotPose.getRotation().getRadians() + RobotContainer.driveSubsystem.velocityR * thetaAccel;
 
+    //robotPose = new Pose2d(deceleratedX, deceleratedY, robotPose.getRotation().plus(new Rotation2d(deceleratedTheta)));
     robotPose = new Pose2d(deceleratedX, deceleratedY, robotPose.getRotation().plus(new Rotation2d(deceleratedTheta)));
 
     // Log or use the deceleratedPose as needed
 
     targetPoint = robotPose.nearest(AlignConstants.trenchPoints);
+    
     if(!second) return;
     var newPoints = new HashSet<>(AlignConstants.trenchPoints);
     newPoints.remove(targetPoint);

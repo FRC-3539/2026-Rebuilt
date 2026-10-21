@@ -8,6 +8,8 @@ import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -143,6 +145,13 @@ public class RobotContainer {
     operatorController.povRight().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberSoftMin));
 
+    // spinner command for girls comp
+
+    //driverController.leftTrigger().whileTrue(new SpinnerCommand());
+
+    // driver auto move command
+    driverController.rightTrigger().whileTrue( new BBAutoAlignCommand(new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
+
   }
 
   public double getTotalCurrentDraw() {
@@ -184,6 +193,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("RevWheelCommand", new RevWheelCommand());
     NamedCommands.registerCommand("LeftBumpPosition", new SetOdometryCommand(3.440, 5.576));
     NamedCommands.registerCommand("RightBumpPosition", new SetOdometryCommand(3.451, 2.265));
+    NamedCommands.registerCommand("BBAutoAlignCommand", new BBAutoAlignCommand(new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
 
     chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(chooser);
