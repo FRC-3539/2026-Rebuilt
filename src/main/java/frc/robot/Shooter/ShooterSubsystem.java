@@ -40,7 +40,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IDConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Utilities.Utilities;
+//import frc.robot.Utilities.Utilities;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.EnumConstants.ShootingMode;
 import frc.robot.Drivetrain.DriveSubsystem;
@@ -464,7 +464,7 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("/Turret/TurretRotation", getTurretRotation());
         SmartDashboard.putNumber("/Turret/HoodAngle", getHoodAngle());
 
-        Utilities.publishTranslation2d("/Turret/Location", turretLocation);
+       // Utilities.publishTranslation2d("/Turret/Location", turretLocation);
 
         SmartDashboard.putNumber("/Turret/ShootLeadTemp", shootMotorLeader.getDeviceTemp().getValueAsDouble());
         SmartDashboard.putNumber("/Turret/ShootFollowTemp", shootMotorFollower.getDeviceTemp().getValueAsDouble());

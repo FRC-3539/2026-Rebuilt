@@ -33,6 +33,7 @@ import frc.robot.Intake.*;
 import frc.robot.LED.LEDConstants;
 import frc.robot.LED.LEDSubsystem;
 import frc.robot.Shooter.*;
+import frc.robot.TeleOpAuton.TeleopAutonCommand;
 import frc.robot.Vision.*;
 
 /**
@@ -77,6 +78,8 @@ public class RobotContainer {
 
   public static SendableChooser<Command> chooser = new SendableChooser<Command>();
 
+  public static Command teleopAutonCommand;
+
   public RobotContainer() {
     if(IDConstants.PracticeBot){driveSubsystem = TunerConstantsPractice.createDrivetrain();}
     else driveSubsystem = TunerConstants.createDrivetrain();
@@ -85,6 +88,7 @@ public class RobotContainer {
     putAutons();
     putCommands();
     visionSubsystem.start();
+    teleopAutonCommand = new TeleopAutonCommand();
 
   }
 
@@ -145,12 +149,14 @@ public class RobotContainer {
     operatorController.povRight().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberAirHeight));
     operatorController.povDown().onTrue(new SetClimberPositionCommand(ClimberConstants.ClimberSoftMin));
 
-    // spinner command for girls comp
 
-    //driverController.leftTrigger().whileTrue(new SpinnerCommand());
 
-    // driver auto move command
+    
+
+    // driver auto move commands
     driverController.rightTrigger().whileTrue( new BBAutoAlignCommand(new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
+
+    driverController.leftTrigger().onTrue(new TeleopAutonCommand());
 
   }
 
