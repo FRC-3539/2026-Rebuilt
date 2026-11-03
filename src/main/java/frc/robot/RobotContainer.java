@@ -156,7 +156,7 @@ public class RobotContainer {
     // driver auto move commands
     driverController.rightTrigger().whileTrue( new BBAutoAlignCommand(new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
 
-    driverController.leftTrigger().onTrue(new TeleopAutonCommand());
+    driverController.leftTrigger().whileTrue(new TeleopAutonCommand());
 
   }
 

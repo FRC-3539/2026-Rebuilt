@@ -25,14 +25,13 @@ public class TeleopAutonCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    teleopauto = new PathPlannerAuto("TestAuton"); 
+    teleopauto = new PathPlannerAuto("TeleopTestAuto"); 
     teleopauto.schedule();
-    System.out.println("Chad boy koz");
+
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     System.out.println("Command is running");
   }
 
   // Called once the command ends or is interrupted.
@@ -44,8 +43,8 @@ public class TeleopAutonCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("AutoIsFinished " + teleopauto.isFinished());
     return teleopauto.isFinished()
-      || !MathUtil.isNear(0, RobotContainer.driverController.getLeftTriggerAxis(), 0.1)
       || !MathUtil.isNear(0, RobotContainer.driverController.getRightTriggerAxis(), 0.1);
   }
 }
